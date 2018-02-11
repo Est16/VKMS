@@ -1,0 +1,45 @@
+/URL: https://www.mjmwired.net/kernel/Documentation/hid/hidraw.txt/
+Nombre de la página web: mjmwired
+Título de la publicación: Hidraw - Raw Access to USB and Bluetooth Human Interface Devices
+Fecha de publicación: 29/01/2018 10:00 EST
+Nombre del autor: Alan Ott
+Fecha de consulta: 11/02/2018
+Descripción: Información sobre Hidraw.
+
+Manual del Programador de Linux (man 2)
+Descripción: Obtención de información sobre las funciones que se aplican
+a hidraw en el volumen 2 del manual.
+
+
+URL: https://gradeup.co/i-o-interface-interrupt-and-dma-mode-i-b5838ffb-c595-11e5-9fd6-92508233c2e6
+Nombre de la página web: gradeup
+Título de la publicación: I/O Interface (Interrupt and DMA Mode)
+Fecha de publicación: Agosto de 2015
+Nombre del autor: Mallesham Devasane
+Fecha de consulta: 11/02/2018
+Descripción: Interfaces de entrada y salida.
+
+URL: https://github.com/torvalds/linux/blob/master/Documentation/hid/hiddev.txt
+Nombre de la página web: Github
+Tipo de publicación: Documento en repositorio 
+Nombre del documento: hiddev.txt
+Fecha de publicación: -
+Nombre del autor: Linus Torvalds
+Fecha de consulta: 11/02/2018
+Descripción: Información sobre hiddev
+
+URL: 
+Nombre de la página web: 
+Título de la publicación:
+Fecha de publicación:
+Nombre del autor:
+Fecha de consulta:
+Descripción:
+
+URL: 
+Nombre de la página web: 
+Título de la publicación:
+Fecha de publicación:
+Nombre del autor:
+Fecha de consulta:
+Descripción:
