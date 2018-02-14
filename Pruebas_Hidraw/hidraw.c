@@ -37,15 +37,15 @@ static void keyboard (event_handler* ev) {
 
 int main () {
 	
-	int fd = open("/dev/hidraw0", O_RDONLY);
-	//printf("Descriptor2: %d\n", fd);
+	int fd1 = open("/dev/hidraw0", O_RDONLY);
+	//printf("Descriptor2: %d\n", fd1);
 	
-	if (fd==-1)
+	if (fd1==-1)
 	printf ("Error al abrir el archivo\n");
 	
 	void* state= console_set_raw_mode(0);
 	reactor *r= reactor_new();
-	reactor_add(r, keyboard_handler_new(fd));
+	reactor_add(r, keyboard_handler_new(fd1));
 	reactor_run(r);
 	console_restore(0,  state);
 	return 0;
