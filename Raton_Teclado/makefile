@@ -1,7 +1,4 @@
-REACTOR=/home/pi/src/c/reactor
+REACTOR=/home/pi/devel/VKMS/Raton_Teclado
 CFLAGS=-pthread -ggdb -I$(REACTOR) -std=c11
 LDFLAGS=-pthread -L$(REACTOR)/reactor
 LDLIBS=-lreactor -lwiringPi -lpthread
-
-
-

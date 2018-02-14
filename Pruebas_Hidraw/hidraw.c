@@ -38,7 +38,7 @@ static void keyboard (event_handler* ev) {
 int main () {
 	
 	int fd1 = open("/dev/hidraw0", O_RDONLY);
-	//printf("Descriptor2: %d\n", fd1);
+	printf("Descriptor2: %d\n", fd1);
 	
 	if (fd1==-1)
 	printf ("Error al abrir el archivo\n");
