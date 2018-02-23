@@ -1,0 +1,53 @@
+OS = $(shell uname)
+
+ifeq "$(OS)" "Darwin"
+	CC = gcc
+	SCRS = src/eyelink_2.c src/eyelink_2_config.c src/eyelink_2_hooks.c src/eyelink_2_error.c src/eyelink_2_cam_image.c src/eyelink_2_logging.c
+	OBJS = bin/eyelink_2.o bin/eyelink_2_config.o bin/eyelink_2_hooks.o bin/eyelink_2_error.o bin/eyelink_2_cam_image.o bin/eyelink_2_logging.o
+	EYELINK_LIB=
+	EYELINK_INCLUDE=/Library/Frameworks/eyelink_core.framework/Headers
+	LINKLIBS= -L. -L"../parse_conf/" -L/sw/lib/ -lparse_conf -framework eyelink_core -lglib-2.0 -lgthread-2.0
+	INCLUDES = -I"../libGaze" -I"../libGaze/include/libGaze" -I$(EYELINK_INCLUDE) -I"/sw/include/glib-2.0/" -I"/sw/lib/glib-2.0/include/" -I../parse_conf/
+	CFLAGS= -dynamiclib 
+	
+	LIBNAME = lib/libeyelink_2
+	#LIBEXT = .dylib
+	LIBEXT = .so
+endif
+
+all:
+	@echo $(OS)
+	$(MAKE) -f makefile.macos clean
+	$(MAKE) -f makefile.macos alle
+
+alle: $(OBJS)
+	$(CC)  $(CFLAGS) -o $(LIBNAME)$(LIBEXT)  $(OBJS)  $(LINKLIBS)	
+	
+bin/eyelink_2.o: src/eyelink_2.c
+	$(CC) -fPIC -o $@ -c $<  $(CFLAGS) $(INCLUDES)
+	
+bin/eyelink_2_config.o: src/eyelink_2_config.c
+	$(CC) -fPIC -o $@ -c $<  $(CFLAGS) $(INCLUDES)
+	
+bin/eyelink_2_hooks.o: src/eyelink_2_hooks.c
+	$(CC) -fPIC -o $@ -c $<  $(CFLAGS) $(INCLUDES)
+
+bin/eyelink_2_error.o: src/eyelink_2_error.c
+	$(CC) -fPIC -o $@ -c $< $(CFLAGS) $(INCLUDES)
+	
+bin/eyelink_2_cam_image.o: src/eyelink_2_cam_image.c
+	$(CC) -fPIC -o $@ -c $< $(CFLAGS) $(INCLUDES)
+	
+	
+bin/eyelink_2_logging.o: src/eyelink_2_logging.c
+	$(CC) -fPIC -o $@ -c $< $(CFLAGS) $(INCLUDES)
+	
+clean:
+	rm -rf $(OBJS) $(LIBNAME)$(LIBEXT)
+
+
+
+
+	
+	
+	

@@ -1,0 +1,12 @@
+CC = gcc
+
+LINKLIBS+=	-lrt
+
+INCLUDES +=	-I"/usr/include/glib-2.0" \
+-I"../libGaze/include" \
+			-I"/usr/lib/glib-2.0/include"
+			
+CFLAGS+= -shared -Wall 
+LIBEXT = .so
+
+include makefile.config

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="84">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+      <logicalFolder name="html" displayName="html" projectFiles="true">
+        <logicalFolder name="img" displayName="img" projectFiles="true">
+          <itemPath>html/img/circle.jpg</itemPath>
+          <itemPath>html/img/circle_full.jpg</itemPath>
+          <itemPath>html/img/mario.gif</itemPath>
+        </logicalFolder>
+        <logicalFolder name="js" displayName="js" projectFiles="true">
+          <itemPath>html/js/calibration.js</itemPath>
+          <itemPath>html/js/jquery-1.8.3.min.js</itemPath>
+        </logicalFolder>
+        <itemPath>html/bookmarks.html</itemPath>
+        <itemPath>html/calibration.html</itemPath>
+      </logicalFolder>
+      <itemPath>gaze_js.qrc</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="actions" displayName="actions" projectFiles="true">
+        <itemPath>actions/ActionManager.cpp</itemPath>
+        <itemPath>actions/ActionManager.hpp</itemPath>
+        <itemPath>actions/GazeAction.cpp</itemPath>
+        <itemPath>actions/GazeAction.hpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="threads" displayName="threads" projectFiles="true">
+        <logicalFolder name="worker" displayName="worker" projectFiles="true">
+          <itemPath>threads/worker/GazeTrackWorker.cpp</itemPath>
+          <itemPath>threads/worker/GazeTrackWorker.hpp</itemPath>
+          <itemPath>threads/worker/IdleWorker.cpp</itemPath>
+          <itemPath>threads/worker/IdleWorker.hpp</itemPath>
+        </logicalFolder>
+        <itemPath>threads/Sleeper.cpp</itemPath>
+        <itemPath>threads/Sleeper.hpp</itemPath>
+        <itemPath>threads/StateMachineDefinition.hpp</itemPath>
+        <itemPath>threads/ThreadManager.cpp</itemPath>
+        <itemPath>threads/ThreadManager.hpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="ui" displayName="ui" projectFiles="true">
+        <itemPath>ui/AutoSaveSpinbox.cpp</itemPath>
+        <itemPath>ui/AutoSaveSpinbox.hpp</itemPath>
+        <itemPath>ui/BookmarksWindow.cpp</itemPath>
+        <itemPath>ui/BookmarksWindow.hpp</itemPath>
+        <itemPath>ui/BrowserWindow.cpp</itemPath>
+        <itemPath>ui/BrowserWindow.hpp</itemPath>
+        <itemPath>ui/CVWidget.cpp</itemPath>
+        <itemPath>ui/CVWidget.hpp</itemPath>
+        <itemPath>ui/GazePointer.cpp</itemPath>
+        <itemPath>ui/GazePointer.hpp</itemPath>
+        <itemPath>ui/ImageLinkLabel.cpp</itemPath>
+        <itemPath>ui/ImageLinkLabel.hpp</itemPath>
+        <itemPath>ui/ImageWindow.cpp</itemPath>
+        <itemPath>ui/ImageWindow.hpp</itemPath>
+        <itemPath>ui/MessageWindow.cpp</itemPath>
+        <itemPath>ui/MessageWindow.hpp</itemPath>
+        <itemPath>ui/SettingsWindow.cpp</itemPath>
+        <itemPath>ui/SettingsWindow.hpp</itemPath>
+        <itemPath>ui/UIConstants.hpp</itemPath>
+      </logicalFolder>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>ui</Elem>
+    <Elem>html</Elem>
+    <Elem>threads</Elem>
+    <Elem>actions</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="4">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>GNU|GNU</compilerSet>
+      </toolsSet>
+      <qt>
+        <modules>core gui network opengl webkit</modules>
+        <defs>
+          <Elem>QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.8</Elem>
+          <Elem>QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64</Elem>
+          <Elem>QMAKE_CXXFLAGS += -Wall</Elem>
+        </defs>
+      </qt>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>../GazeLib</pElem>
+          </incDir>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibLibItem>opencv_core</linkerLibLibItem>
+            <linkerLibLibItem>opencv_features2d</linkerLibLibItem>
+            <linkerLibLibItem>opencv_highgui</linkerLibLibItem>
+            <linkerLibLibItem>opencv_imgproc</linkerLibLibItem>
+            <linkerLibLibItem>opencv_objdetect</linkerLibLibItem>
+            <linkerLibLibItem>opencv_video</linkerLibLibItem>
+            <linkerLibLibItem>GLU</linkerLibLibItem>
+            <linkerLibLibItem>GL</linkerLibLibItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../GazeLib"
+                            CT="3"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../GazeLib"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libgazelib.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Release" type="4">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui network opengl webkit</modules>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../GazeLib</pElem>
+          </incDir>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibLibItem>opencv_core</linkerLibLibItem>
+            <linkerLibLibItem>opencv_features2d</linkerLibLibItem>
+            <linkerLibLibItem>opencv_highgui</linkerLibLibItem>
+            <linkerLibLibItem>opencv_imgproc</linkerLibLibItem>
+            <linkerLibLibItem>opencv_objdetect</linkerLibLibItem>
+            <linkerLibLibItem>opencv_video</linkerLibLibItem>
+            <linkerLibLibItem>GLU</linkerLibLibItem>
+            <linkerLibLibItem>GL</linkerLibLibItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../GazeLib"
+                            CT="3"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../GazeLib"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libgazelib.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>

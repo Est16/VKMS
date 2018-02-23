@@ -1,0 +1,3 @@
+
+all: pyGaze.pyx
+	python setup.py build

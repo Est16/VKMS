@@ -1,0 +1,74 @@
+CC = gcc
+SCRS = src/libGaze.c src/eyetracker/libGaze_eyetracker.c src/libGaze_error.c src/headtracker/libGaze_headtracker.c src/display/libGaze_display.c src/calibration/libGaze_calibration.c src/libGaze_eye_fixation.c src/libGaze_anti_eye_fixation.c src/libGaze_head_fixation.c src/eyeheadtracker/libGaze_eyeheadtracker.c src/eyeheadtracker/libGaze_eyeheadtracker_saveloadcalib.c src/eyeheadtracker/libGaze_eyeheadtracker_calibration.c src/eyeheadtracker/libGaze_eyeheadtracker_grid.c src/eyeheadtracker/libGaze_eyeheadtracker_fixations.c src/eyeheadtracker/libGaze_eyeheadtracker_instructions.c src/tools/libGaze_tools.c src/headtracker/libGaze_headtracker_logging.c src/eyetracker/libGaze_eyetracker_logging.c
+OBJS = bin/libGaze.o bin/libGaze_eyetracker.o bin/libGaze_error.o bin/libGaze_headtracker.o bin/libGaze_display.o bin/libGaze_calibration.o  bin/libGaze_eye_fixation.o bin/libGaze_anti_eye_fixation.o bin/libGaze_head_fixation.o bin/libGaze_eyeheadtracker.o bin/libGaze_eyeheadtracker_saveloadcalib.o bin/libGaze_eyeheadtracker_calibration.o bin/libGaze_eyeheadtracker_grid.o bin/libGaze_eyeheadtracker_instructions.o bin/libGaze_eyeheadtracker_fixations.o bin/libGaze_tools.o bin/libGaze_headtracker_logging.o bin/libGaze_eyetracker_logging.o
+LINKLIBS= -L../parse_conf/ -ldl -lgd -lparse_conf -L/sw/lib/ -L/sw/lib -lglib-2.0 -lgthread-2.0
+INCLUDES = -I"/sw/include/glib-2.0/" -I"/sw/lib/glib-2.0/include/" -I../parse_conf/ -I"/sw/include/" -I"include/libGaze"
+
+CFLAGS=
+
+all:
+	$(MAKE) -f makefile.macos clean
+	$(MAKE) -f makefile.macos alle
+	
+alle:  $(OBJS)
+	ar rcs lib/libgaze.a $(OBJS)
+	ranlib lib/libgaze.a
+	
+bin/libGaze.o: src/libGaze.c
+	$(CC) -o $@ -c $<  $(INCLUDES)
+	
+bin/libGaze_eyetracker.o: src/eyetracker/libGaze_eyetracker.c
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+bin/libGaze_headtracker.o: src/headtracker/libGaze_headtracker.c
+	$(CC) -o $@ -c $< $(INCLUDES)
+		
+bin/libGaze_error.o: src/libGaze_error.c
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+bin/libGaze_display.o: src/display/libGaze_display.c
+	$(CC) -o $@ -c $< $(INCLUDES)
+
+bin/libGaze_calibration.o: src/calibration/libGaze_calibration.c
+	$(CC) -o $@ -c $< $(INCLUDES)	
+
+bin/libGaze_eye_fixation.o: src/libGaze_eye_fixation.c
+	$(CC) -o $@ -c $< $(INCLUDES)	
+	
+bin/libGaze_head_fixation.o: src/libGaze_head_fixation.c
+	$(CC) -o $@ -c $< $(INCLUDES)	
+	
+bin/libGaze_anti_eye_fixation.o: src/libGaze_anti_eye_fixation.c
+	$(CC) -o $@ -c $< $(INCLUDES)	
+
+bin/libGaze_eyeheadtracker.o: src/eyeheadtracker/libGaze_eyeheadtracker.c		
+	$(CC) -o $@ -c $< $(INCLUDES)	
+	
+bin/libGaze_eyeheadtracker_saveloadcalib.o: src/eyeheadtracker/libGaze_eyeheadtracker_saveloadcalib.c		
+	$(CC) -o $@ -c $< $(INCLUDES)	
+	
+bin/libGaze_eyeheadtracker_calibration.o: src/eyeheadtracker/libGaze_eyeheadtracker_calibration.c		
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+bin/libGaze_eyeheadtracker_grid.o: src/eyeheadtracker/libGaze_eyeheadtracker_grid.c		
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+bin/libGaze_eyeheadtracker_instructions.o: src/eyeheadtracker/libGaze_eyeheadtracker_instructions.c		
+	$(CC) -o $@ -c $< $(INCLUDES)
+
+bin/libGaze_eyeheadtracker_fixations.o: src/eyeheadtracker/libGaze_eyeheadtracker_fixations.c		
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+bin/libGaze_tools.o: src/tools/libGaze_tools.c		
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+bin/libGaze_headtracker_logging.o: src/headtracker/libGaze_headtracker_logging.c		
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+bin/libGaze_eyetracker_logging.o: src/eyetracker/libGaze_eyetracker_logging.c		
+	$(CC) -o $@ -c $< $(INCLUDES)
+	
+clean:
+	rm -rf $(OBJS) lib/libgaze.a
+
+	

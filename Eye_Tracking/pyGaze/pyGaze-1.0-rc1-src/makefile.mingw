@@ -1,0 +1,5 @@
+
+all: pyGaze.pyx
+	python setup.py build --compiler=mingw32 bdist_wininst
+
+	

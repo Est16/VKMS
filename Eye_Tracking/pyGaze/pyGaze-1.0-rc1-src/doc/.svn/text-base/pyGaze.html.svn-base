@@ -1,0 +1,753 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module pyGaze</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pyGaze</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/usr/lib/python2.5/site-packages/pyGaze.so">/usr/lib/python2.5/site-packages/pyGaze.so</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="__builtin__.html">__builtin__</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="pyGaze.html#Display">Display</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#EyeTracker">EyeTracker</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#GazeTracker">GazeTracker</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#HeadTracker">HeadTracker</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="pyGaze.html#DisplayCoord">DisplayCoord</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#DisplayCoordSet">DisplayCoordSet</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#EyeData">EyeData</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#GazeData">GazeData</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#GazeDataSet">GazeDataSet</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#HeadData">HeadData</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#IVisualisationHooks">IVisualisationHooks</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#Input">Input</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#RawEyeData">RawEyeData</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#RawHeadData">RawHeadData</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#Ray">Ray</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#ValidationData">ValidationData</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#ValidationDataSet">ValidationDataSet</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyGaze.html#pyGaze">pyGaze</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Display">class <strong>Display</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#Display">Display</a>&nbsp;class&nbsp;represents&nbsp;the&nbsp;display&nbsp;model&nbsp;used&nbsp;with&nbsp;<a href="#pyGaze">pyGaze</a>.&nbsp;It&nbsp;loads&nbsp;<br>
+a&nbsp;libGaze&nbsp;display&nbsp;module&nbsp;and&nbsp;offers&nbsp;functions&nbsp;to&nbsp;interact&nbsp;with&nbsp;this&nbsp;model.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Display-configure"><strong>configure</strong></a>(...)</dt><dd><tt>Configures&nbsp;the&nbsp;loaded&nbsp;display&nbsp;module&nbsp;using&nbsp;a&nbsp;configuration&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;cfg:&nbsp;&nbsp;the&nbsp;path&nbsp;to&nbsp;the&nbsp;configuration&nbsp;file&nbsp;for&nbsp;the&nbsp;display&nbsp;module.</tt></dd></dl>
+
+<dl><dt><a name="Display-get3DPositionFromXY"><strong>get3DPositionFromXY</strong></a>(...)</dt><dd><tt>Gets&nbsp;the&nbsp;3d&nbsp;position&nbsp;of&nbsp;a&nbsp;given&nbsp;pixel&nbsp;(x,y)&nbsp;on&nbsp;the&nbsp;display&nbsp;in&nbsp;the&nbsp;world&nbsp;coordinate&nbsp;system.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;x:&nbsp;&nbsp;x&nbsp;value&nbsp;of&nbsp;the&nbsp;pixel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;y:&nbsp;&nbsp;y&nbsp;value&nbsp;of&nbsp;the&nbsp;pixel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return&nbsp;a&nbsp;list&nbsp;of&nbsp;3&nbsp;values&nbsp;=&nbsp;[x,&nbsp;y,&nbsp;z]</tt></dd></dl>
+
+<dl><dt><a name="Display-getDisplayCoordFromRay"><strong>getDisplayCoordFromRay</strong></a>(...)</dt><dd><tt>Calculates&nbsp;a&nbsp;DisplayCood&nbsp;from&nbsp;a&nbsp;<a href="#Ray">Ray</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;ray:&nbsp;&nbsp;a&nbsp;<a href="#Ray">Ray</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;presenting&nbsp;the&nbsp;ray&nbsp;from&nbsp;which&nbsp;the&nbsp;intersection&nbsp;with&nbsp;the&nbsp;screen&nbsp;needs&nbsp;to&nbsp;be&nbsp;calculated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return&nbsp;a&nbsp;DislpayCoord&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;containing&nbsp;the&nbsp;xy&nbsp;display&nbsp;coordinates&nbsp;on&nbsp;the&nbsp;display&nbsp;and&nbsp;its&nbsp;3D&nbsp;position.</tt></dd></dl>
+
+<dl><dt><a name="Display-getDisplayCoordsFromGaze"><strong>getDisplayCoordsFromGaze</strong></a>(...)</dt><dd><tt>Calculates&nbsp;a&nbsp;<a href="#DisplayCoordSet">DisplayCoordSet</a>&nbsp;from&nbsp;a&nbsp;given&nbsp;<a href="#GazeDataSet">GazeDataSet</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;gds:&nbsp;&nbsp;the&nbsp;<a href="#GazeDataSet">GazeDataSet</a>&nbsp;presenting&nbsp;the&nbsp;gaze&nbsp;of&nbsp;an&nbsp;observer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#DisplayCoordSet">DisplayCoordSet</a>&nbsp;representing&nbsp;the&nbsp;intersection&nbsp;of&nbsp;the&nbsp;gaze&nbsp;and&nbsp;the&nbsp;display&nbsp;model.</tt></dd></dl>
+
+<dl><dt><a name="Display-getXYPositionFrom3D"><strong>getXYPositionFrom3D</strong></a>(...)</dt><dd><tt>Gets&nbsp;the&nbsp;pixel&nbsp;postion&nbsp;[x,&nbsp;y]&nbsp;of&nbsp;a&nbsp;given&nbsp;point&nbsp;on&nbsp;the&nbsp;screen&nbsp;represented&nbsp;by&nbsp;a&nbsp;3D&nbsp;point&nbsp;in&nbsp;the&nbsp;world&nbsp;coordinate&nbsp;system.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;pos:&nbsp;&nbsp;the&nbsp;3d&nbsp;postion&nbsp;[x,&nbsp;y,&nbsp;z]&nbsp;on&nbsp;the&nbsp;display.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:&nbsp;&nbsp;a&nbsp;two&nbsp;element&nbsp;list&nbsp;with&nbsp;x&nbsp;and&nbsp;y&nbsp;pixel&nbsp;postion&nbsp;[x,&nbsp;y]</tt></dd></dl>
+
+<dl><dt><a name="Display-loadModule"><strong>loadModule</strong></a>(...)</dt><dd><tt>Loads&nbsp;a&nbsp;libGaze&nbsp;display&nbsp;module.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;dismod:&nbsp;&nbsp;location&nbsp;of&nbsp;the&nbsp;display&nbsp;module<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;debug:&nbsp;&nbsp;if&nbsp;the&nbsp;the&nbsp;module&nbsp;should&nbsp;return&nbsp;debug&nbsp;output&nbsp;messages&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;error:&nbsp;&nbsp;if&nbsp;the&nbsp;the&nbsp;module&nbsp;should&nbsp;return&nbsp;error&nbsp;output&nbsp;messages</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0xb7cafe00&gt;<dd><tt>T.<a href="#Display-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DisplayCoord">class <strong>DisplayCoord</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#DisplayCoord">DisplayCoord</a>&nbsp;class&nbsp;represents&nbsp;a&nbsp;display&nbsp;coordinate&nbsp;on&nbsp;a&nbsp;<a href="#Display">Display</a>.&nbsp;It&nbsp;contains&nbsp;the&nbsp;xy&nbsp;pixel&nbsp;coordinates&nbsp;and&nbsp;its&nbsp;3D&nbsp;position.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;x:&nbsp;&nbsp;the&nbsp;x&nbsp;display&nbsp;position&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;y:&nbsp;&nbsp;the&nbsp;y&nbsp;display&nbsp;position&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;pos3D:&nbsp;&nbsp;the&nbsp;3D&nbsp;position&nbsp;of&nbsp;the&nbsp;xy&nbsp;display&nbsp;coordinate.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="DisplayCoord-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>pos3D</strong> = [0.0, 0.0, 0.0]</dl>
+
+<dl><dt><strong>x</strong> = 0</dl>
+
+<dl><dt><strong>y</strong> = 0</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DisplayCoordSet">class <strong>DisplayCoordSet</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#DisplayCoordSet">DisplayCoordSet</a>&nbsp;class&nbsp;contains&nbsp;display&nbsp;coordinates&nbsp;for&nbsp;both&nbsp;eyes.&nbsp;It&nbsp;also&nbsp;contains&nbsp;the&nbsp;average&nbsp;xy&nbsp;pixel&nbsp;coordinates&nbsp;of&nbsp;both&nbsp;eyes.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;display_coords_available:&nbsp;For&nbsp;which&nbsp;eye&nbsp;display&nbsp;coordinates&nbsp;are&nbsp;available&nbsp;in&nbsp;the&nbsp;displayCoords&nbsp;list.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;avg_x:&nbsp;&nbsp;the&nbsp;average&nbsp;x&nbsp;display&nbsp;coordinate&nbsp;form&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;avg_y:&nbsp;&nbsp;the&nbsp;average&nbsp;y&nbsp;display&nbsp;coordinate&nbsp;form&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;displayCoords:&nbsp;an&nbsp;arrray&nbsp;containing&nbsp;two&nbsp;<a href="#DisplayCoord">DisplayCoord</a>&nbsp;objects&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="DisplayCoordSet-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>avg_x</strong> = 0</dl>
+
+<dl><dt><strong>avg_y</strong> = 0</dl>
+
+<dl><dt><strong>displayCoords</strong> = [None, None]</dl>
+
+<dl><dt><strong>display_coords_available</strong> = 0</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="EyeData">class <strong>EyeData</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#EyeData">EyeData</a>&nbsp;class&nbsp;contains&nbsp;processed&nbsp;eye&nbsp;data&nbsp;like&nbsp;viewing&nbsp;angles&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;eye_available:&nbsp;&nbsp;for&nbsp;which&nbsp;eye&nbsp;data&nbsp;is&nbsp;available&nbsp;in&nbsp;this&nbsp;data&nbsp;set.&nbsp;Possible&nbsp;values&nbsp;are:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EYE_BOTH<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EYE_LEFT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EYE_NONE&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EYE_RIGHT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;alpha:&nbsp;&nbsp;the&nbsp;horizontal&nbsp;viewing&nbsp;angle&nbsp;for&nbsp;the&nbsp;right&nbsp;and&nbsp;left&nbsp;eye&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;beta:&nbsp;&nbsp;the&nbsp;vertical&nbsp;viewing&nbsp;angle&nbsp;for&nbsp;the&nbsp;right&nbsp;and&nbsp;left&nbsp;eye&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;size:&nbsp;&nbsp;&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;right&nbsp;and&nbsp;left&nbsp;eye<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Data and other attributes defined here:<br>
+<dl><dt><strong>alpha</strong> = [0.0, 0.0]</dl>
+
+<dl><dt><strong>beta</strong> = [0.0, 0.0]</dl>
+
+<dl><dt><strong>eye_available</strong> = 0</dl>
+
+<dl><dt><strong>size</strong> = [0.0, 0.0]</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="EyeTracker">class <strong>EyeTracker</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="EyeTracker-addLogMessage"><strong>addLogMessage</strong></a>(...)</dt><dd><tt>Writes&nbsp;&nbsp;a&nbsp;message&nbsp;into&nbsp;the&nbsp;opened&nbsp;log&nbsp;file.&nbsp;A&nbsp;timestamp&nbsp;will&nbsp;be&nbsp;put&nbsp;<br>
+infront&nbsp;of&nbsp;the&nbsp;message.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;msg:&nbsp;&nbsp;the&nbsp;message&nbsp;which&nbsp;will&nbsp;be&nbsp;added&nbsp;to&nbsp;the&nbsp;log&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-closeLogFile"><strong>closeLogFile</strong></a>(...)</dt><dd><tt>Closes&nbsp;the&nbsp;logfile&nbsp;opened&nbsp;by&nbsp;the&nbsp;openLogFile&nbsp;function.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-configure"><strong>configure</strong></a>(...)</dt><dd><tt>Configures&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;using&nbsp;a&nbsp;configuration&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;cfgFile:&nbsp;&nbsp;name&nbsp;and&nbsp;location&nbsp;of&nbsp;the&nbsp;configuration&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-connect"><strong>connect</strong></a>(...)</dt><dd><tt>Connects&nbsp;to&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-disconnect"><strong>disconnect</strong></a>(...)</dt><dd><tt>Disconnects&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-getTrackingData"><strong>getTrackingData</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="EyeTracker-isConnected"><strong>isConnected</strong></a>(...)</dt><dd><tt>Checks&nbsp;if&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;is&nbsp;connected.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-loadModule"><strong>loadModule</strong></a>(...)</dt><dd><tt>Loads&nbsp;an&nbsp;eyetracker&nbsp;module.<br>
+&nbsp;<br>
+@param&nbsp;module:&nbsp;&nbsp;path&nbsp;to&nbsp;the&nbsp;eye&nbsp;tracker&nbsp;module&nbsp;<br>
+@param&nbsp;mode:&nbsp;the&nbsp;mode&nbsp;in&nbsp;which&nbsp;the&nbsp;module&nbsp;should&nbsp;be&nbsp;loaded<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_ET_MODE_NORMAL:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_ET_MODE_DUMMY:</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-openLogFile"><strong>openLogFile</strong></a>(...)</dt><dd><tt>Opens&nbsp;a&nbsp;logfile&nbsp;for&nbsp;logging&nbsp;eyetracking&nbsp;data&nbsp;and&nbsp;messages.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;file:&nbsp;&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;log&nbsp;file&nbsp;which&nbsp;should&nbsp;be&nbsp;generated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;path:&nbsp;&nbsp;the&nbsp;path&nbsp;where&nbsp;the&nbsp;log&nbsp;file&nbsp;should&nbsp;be&nbsp;generated.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-startLogging"><strong>startLogging</strong></a>(...)</dt><dd><tt>Starts&nbsp;the&nbsp;logging&nbsp;of&nbsp;eyetracking&nbsp;data&nbsp;into&nbsp;the&nbsp;opened&nbsp;log&nbsp;file.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-startTracking"><strong>startTracking</strong></a>(...)</dt><dd><tt>Starts&nbsp;the&nbsp;tracking&nbsp;of&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-stopLogging"><strong>stopLogging</strong></a>(...)</dt><dd><tt>Stops&nbsp;the&nbsp;logging&nbsp;of&nbsp;eyetracking&nbsp;data&nbsp;into&nbsp;the&nbsp;opened&nbsp;log&nbsp;file.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-stopTracking"><strong>stopTracking</strong></a>(...)</dt><dd><tt>Stops&nbsp;the&nbsp;tracking&nbsp;of&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="EyeTracker-waitForFixation"><strong>waitForFixation</strong></a>(...)</dt><dd><tt>Waits&nbsp;for&nbsp;an&nbsp;eye&nbsp;fixation.&nbsp;If&nbsp;the&nbsp;eye&nbsp;if&nbsp;not&nbsp;moving&nbsp;for&nbsp;a&nbsp;specific&nbsp;amount&nbsp;of&nbsp;time&nbsp;the&nbsp;<br>
+(fixdur)&nbsp;fixation&nbsp;will&nbsp;be&nbsp;accepted.&nbsp;Otherwise&nbsp;if&nbsp;the&nbsp;eye&nbsp;is&nbsp;not&nbsp;fixating&nbsp;for&nbsp;at&nbsp;least&nbsp;this&nbsp;specific&nbsp;amount&nbsp;of&nbsp;time<br>
+the&nbsp;function&nbsp;will&nbsp;timeout.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;eye:&nbsp;&nbsp;for&nbsp;which&nbsp;eye&nbsp;should&nbsp;be&nbsp;waited&nbsp;for&nbsp;a&nbsp;fixation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;fixdur:&nbsp;&nbsp;minimal&nbsp;time&nbsp;in&nbsp;millisec.&nbsp;until&nbsp;a&nbsp;fixation&nbsp;is&nbsp;accepted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;timeout:&nbsp;&nbsp;time&nbsp;in&nbsp;millisec&nbsp;untill&nbsp;the&nbsp;function&nbsp;breaks&nbsp;up</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0xb7cafec0&gt;<dd><tt>T.<a href="#EyeTracker-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GazeData">class <strong>GazeData</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>@attrib&nbsp;origin:&nbsp;&nbsp;the&nbsp;3D&nbsp;position&nbsp;of&nbsp;the&nbsp;orign&nbsp;of&nbsp;the&nbsp;gaze&nbsp;ray.<br>
+@attrib&nbsp;direction:&nbsp;&nbsp;the&nbsp;3D&nbsp;direction&nbsp;vector&nbsp;of&nbsp;the&nbsp;gaze&nbsp;ray.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GazeData-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>direction</strong> = [0, 0, 0]</dl>
+
+<dl><dt><strong>origin</strong> = [0, 0, 0]</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GazeDataSet">class <strong>GazeDataSet</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>@attrib&nbsp;gaze_available:&nbsp;&nbsp;for&nbsp;which&nbsp;eye&nbsp;<a href="#GazeData">GazeData</a>&nbsp;is&nbsp;available&nbsp;in&nbsp;this&nbsp;<a href="#GazeDataSet">GazeDataSet</a>.<br>
+@attrib&nbsp;eye:&nbsp;&nbsp;processed&nbsp;<a href="#EyeData">EyeData</a>&nbsp;containing&nbsp;the&nbsp;eye&nbsp;related&nbsp;viewing&nbsp;angles&nbsp;of&nbsp;the&nbsp;gaze.<br>
+@attrib&nbsp;head:&nbsp;&nbsp;processed&nbsp;<a href="#HeadData">HeadData</a>&nbsp;containing&nbsp;the&nbsp;corrected&nbsp;position&nbsp;and&nbsp;orientation&nbsp;of&nbsp;the&nbsp;observers&nbsp;head.&nbsp;<br>
+@attrib&nbsp;gaze:&nbsp;&nbsp;a&nbsp;list&nbsp;of&nbsp;<a href="#GazeData">GazeData</a>&nbsp;objects&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GazeDataSet-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>eye</strong> = None</dl>
+
+<dl><dt><strong>gaze</strong> = [None, None]</dl>
+
+<dl><dt><strong>gaze_available</strong> = None</dl>
+
+<dl><dt><strong>head</strong> = None</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GazeTracker">class <strong>GazeTracker</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GazeTracker-addLogMessage"><strong>addLogMessage</strong></a>(...)</dt><dd><tt>Adds&nbsp;a&nbsp;messahge&nbsp;to&nbsp;the&nbsp;log&nbsp;file&nbsp;of&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;also&nbsp;adds&nbsp;the&nbsp;same&nbsp;message&nbsp;to&nbsp;the&nbsp;log&nbsp;files&nbsp;of&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a><br>
+used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;msg:&nbsp;&nbsp;messaged&nbsp;which&nbsp;should&nbsp;be&nbsp;added&nbsp;to&nbsp;the&nbsp;log&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-calibrate"><strong>calibrate</strong></a>(...)</dt><dd><tt>Step&nbsp;3&nbsp;of&nbsp;the&nbsp;calibration&nbsp;procedure.&nbsp;Calibrates&nbsp;the&nbsp;mapping&nbsp;function&nbsp;which&nbsp;maps&nbsp;the&nbsp;raw&nbsp;pupil&nbsp;positions&nbsp;in&nbsp;the&nbsp;camera&nbsp;images&nbsp;of&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;to&nbsp;eye&nbsp;related&nbsp;viewing&nbsp;angles.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;alpha:&nbsp;&nbsp;horizontal&nbsp;size&nbsp;(in&nbsp;deg)&nbsp;of&nbsp;the&nbsp;grid&nbsp;used&nbsp;for&nbsp;the&nbsp;calibration&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;beta:&nbsp;&nbsp;vertical&nbsp;size&nbsp;(in&nbsp;deg)&nbsp;of&nbsp;the&nbsp;grid&nbsp;used&nbsp;for&nbsp;the&nbsp;calibration&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;n:&nbsp;&nbsp;number&nbsp;of&nbsp;columns&nbsp;of&nbsp;the&nbsp;fixation&nbsp;target&nbsp;grid<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;m:&nbsp;&nbsp;number&nbsp;of&nbsp;rows&nbsp;of&nbsp;the&nbsp;fixation&nbsp;target&nbsp;grid<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;center:&nbsp;&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;fixation&nbsp;target&nbsp;grid&nbsp;in&nbsp;display&nbsp;coordinates</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-closeLogFile"><strong>closeLogFile</strong></a>(...)</dt><dd><tt>Closes&nbsp;the&nbsp;log&nbsp;files&nbsp;opened&nbsp;by&nbsp;the&nbsp;openLogFile&nbsp;Function.<br>
+This&nbsp;function&nbsp;also&nbsp;closes&nbsp;the&nbsp;log&nbsp;files&nbsp;opened&nbsp;on&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;<a href="#HeadTracker">HeadTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-collectEyeHeadRelation"><strong>collectEyeHeadRelation</strong></a>(...)</dt><dd><tt>Step&nbsp;1&nbsp;of&nbsp;the&nbsp;calibration&nbsp;procedure.&nbsp;This&nbsp;function&nbsp;collects&nbsp;the&nbsp;relationship&nbsp;between&nbsp;the&nbsp;eyes&nbsp;position&nbsp;of&nbsp;the&nbsp;head&nbsp;tracked&nbsp;<br>
+<a href="__builtin__.html#object">object</a>&nbsp;tracked&nbsp;by&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;and&nbsp;the&nbsp;eyes&nbsp;of&nbsp;the&nbsp;observer.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-configure"><strong>configure</strong></a>(...)</dt><dd><tt>Configures&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;and&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>,&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;and&nbsp;<a href="#Display">Display</a>&nbsp;modules&nbsp;used<br>
+by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;eyecfg:&nbsp;&nbsp;path&nbsp;to&nbsp;the&nbsp;configuration&nbsp;file&nbsp;of&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;module&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;headcfg:&nbsp;&nbsp;path&nbsp;to&nbsp;the&nbsp;configuration&nbsp;file&nbsp;of&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;module</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-connect"><strong>connect</strong></a>(...)</dt><dd><tt>Connects&nbsp;to&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-correctHeadDirectionVector"><strong>correctHeadDirectionVector</strong></a>(...)</dt><dd><tt>Step&nbsp;2&nbsp;of&nbsp;the&nbsp;calibration&nbsp;procedure.&nbsp;This&nbsp;function&nbsp;adjusts&nbsp;the&nbsp;orientation&nbsp;of&nbsp;the&nbsp;head&nbsp;tracked&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;so<br>
+that&nbsp;it&nbsp;maps&nbsp;to&nbsp;the&nbsp;visual&nbsp;field&nbsp;of&nbsp;view&nbsp;of&nbsp;the&nbsp;observer.&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;alpha:&nbsp;&nbsp;horizontal&nbsp;size&nbsp;(deg)&nbsp;of&nbsp;the&nbsp;presented&nbsp;vfov<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;beta:&nbsp;&nbsp;vertical&nbsp;size&nbsp;(deg)&nbsp;of&nbsp;the&nbsp;presented&nbsp;vfov</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-disconnect"><strong>disconnect</strong></a>(...)</dt><dd><tt>Disconnects&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-displayLastValidation"><strong>displayLastValidation</strong></a>(...)</dt><dd><tt>Displays&nbsp;the&nbsp;result&nbsp;of&nbsp;the&nbsp;last&nbsp;preformed&nbsp;validation&nbsp;of&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;calibration.<br>
+To&nbsp;display&nbsp;the&nbsp;<a href="#ValidationDataSet">ValidationDataSet</a>&nbsp;of&nbsp;the&nbsp;last&nbsp;preformed&nbsp;validation&nbsp;the&nbsp;VisualisationHooks<br>
+are&nbsp;used.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-doHeadFixation"><strong>doHeadFixation</strong></a>(...)</dt><dd><tt>Preforms&nbsp;a&nbsp;fixation&nbsp;of&nbsp;the&nbsp;head&nbsp;orientation&nbsp;at&nbsp;a&nbsp;specific&nbsp;position&nbsp;on&nbsp;the&nbsp;display.<br>
+The&nbsp;function&nbsp;will&nbsp;end&nbsp;when&nbsp;the&nbsp;head&nbsp;is&nbsp;oriented&nbsp;for&nbsp;a&nbsp;specific&nbsp;time&nbsp;to&nbsp;a&nbsp;fixation&nbsp;target<br>
+on&nbsp;the&nbsp;display&nbsp;or&nbsp;until&nbsp;a&nbsp;given&nbsp;timeout&nbsp;is&nbsp;reached.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;x:&nbsp;&nbsp;x&nbsp;position&nbsp;of&nbsp;the&nbsp;target&nbsp;in&nbsp;display&nbsp;coordinates<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;y:&nbsp;&nbsp;y&nbsp;position&nbsp;of&nbsp;the&nbsp;target&nbsp;in&nbsp;display&nbsp;coordinates<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;fixdur:&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;millisec&nbsp;unbtil&nbsp;a&nbsp;fixation&nbsp;of&nbsp;the&nbsp;head&nbsp;oirientation&nbsp;is&nbsp;accepted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;showInstructions:&nbsp;&nbsp;&nbsp;1&nbsp;if&nbsp;instructions&nbsp;for&nbsp;the&nbsp;headFixation&nbsp;should&nbsp;be&nbsp;presented&nbsp;at&nbsp;the&nbsp;beginning&nbsp;or&nbsp;0&nbsp;if&nbsp;not</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-driftCheck"><strong>driftCheck</strong></a>(...)</dt><dd><tt>@param&nbsp;center:&nbsp;&nbsp;<br>
+@param&nbsp;alpha:<br>
+@param&nbsp;beta:<br>
+@param&nbsp;n:&nbsp;&nbsp;<br>
+@param&nbsp;m:&nbsp;&nbsp;<br>
+@param&nbsp;count:<br>
+@param&nbsp;driftDataSet:</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-getCurrentGaze"><strong>getCurrentGaze</strong></a>(...)</dt><dd><tt>Gets&nbsp;the&nbsp;current&nbsp;gaze&nbsp;tracked&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;and&nbsp;stores&nbsp;it&nbsp;into&nbsp;a&nbsp;<a href="#GazeDataSet">GazeDataSet</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;gds:&nbsp;&nbsp;instance&nbsp;of&nbsp;the&nbsp;<a href="#GazeDataSet">GazeDataSet</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;where&nbsp;the&nbsp;gaze&nbsp;should&nbsp;be&nbsp;stored&nbsp;in</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-getEyeTracker"><strong>getEyeTracker</strong></a>(...)</dt><dd><tt>Returns&nbsp;the&nbsp;instance&nbsp;of&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;module&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:&nbsp;&nbsp;instance&nbsp;of&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-getHeadTracker"><strong>getHeadTracker</strong></a>(...)</dt><dd><tt>Returns&nbsp;the&nbsp;instance&nbsp;of&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;module&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:&nbsp;&nbsp;instance&nbsp;of&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-getRayRelativeToHeadOrientaion"><strong>getRayRelativeToHeadOrientaion</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="GazeTracker-loadCalibrationData"><strong>loadCalibrationData</strong></a>(...)</dt><dd><tt>Loads&nbsp;calibration&nbsp;data&nbsp;to&nbsp;calibrate&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;from&nbsp;a&nbsp;file.&nbsp;A&nbsp;file&nbsp;which&nbsp;contains&nbsp;calibration&nbsp;data<br>
+can&nbsp;be&nbsp;generated&nbsp;using&nbsp;the&nbsp;saveCalibrationData&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;calibFile:&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;file&nbsp;which&nbsp;contains&nbsp;calibration&nbsp;data</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-loadCalibrationModule"><strong>loadCalibrationModule</strong></a>(...)</dt><dd><tt>Loads&nbsp;the&nbsp;Calibration&nbsp;module&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;uses&nbsp;for&nbsp;calulating&nbsp;the&nbsp;<br>
+mapping&nbsp;function&nbsp;map&nbsp;the&nbsp;<a href="#RawEyeData">RawEyeData</a>&nbsp;from&nbsp;its&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;to&nbsp;<a href="#EyeData">EyeData</a>.&nbsp;With&nbsp;this<br>
+<a href="#EyeData">EyeData</a>&nbsp;the&nbsp;<a href="#GazeData">GazeData</a>&nbsp;is&nbsp;calculated&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;cmod:&nbsp;&nbsp;path&nbsp;to&nbsp;the&nbsp;Calibtion&nbsp;module</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-loadModules"><strong>loadModules</strong></a>(...)</dt><dd><tt>Loads&nbsp;all&nbsp;modules&nbsp;for&nbsp;the&nbsp;seperate&nbsp;tracking&nbsp;devices&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+The&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;uses&nbsp;modules&nbsp;for&nbsp;an&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;a&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;and&nbsp;the&nbsp;used&nbsp;<a href="#Display">Display</a>&nbsp;to<br>
+present&nbsp;the&nbsp;Calibration&nbsp;targets.&nbsp;In&nbsp;addition&nbsp;to&nbsp;the&nbsp;modules&nbsp;a&nbsp;mode&nbsp;can&nbsp;be&nbsp;specified&nbsp;in&nbsp;which&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;<br>
+should&nbsp;run.&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;eyemod:&nbsp;&nbsp;name&nbsp;and&nbsp;location&nbsp;of&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;module<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;headmod:&nbsp;&nbsp;name&nbsp;and&nbsp;location&nbsp;of&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;module<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;mode:&nbsp;&nbsp;describes&nbsp;the&nbsp;mode&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;can&nbsp;run&nbsp;in.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EHT_MODE_BOTH&nbsp;=&nbsp;The&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;connects&nbsp;to&nbsp;both&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;HeadTracking&nbsp;systems&nbsp;and&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses&nbsp;their&nbsp;current&nbsp;data&nbsp;for&nbsp;all&nbsp;calculations.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EHT_MODE_DUMMY&nbsp;=&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;runs&nbsp;in&nbsp;DUMMY&nbsp;mode&nbsp;in&nbsp;the&nbsp;is&nbsp;mode&nbsp;the&nbsp;system&nbsp;does&nbsp;not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connect&nbsp;to&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;it&nbsp;only&nbsp;simulates&nbsp;a&nbsp;connection&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;both&nbsp;tracker&nbsp;and&nbsp;used&nbsp;dummy&nbsp;data&nbsp;for&nbsp;all&nbsp;calculations.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EHT_MODE_EYE&nbsp;=&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;only&nbsp;connects&nbsp;to&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;uses&nbsp;the&nbsp;real&nbsp;life&nbsp;data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>.&nbsp;It&nbsp;only&nbsp;simulates&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;and&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses&nbsp;artificial&nbsp;<a href="#RawHeadData">RawHeadData</a>&nbsp;for&nbsp;all&nbsp;calculations.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_EHT_MODE_HEAD&nbsp;=&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;only&nbsp;connects&nbsp;to&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;and&nbsp;uses&nbsp;the&nbsp;real&nbsp;life&nbsp;data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>.&nbsp;It&nbsp;only&nbsp;simulates&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses&nbsp;artificial&nbsp;<a href="#RawEyeData">RawEyeData</a>&nbsp;for&nbsp;all&nbsp;calculations.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-openLogFile"><strong>openLogFile</strong></a>(...)</dt><dd><tt>Opens&nbsp;a&nbsp;log&nbsp;file&nbsp;for&nbsp;logging&nbsp;the&nbsp;<a href="#GazeData">GazeData</a>&nbsp;calcualted&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+The&nbsp;.......<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;file:&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;path:</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-saveCalibrationData"><strong>saveCalibrationData</strong></a>(...)</dt><dd><tt>Saves&nbsp;the&nbsp;calibration&nbsp;data&nbsp;of&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;into&nbsp;a&nbsp;file.&nbsp;This<br>
+calibration&nbsp;data&nbsp;can&nbsp;be&nbsp;loaded&nbsp;using&nbsp;the&nbsp;loadCalibrationData&nbsp;function.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;calibFile:&nbsp;&nbsp;file&nbsp;name&nbsp;of&nbsp;the&nbsp;file&nbsp;the&nbsp;calibration&nbsp;data&nbsp;should&nbsp;be&nbsp;saved&nbsp;in</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-setVisualHooks"><strong>setVisualHooks</strong></a>(...)</dt><dd><tt>Sets&nbsp;the&nbsp;VisualisationHooks&nbsp;of&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.&nbsp;The&nbsp;VisualisationHooks&nbsp;are<br>
+used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>&nbsp;to&nbsp;present&nbsp;informations&nbsp;and&nbsp;calibration&nbsp;targets&nbsp;during&nbsp;the&nbsp;<br>
+calibration&nbsp;procedure.&nbsp;The&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;given&nbsp;as&nbsp;parameter&nbsp;to&nbsp;this&nbsp;function&nbsp;must&nbsp;implement&nbsp;the&nbsp;VisualisationHooks&nbsp;interface.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;pyVhooks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instanze&nbsp;of&nbsp;a&nbsp;class&nbsp;which&nbsp;implements&nbsp;the&nbsp;VisualisationHooks&nbsp;interface.&nbsp;This&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;is&nbsp;responsible&nbsp;to&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;present&nbsp;information&nbsp;and&nbsp;calibration&nbsp;targets&nbsp;to&nbsp;the&nbsp;user&nbsp;during&nbsp;calibration.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-startLogging"><strong>startLogging</strong></a>(...)</dt><dd><tt>Starts&nbsp;logging&nbsp;of&nbsp;the&nbsp;<a href="#GazeData">GazeData</a>&nbsp;into&nbsp;the&nbsp;logfile&nbsp;opend&nbsp;with&nbsp;the&nbsp;openLogFile&nbsp;function.<br>
+This&nbsp;function&nbsp;also&nbsp;starts&nbsp;the&nbsp;logging&nbsp;on&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-startTracking"><strong>startTracking</strong></a>(...)</dt><dd><tt>Starts&nbsp;the&nbsp;tracking&nbsp;on&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+It&nbsp;also&nbsp;start&nbsp;the&nbsp;tracking&nbsp;of&nbsp;the&nbsp;of&nbsp;gaze&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-stopLogging"><strong>stopLogging</strong></a>(...)</dt><dd><tt>Stops&nbsp;logging&nbsp;of&nbsp;the&nbsp;<a href="#GazeData">GazeData</a>&nbsp;into&nbsp;the&nbsp;logfile&nbsp;opend&nbsp;with&nbsp;the&nbsp;openLogFile&nbsp;function.<br>
+This&nbsp;function&nbsp;also&nbsp;stops&nbsp;the&nbsp;logging&nbsp;on&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-stopTracking"><strong>stopTracking</strong></a>(...)</dt><dd><tt>Stops&nbsp;the&nbsp;tracking&nbsp;of&nbsp;the&nbsp;gaze&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.<br>
+It&nbsp;also&nbsp;stops&nbsp;the&nbsp;tracking&nbsp;on&nbsp;the&nbsp;<a href="#EyeTracker">EyeTracker</a>&nbsp;and&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;used&nbsp;by&nbsp;the&nbsp;<a href="#GazeTracker">GazeTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="GazeTracker-validateCalibration"><strong>validateCalibration</strong></a>(...)</dt><dd><tt>Step&nbsp;4&nbsp;of&nbsp;the&nbsp;calibration&nbsp;procedure.&nbsp;This&nbsp;function&nbsp;validates&nbsp;the&nbsp;calibration&nbsp;of&nbsp;the&nbsp;mapping&nbsp;function&nbsp;calibrated&nbsp;by&nbsp;the&nbsp;<br>
+calibrate&nbsp;function.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;alpha:&nbsp;&nbsp;&nbsp;horizontal&nbsp;size&nbsp;(in&nbsp;deg)&nbsp;of&nbsp;the&nbsp;grid&nbsp;used&nbsp;for&nbsp;the&nbsp;validation&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;beta:&nbsp;&nbsp;&nbsp;vertical&nbsp;size&nbsp;(in&nbsp;deg)&nbsp;of&nbsp;the&nbsp;grid&nbsp;used&nbsp;for&nbsp;the&nbsp;validation&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;n:&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;columns&nbsp;of&nbsp;the&nbsp;fixation&nbsp;target&nbsp;grid<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;m:&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;rows&nbsp;of&nbsp;the&nbsp;fixation&nbsp;target&nbsp;grid<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;center:&nbsp;&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;fixation&nbsp;target&nbsp;grid&nbsp;in&nbsp;display&nbsp;coordinates<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;vDataSet:&nbsp;&nbsp;instance&nbsp;of&nbsp;the&nbsp;<a href="#ValidationDataSet">ValidationDataSet</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;the&nbsp;validationData&nbsp;will&nbsp;be&nbsp;stored&nbsp;in</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0xb7cb0040&gt;<dd><tt>T.<a href="#GazeTracker-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="HeadData">class <strong>HeadData</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>@attrib&nbsp;position:&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;float&nbsp;values&nbsp;with&nbsp;the&nbsp;size&nbsp;of&nbsp;3&nbsp;representing&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>(e.g.&nbsp;[x,&nbsp;y,&nbsp;z])<br>
+@attrib&nbsp;orientation:&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;float&nbsp;values&nbsp;with&nbsp;the&nbsp;size&nbsp;of&nbsp;9&nbsp;representing&nbsp;a&nbsp;3x3&nbsp;orientation&nbsp;matrix&nbsp;&nbsp;of&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(e.g.&nbsp;[a00,&nbsp;a01,&nbsp;a02,&nbsp;a10,&nbsp;a11,&nbsp;a12,&nbsp;a20,&nbsp;a21,&nbsp;a22])<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Data and other attributes defined here:<br>
+<dl><dt><strong>orientation</strong> = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]</dl>
+
+<dl><dt><strong>position</strong> = [0.0, 0.0, 0.0]</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="HeadTracker">class <strong>HeadTracker</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="HeadTracker-addLogMessage"><strong>addLogMessage</strong></a>(...)</dt><dd><tt>Writes&nbsp;&nbsp;a&nbsp;message&nbsp;into&nbsp;the&nbsp;opened&nbsp;log&nbsp;file.&nbsp;A&nbsp;timestamp&nbsp;will&nbsp;be&nbsp;put&nbsp;<br>
+infront&nbsp;of&nbsp;the&nbsp;message.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;msg:&nbsp;the&nbsp;message&nbsp;which&nbsp;will&nbsp;be&nbsp;added&nbsp;to&nbsp;the&nbsp;log&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-closeLogFile"><strong>closeLogFile</strong></a>(...)</dt><dd><tt>Closes&nbsp;the&nbsp;logfile&nbsp;opened&nbsp;by&nbsp;the&nbsp;openLogFile&nbsp;function.</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-configure"><strong>configure</strong></a>(...)</dt><dd><tt>Configures&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;using&nbsp;a&nbsp;configuration&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;cfgFile:&nbsp;&nbsp;name&nbsp;and&nbsp;location&nbsp;of&nbsp;the&nbsp;configuration&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-connect"><strong>connect</strong></a>(...)</dt><dd><tt>Connects&nbsp;to&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-disconnect"><strong>disconnect</strong></a>(...)</dt><dd><tt>Disconnects&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-getTrackingData"><strong>getTrackingData</strong></a>(...)</dt><dd><tt>Gets&nbsp;the&nbsp;current&nbsp;<a href="#RawHeadData">RawHeadData</a>&nbsp;for&nbsp;the&nbsp;head&nbsp;tracked&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;a&nbsp;specific&nbsp;id.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;id:&nbsp;&nbsp;the&nbsp;id&nbsp;of&nbsp;the&nbsp;head&nbsp;tracked&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:&nbsp;&nbsp;<a href="#RawHeadData">RawHeadData</a>&nbsp;of&nbsp;the&nbsp;head&nbsp;tracked&nbsp;<a href="__builtin__.html#object">object</a></tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-isConnected"><strong>isConnected</strong></a>(...)</dt><dd><tt>Checks&nbsp;if&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>&nbsp;is&nbsp;connected.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-loadModule"><strong>loadModule</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="HeadTracker-openLogFile"><strong>openLogFile</strong></a>(...)</dt><dd><tt>Opens&nbsp;a&nbsp;logfile&nbsp;for&nbsp;logging&nbsp;headtracking&nbsp;data&nbsp;and&nbsp;messages.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;file:&nbsp;&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;log&nbsp;file&nbsp;which&nbsp;should&nbsp;be&nbsp;generated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;path:&nbsp;&nbsp;&nbsp;the&nbsp;path&nbsp;where&nbsp;the&nbsp;log&nbsp;file&nbsp;should&nbsp;be&nbsp;generated.</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-startLogging"><strong>startLogging</strong></a>(...)</dt><dd><tt>Starts&nbsp;the&nbsp;logging&nbsp;of&nbsp;headtracking&nbsp;data&nbsp;into&nbsp;the&nbsp;opened&nbsp;log&nbsp;file.</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-startTracking"><strong>startTracking</strong></a>(...)</dt><dd><tt>Starts&nbsp;the&nbsp;tracking&nbsp;of&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>.</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-stopLogging"><strong>stopLogging</strong></a>(...)</dt><dd><tt>Stops&nbsp;the&nbsp;logging&nbsp;of&nbsp;headtracking&nbsp;data&nbsp;into&nbsp;the&nbsp;opened&nbsp;log&nbsp;file.</tt></dd></dl>
+
+<dl><dt><a name="HeadTracker-stopTracking"><strong>stopTracking</strong></a>(...)</dt><dd><tt>Stops&nbsp;the&nbsp;tracking&nbsp;of&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a>.</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0xb7caff80&gt;<dd><tt>T.<a href="#HeadTracker-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="IVisualisationHooks">class <strong>IVisualisationHooks</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#IVisualisationHooks">IVisualisationHooks</a>&nbsp;class&nbsp;is&nbsp;an&nbsp;interface&nbsp;class<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="IVisualisationHooks-clearInput"><strong>clearInput</strong></a>(...)</dt><dd><tt>Clears&nbsp;the&nbsp;current&nbsp;<a href="#Input">Input</a>&nbsp;queue.</tt></dd></dl>
+
+<dl><dt><a name="IVisualisationHooks-drawCalTarget"><strong>drawCalTarget</strong></a>(...)</dt><dd><tt>Draws&nbsp;a&nbsp;calibration&nbsp;target&nbsp;on&nbsp;a&nbsp;3D&nbsp;viewing&nbsp;ray.&nbsp;Teh&nbsp;ray&nbsp;is&nbsp;represented&nbsp;by&nbsp;the&nbsp;its<br>
+origin&nbsp;and&nbsp;direction&nbsp;in&nbsp;the&nbsp;WCS&nbsp;3D&nbsp;coordinate&nbsp;system.&nbsp;To&nbsp;draw&nbsp;the&nbsp;target&nbsp;on&nbsp;th&nbsp;2d&nbsp;<br>
+display&nbsp;the&nbsp;display&nbsp;module&nbsp;is&nbsp;used&nbsp;to&nbsp;calculate&nbsp;the&nbsp;xy&nbsp;2d&nbsp;coordinates&nbsp;on&nbsp;the&nbsp;display.</tt></dd></dl>
+
+<dl><dt><a name="IVisualisationHooks-drawFov"><strong>drawFov</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="IVisualisationHooks-drawHeadOrientation"><strong>drawHeadOrientation</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="IVisualisationHooks-drawHeadOrientationTarget"><strong>drawHeadOrientationTarget</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="IVisualisationHooks-drawValidation"><strong>drawValidation</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="IVisualisationHooks-eraseScreen"><strong>eraseScreen</strong></a>(...)</dt><dd><tt>Clears&nbsp;all&nbsp;contentent&nbsp;presented&nbsp;on&nbsp;the&nbsp;screen.</tt></dd></dl>
+
+<dl><dt><a name="IVisualisationHooks-getInput"><strong>getInput</strong></a>(...)</dt><dd><tt>Returns&nbsp;the&nbsp;current&nbsp;input&nbsp;done&nbsp;by&nbsp;the&nbsp;user.&nbsp;<br>
+The&nbsp;return&nbsp;value&nbsp;is&nbsp;an&nbsp;instance&nbsp;of&nbsp;the&nbsp;<a href="#Input">Input</a>&nbsp;class.</tt></dd></dl>
+
+<dl><dt><a name="IVisualisationHooks-showMessage"><strong>showMessage</strong></a>(...)</dt><dd><tt>Presents&nbsp;a&nbsp;message&nbsp;on&nbsp;the&nbsp;screen.</tt></dd></dl>
+
+<dl><dt><a name="IVisualisationHooks-updateScreen"><strong>updateScreen</strong></a>(...)</dt><dd><tt>Updates&nbsp;the&nbsp;content&nbsp;presented&nbsp;on&nbsp;the&nbsp;screen.&nbsp;All&nbsp;elements&nbsp;which&nbsp;were&nbsp;drawn&nbsp;after&nbsp;the&nbsp;last<br>
+eraseScreen&nbsp;are&nbsp;presented.</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Input">class <strong>Input</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>@attrib&nbsp;type:&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_INPUT_ABORT:&nbsp;a&nbsp;abort&nbsp;signal&nbsp;is&nbsp;send&nbsp;as&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_INPUT_ACCEPT:&nbsp;a&nbsp;accept&nbsp;signal&nbsp;is&nbsp;send&nbsp;as&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_INPUT_KEY:&nbsp;the&nbsp;input&nbsp;is&nbsp;a&nbsp;pressed&nbsp;key&nbsp;(the&nbsp;value&nbsp;of&nbsp;the&nbsp;pressed&nbsp;key&nbsp;is&nbsp;sved&nbsp;under&nbsp;key)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_INPUT_MESSAGE:&nbsp;depricated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_INPUT_NONE:&nbsp;no&nbsp;new&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PG_INPUT_QUIT:&nbsp;a&nbsp;quit&nbsp;signal&nbsp;is&nbsp;send&nbsp;as&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+@attrib&nbsp;key:&nbsp;&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;pressd&nbsp;key&nbsp;of&nbsp;a&nbsp;&nbsp;type&nbsp;PG_INPUT_KEY&nbsp;input<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Input-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>key</strong> = ' '</dl>
+
+<dl><dt><strong>type</strong> = 0</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RawEyeData">class <strong>RawEyeData</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>@attrib&nbsp;time:&nbsp;&nbsp;the&nbsp;time&nbsp;in&nbsp;milliseconds&nbsp;when&nbsp;the&nbsp;eye&nbsp;data&nbsp;was&nbsp;colleced&nbsp;fromthe&nbsp;tracker<br>
+@attrib&nbsp;eye_available:&nbsp;&nbsp;for&nbsp;which&nbsp;eye&nbsp;data&nbsp;is&nbsp;available<br>
+@attrib&nbsp;pupil_x:&nbsp;&nbsp;the&nbsp;x&nbsp;position&nbsp;of&nbsp;the&nbsp;pupil&nbsp;centroid&nbsp;in&nbsp;the&nbsp;camera&nbsp;images&nbsp;of&nbsp;the&nbsp;eye&nbsp;tracker&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye&nbsp;<br>
+@attrib&nbsp;pupil_y:&nbsp;&nbsp;the&nbsp;y&nbsp;position&nbsp;of&nbsp;the&nbsp;pupil&nbsp;centroid&nbsp;in&nbsp;the&nbsp;camera&nbsp;images&nbsp;of&nbsp;the&nbsp;eye&nbsp;tracker&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye&nbsp;<br>
+@attrib&nbsp;pupil_size:&nbsp;the&nbsp;size&nbsp;of&nbsp;left&nbsp;and&nbsp;right&nbsp;eye&nbsp;in&nbsp;the&nbsp;camera&nbsp;images&nbsp;of&nbsp;the&nbsp;eye&nbsp;tracker<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="RawEyeData-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RawHeadData">class <strong>RawHeadData</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>@attrib&nbsp;time:&nbsp;&nbsp;the&nbsp;time&nbsp;in&nbsp;milliseconds&nbsp;when&nbsp;the&nbsp;data&nbsp;set&nbsp;was&nbsp;collected&nbsp;from&nbsp;the&nbsp;<a href="#HeadTracker">HeadTracker</a><br>
+@attrib&nbsp;button:&nbsp;&nbsp;when&nbsp;a&nbsp;button&nbsp;is&nbsp;mounted&nbsp;to&nbsp;the&nbsp;tracked&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;this&nbsp;attributed&nbsp;shows&nbsp;if&nbsp;it&nbsp;is&nbsp;pressed&nbsp;(1)&nbsp;or&nbsp;not&nbsp;(0)<br>
+@attrib&nbsp;position:&nbsp;&nbsp;the&nbsp;3D&nbsp;postion&nbsp;of&nbsp;the&nbsp;tracked&nbsp;<a href="__builtin__.html#object">object</a><br>
+@attrib&nbsp;matrix:&nbsp;&nbsp;a&nbsp;9&nbsp;element&nbsp;array&nbsp;presenting&nbsp;a&nbsp;3x3&nbsp;rotation&nbsp;matrix&nbsp;which&nbsp;represents&nbsp;the&nbsp;orientation&nbsp;of&nbsp;the&nbsp;tracked&nbsp;<a href="__builtin__.html#object">object</a>.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="RawHeadData-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Ray">class <strong>Ray</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#Ray">Ray</a>&nbsp;class&nbsp;represents&nbsp;a&nbsp;ray&nbsp;in&nbsp;3D&nbsp;space.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;origin:&nbsp;&nbsp;the&nbsp;3d&nbsp;position&nbsp;of&nbsp;the&nbsp;origin&nbsp;of&nbsp;the&nbsp;ray&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;direction:&nbsp;&nbsp;the&nbsp;3d&nbsp;direction&nbsp;vector&nbsp;of&nbsp;the&nbsp;ray<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Ray-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>direction</strong> = None</dl>
+
+<dl><dt><strong>origin</strong> = None</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ValidationData">class <strong>ValidationData</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#ValidationData">ValidationData</a>&nbsp;class&nbsp;contains&nbsp;the&nbsp;validation&nbsp;data&nbsp;for&nbsp;one&nbsp;target&nbsp;presented&nbsp;during&nbsp;a&nbsp;validation&nbsp;or&nbsp;a&nbsp;driftCheck.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;alpha:&nbsp;&nbsp;the&nbsp;horizontal&nbsp;angle&nbsp;in&nbsp;degree&nbsp;were&nbsp;the&nbsp;validation&nbsp;target&nbsp;was&nbsp;presented<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;beta:&nbsp;&nbsp;the&nbsp;vertical&nbsp;angle&nbsp;in&nbsp;degree&nbsp;were&nbsp;the&nbsp;validation&nbsp;target&nbsp;was&nbsp;presented<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;calpha:&nbsp;&nbsp;the&nbsp;calculated&nbsp;horizontal&nbsp;viewinging&nbsp;angle&nbsp;in&nbsp;degree&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;cbeta:&nbsp;&nbsp;the&nbsp;calculated&nbsp;vertical&nbsp;viewinging&nbsp;angle&nbsp;in&nbsp;degree&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@attrib&nbsp;cdrift:&nbsp;&nbsp;the&nbsp;overall&nbsp;drift&nbsp;between&nbsp;the&nbsp;presented&nbsp;and&nbsp;calculated&nbsp;angles&nbsp;for&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;eye<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ValidationData-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="ValidationData-__str__"><strong>__str__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>alpha</strong> = 0.0</dl>
+
+<dl><dt><strong>beta</strong> = 0.0</dl>
+
+<dl><dt><strong>calpha</strong> = [0.0, 0.0]</dl>
+
+<dl><dt><strong>cbeta</strong> = [0.0, 0.0]</dl>
+
+<dl><dt><strong>cdrift</strong> = [0.0, 0.0]</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ValidationDataSet">class <strong>ValidationDataSet</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>@attrib&nbsp;num:<br>
+@attrib&nbsp;bad:&nbsp;&nbsp;<br>
+@attrib&nbsp;good:&nbsp;&nbsp;<br>
+@attrib&nbsp;max_drift:<br>
+@attrib&nbsp;avg_drift:<br>
+@attrib&nbsp;avg_drift_alpha:<br>
+@attrib&nbsp;avg_drift_beta:<br>
+@attrib&nbsp;vdata:<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ValidationDataSet-__init__"><strong>__init__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="ValidationDataSet-__str__"><strong>__str__</strong></a>(...)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>avg_drift</strong> = [None, None]</dl>
+
+<dl><dt><strong>avg_drift_alpha</strong> = [None, None]</dl>
+
+<dl><dt><strong>avg_drift_beta</strong> = [None, None]</dl>
+
+<dl><dt><strong>bad</strong> = None</dl>
+
+<dl><dt><strong>good</strong> = None</dl>
+
+<dl><dt><strong>max_drift</strong> = [None, None]</dl>
+
+<dl><dt><strong>num</strong> = None</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="pyGaze">class <strong>pyGaze</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;base&nbsp;class&nbsp;of&nbsp;the&nbsp;<a href="#pyGaze">pyGaze</a>&nbsp;module.&nbsp;This&nbsp;class&nbsp;has&nbsp;to&nbsp;be&nbsp;initialized&nbsp;before&nbsp;any&nbsp;other&nbsp;<a href="#pyGaze">pyGaze</a><br>
+class&nbsp;is&nbsp;used.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="pyGaze-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>Initializes&nbsp;the&nbsp;<a href="#pyGaze">pyGaze</a>&nbsp;framework.&nbsp;During&nbsp;the&nbsp;initialisation&nbsp;the&nbsp;internal&nbsp;timer&nbsp;will&nbsp;be&nbsp;reset.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;debug:&nbsp;&nbsp;if&nbsp;the&nbsp;framework&nbsp;should&nbsp;print&nbsp;out&nbsp;debug&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;error:&nbsp;&nbsp;if&nbsp;the&nbsp;framework&nbsp;should&nbsp;print&nbsp;out&nbsp;error&nbsp;messages</tt></dd></dl>
+
+<dl><dt><a name="pyGaze-getTime"><strong>getTime</strong></a>(...)</dt><dd><tt>Gets&nbsp;the&nbsp;current&nbsp;time&nbsp;from&nbsp;the&nbsp;<a href="#pyGaze">pyGaze</a>&nbsp;timer.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:&nbsp;&nbsp;long&nbsp;value&nbsp;current&nbsp;time&nbsp;in&nbsp;milliseconds</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-decomposeRotationMatix"><strong>decomposeRotationMatix</strong></a>(...)</dt><dd><tt>Decomposes&nbsp;a&nbsp;rotation&nbsp;matrix&nbsp;into&nbsp;euler&nbsp;angles&nbsp;for&nbsp;yaw&nbsp;pitch&nbsp;and&nbsp;roll.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;matrix:&nbsp;&nbsp;a&nbsp;single&nbsp;array&nbsp;of&nbsp;9&nbsp;elements&nbsp;presenting&nbsp;a&nbsp;3x3&nbsp;rotation&nbsp;matrix.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@return:&nbsp;&nbsp;a&nbsp;list&nbsp;with&nbsp;3&nbsp;elements&nbsp;containing&nbsp;the&nbsp;euler&nbsp;angles&nbsp;for&nbsp;x&nbsp;y&nbsp;z&nbsp;rotations.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>PG_ABORT</strong> = 8<br>
+<strong>PG_ACCEPT</strong> = 7<br>
+<strong>PG_ALL_LOG_FILE</strong> = 31<br>
+<strong>PG_ERROR</strong> = 5<br>
+<strong>PG_ET_MODE_DUMMY</strong> = 1<br>
+<strong>PG_ET_MODE_NORMAL</strong> = 0<br>
+<strong>PG_EYE_BOTH</strong> = 1<br>
+<strong>PG_EYE_LEFT</strong> = 2<br>
+<strong>PG_EYE_LOG_FILE</strong> = 4<br>
+<strong>PG_EYE_NONE</strong> = 4<br>
+<strong>PG_EYE_RIGHT</strong> = 3<br>
+<strong>PG_GAZE_LOG_FILE</strong> = 1<br>
+<strong>PG_GT_MODE_BOTH</strong> = 0<br>
+<strong>PG_GT_MODE_DUMMY</strong> = 3<br>
+<strong>PG_GT_MODE_EYE</strong> = 1<br>
+<strong>PG_GT_MODE_HEAD</strong> = 2<br>
+<strong>PG_HEAD_LOG_FILE</strong> = 2<br>
+<strong>PG_HT_MODE_DUMMY</strong> = 1<br>
+<strong>PG_HT_MODE_NORMAL</strong> = 0<br>
+<strong>PG_INPUT_ABORT</strong> = 3<br>
+<strong>PG_INPUT_ACCEPT</strong> = 2<br>
+<strong>PG_INPUT_KEY</strong> = 4<br>
+<strong>PG_INPUT_MESSAGE</strong> = 5<br>
+<strong>PG_INPUT_NONE</strong> = 0<br>
+<strong>PG_INPUT_QUIT</strong> = 1<br>
+<strong>PG_KEY_PRESS</strong> = 1<br>
+<strong>PG_NO_KEY_PRESS</strong> = 0<br>
+<strong>PG_NO_LOG_FILE</strong> = 0<br>
+<strong>PG_OK</strong> = 6<br>
+<strong>PG_QUIT</strong> = 9<br>
+<strong>PG_TIMEOUT</strong> = 10</td></tr></table>
+</body></html>

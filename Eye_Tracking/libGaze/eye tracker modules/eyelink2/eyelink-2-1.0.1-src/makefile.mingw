@@ -1,0 +1,21 @@
+CC = gcc
+
+#Remember setting the MINGWPATH and EYELINKPATH as System variable
+#MINGWPATH=C:/msys/MinGW
+#EYELINKPATH=C:/SRResearch/EyeLink
+
+LINKLIBS+=	-leyelink_core \
+			-L"$(EYELINKPATH)/libs" \
+			-L"$(MINGWPATH)/lib"
+
+INCLUDES+=	-I"$(EYELINKPATH)/Includes/eyelink" \
+			-I"$(MINGWPATH)\include\glib-2.0" \
+			-I"../libGaze/include" \
+			-I"$(MINGWPATH)\lib\glib-2.0\include"
+			
+CFLAGS=  -shared
+
+
+LIBEXT = .dll
+
+include makefile.config
