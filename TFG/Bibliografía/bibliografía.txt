@@ -28,18 +28,27 @@ Nombre del autor: Linus Torvalds
 Fecha de consulta: 11/02/2018
 Descripción: Información sobre hiddev
 
-URL: 
-Nombre de la página web: 
-Título de la publicación:
+// libGaze
+
+URL: http://www.kyb.tuebingen.mpg.de/fileadmin/user_upload/files/publications/VMV-2008-Herholz.pdf
+Nombre de la página web:
+(documento pdf)
+Título de la publicación: LibGaze: Real-time gaze-tracking of freely moving observers for wall-sized displays Vision, 
+Modeling and Visualization Proceedings
 Fecha de publicación:
-Nombre del autor:
-Fecha de consulta:
-Descripción:
+Nombre del autor: Sebastian Herholz, Lewis L. Chuang, Thomas G. Tanner, Heinrich H. Bülthoff and Roland W. Fleming
+Fecha de consulta: 24/02/2018
+Institución: Max-Planck-Institut für biologische Kybernetik
+Descripción: Descripción del empleo de libGaze en un estudio experimental
 
 URL: 
 Nombre de la página web: 
-Título de la publicación:
-Fecha de publicación:
-Nombre del autor:
-Fecha de consulta:
-Descripción:
+(documento docx)
+Título de la publicación: LibGaze: an open-source library for estimating of freely moving observers in real-time.
+Fecha de publicación: 05/2005
+Nombre del autor: Sebastian Herholz, Lewis L. Chuang, Thomas G. Tanner, Heinrich H. Bülthoff and Roland W. Fleming
+Fecha de consulta: 24/02/2018
+Descripción: Descripción de la librería libGaze
+
+
+// openCV
