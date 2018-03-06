@@ -5,6 +5,13 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int fifo = -1;
+
 cv::Vec3f getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
 {
   std::vector<int> sums(circles.size(), 0);
@@ -55,8 +62,6 @@ cv::Rect getLeftmostEye(std::vector<cv::Rect> &eyes)
 }
 
 std::vector<cv::Point> centers;
-//cv::Point lastPoint;
-//cv::Point mousePoint;
 
 cv::Point stabilize(std::vector<cv::Point> &points, int windowSize)
 {
@@ -88,11 +93,20 @@ void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeC
   cv::Mat face = grayscale(faces[0]); // crop the face
   std::vector<cv::Rect> eyes;
   eyeCascade.detectMultiScale(face, eyes, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30)); // same thing as above    
-  rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
+  std::cout << "Face " << faces[0] << std::endl;
+  //rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
   if (eyes.size() != 2) return; // both eyes were not detected
   for (cv::Rect &eye : eyes)
   {
-      rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+      //rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+      std::cout << "Ojos" << eye << std::endl;
+      struct {
+        char type;
+        cv::Rect eye;
+      } s = {
+        'E', eye
+      };
+      ::write(fifo, &s, sizeof(s));
   }
   cv::Rect eyeRect = getLeftmostEye(eyes);
   cv::Mat eye = face(eyeRect); // crop the leftmost eye
@@ -107,41 +121,17 @@ void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeC
       cv::Point center(eyeball[0], eyeball[1]);
       centers.push_back(center);
       center = stabilize(centers, 5);
-      //if (centers.size() > 1)
-      //{
-        //  cv::Point diff;
-       //   diff.x = (center.x - lastPoint.x) * 20;
-        //  diff.y = (center.y - lastPoint.y) * -30;
-        //  mousePoint += diff;
-    //  }
-     // lastPoint = center;
       int radius = (int)eyeball[2];
-      cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
-      cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
+      std::cout << "Pupila " << center << ", " << radius << std::endl;
+      //cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
+      //cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
   }
   
-  cv::imshow("Eye", eye);
+  //cv::imshow("Eye", eye);
 }
-/*
-
-void changeMouse(cv::Mat &frame, cv::Point &location)
-{
-  if (location.x > frame.cols) location.x = frame.cols;
-  if (location.x < 0) location.x = 0;
-  if (location.y > frame.rows) location.y = frame.rows;
-  if (location.y < 0) location.y = 0;
-  system(("xdotool mousemove " + std::to_string(location.x) + " " + std::to_string(location.y)).c_str());
-} */
 
 int main(int argc, char **argv)
 {
-	/*
-  if (argc != 2)
-  {
-      std::cerr << "Usage: EyeDetector <WEBCAM_INDEX>" << std::endl;
-      return -1;
-  }
-  * */
   cv::CascadeClassifier faceCascade;
   cv::CascadeClassifier eyeCascade;
   if (!faceCascade.load("./haarcascade_frontalface_alt.xml"))
@@ -161,14 +151,15 @@ int main(int argc, char **argv)
       return -1;
   }    
   cv::Mat frame;
-  //mousePoint = cv::Point(800, 800);
+
+  fifo = open("eye_detect.log", O_WRONLY|O_CREAT, ~0);
   while (1)
   {
       cap >> frame; // outputs the webcam image to a Mat
       if (!frame.data) break;
       detectEyes(frame, faceCascade, eyeCascade);
       //changeMouse(frame, mousePoint);
-      cv::imshow("Webcam", frame); // displays the Mat
+      //cv::imshow("Webcam", frame); // displays the Mat
       if (cv::waitKey(30) >= 0) break;  // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
   }
   return 0;
