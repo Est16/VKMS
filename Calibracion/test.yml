@@ -1,0 +1,9 @@
+%YAML:1.0
+---
+matrix: !!opencv-matrix
+   rows: 5
+   cols: 5
+   dt: u
+   data: [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+       3, 3, 3, 3 ]
+number: 10

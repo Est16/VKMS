@@ -24,7 +24,7 @@ static void calcChessboardCorners(Size boardSize, float squareSize, std::vector<
 }
 
 static void saveparams(const std::string& filename, const Mat& cameraMatrix, const Mat& distCoeffs,
-					   const std::vector<Mat>& rvecs,const std::vector<Mat>& tvecs,const const double& RMS)
+					   const std::vector<Mat>& rvecs,const std::vector<Mat>& tvecs, const double& RMS)
 {
 		FileStorage fs( filename, FileStorage::WRITE );
 		fs << "Calibrate_Accuracy" << RMS;
@@ -61,10 +61,10 @@ int main(){
 	std::vector<std::vector<cv::Point2f>> coord2D;//Ubicacion de las esquinas detectadas en la imagen
 	std::vector<std::vector<cv::Point3f>> coord3D;//Ubicacion real de los puntos 3D
 
-	std::string direccion = "C:\\Users\\NilssenSteban\\Pictures\\Saved Pictures\\Cam";
+	std::string direccion = "//home//esther//Desktop//VKMS//Calibracion//Calibracion";
 	std::stringstream imgs;
 
-	calcChessboardCorners(patternsize,18,corners3D);
+	calcChessboardCorners(patternsize,23,corners3D);
 
 	Mat img, imgGray;
 	bool found;
@@ -111,7 +111,7 @@ int main(){
 	std::cout << "Camera matrix: " << cameraMatrix << std::endl;
 	std::cout << "Distortion _coefficients: " << distCoeffs << std::endl;
 
-	saveparams("C:\\Users\\NilssenSteban\\Pictures\\Saved Pictures\\DataCam.yml",cameraMatrix,distCoeffs,
+	saveparams("//home//esther//Desktop//VKMS//Calibracion//MiCam.yml",cameraMatrix,distCoeffs,
 				rvecs,tvecs,rms);
 
 	Mat imageUndistorted,image;
@@ -122,7 +122,7 @@ int main(){
 	while(1){
 
     capture >> image;
-    undistort(image, imageUndistorted, cameraMatrix, distCoeffs);//corrigo distorsion radial
+    undistort(image, imageUndistorted, cameraMatrix, distCoeffs);//corrijo distorsion radial
 
     imshow("imgOriginal", image);
     imshow("imgCalibrada", imageUndistorted);

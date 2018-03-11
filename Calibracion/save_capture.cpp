@@ -33,7 +33,8 @@ int main (){
 	bool SaveImage;
 	int nimgs = 0;
 	
-	std::string direccion = "C:\\Users\\NilssenSteban\\Pictures\\Saved Pictures\\Cam";
+	std::string direccion = "//home//esther//Desktop//VKMS//Calibracion";
+	
 	std::stringstream Saveimgs;
 
 	for(;;){

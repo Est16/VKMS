@@ -151,16 +151,49 @@ int main(int argc, char **argv)
       return -1;
   }    
   cv::Mat frame;
+  cv::Mat imageUndistorted;
 
   fifo = open("eye_detect.log", O_WRONLY|O_CREAT, ~0);
   while (1)
   {
       cap >> frame; // outputs the webcam image to a Mat
+      
+      
+    	cv::Mat cameraMatrix = cv::Mat::eye(3, 3, CV_64F);
+		//std::cout << "Matriz de camara: " << cameraMatrix << std::endl;
+		cv::Mat Distortion = cv::Mat::zeros(8, 1, CV_64F);
+		//std::cout << "Distorsion de camara " << Distortion << std::endl;
+			
+       	//Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
+		//Mat distCoeffs = Mat::zeros(8, 1, CV_64F);
+		
+		cv::FileStorage storageRead("MiCam.yml", cv::FileStorage::READ);
+		storageRead["Camera_Matrix"] >> cameraMatrix;
+		storageRead["Distortion_Coefficients"] >> Distortion;
+      
+      undistort(frame, imageUndistorted, cameraMatrix, Distortion);//corrijo distorsion radial
+      
+ /*
+      
       if (!frame.data) break;
       detectEyes(frame, faceCascade, eyeCascade);
       //changeMouse(frame, mousePoint);
       //cv::imshow("Webcam", frame); // displays the Mat
       if (cv::waitKey(30) >= 0) break;  // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
   }
+  * 
+  * */
+  
+      if (!imageUndistorted.data) break;
+      detectEyes(imageUndistorted, faceCascade, eyeCascade);
+      //changeMouse(frame, mousePoint);
+      //cv::imshow("Webcam", frame); // displays the Mat
+      if (cv::waitKey(30) >= 0) break;  // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
+  }
+  
+  
+  
+  
+  
   return 0;
 }
