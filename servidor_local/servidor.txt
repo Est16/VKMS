@@ -1,0 +1,3 @@
+directorio local: /var/wwww/html
+
+via web (navegador): http://localhost/index.php
