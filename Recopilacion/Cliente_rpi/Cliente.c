@@ -29,8 +29,15 @@
 
 static int tcp_client_socket(const char* host, const char* service);
 int main() {
-	int fd = tcp_client_socket("192.168.1.38", "1000");
+	
+	const char* IP;
+	
+	//int fd = tcp_client_socket(IP, "1000");
 	for(;;) {
+		
+	///////////////////////////////////////////////////////////////
+	//			   ENVIO DE EVENTOS DE TECLADO Y RATON		     //
+	///////////////////////////////////////////////////////////////
 	
 	int fifo= -1;
 	
@@ -73,7 +80,36 @@ int main() {
 		puts("");
 		
 	}
-
+	
+	
+	///////////////////////////////////////////////////////////////
+	//   OBTENCION DEL ARDUINO AL QUE HAY QUE ENVIAR EVENTOS     //
+	///////////////////////////////////////////////////////////////
+	
+	
+	int fifo1= -1;
+	char bufer3[1];
+	fifo1= open("select", O_RDONLY); // 1 caracter ocupa 1 byte
+	
+	int r;
+	
+	r= read (fifo1, bufer3, sizeof(bufer3));
+	
+	if (bufer3[0]=='A') {
+		
+		IP= "192.168.1.38";
+		
+	} else if (bufer3[0]=='B') {
+		
+		IP= "192.168.1.39";
+		
+	} 
+	
+	////////////////////////////////////////////////////////////////////////////
+	//   ENVIO DE LOS EVENTOS DE TECLADO Y RATON AL ARDUINO CORRESPONDIENTE   //
+	////////////////////////////////////////////////////////////////////////////
+	
+		int fd = tcp_client_socket(IP, "1000");
 		int n = write(fd, bufer2, strlen(bufer2));
 		assert(n >= 0);
 		if (n == 0) break;
