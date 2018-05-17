@@ -94,11 +94,14 @@ void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeC
   std::vector<cv::Rect> eyes;
   eyeCascade.detectMultiScale(face, eyes, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30)); // same thing as above    
   std::cout << "Face " << faces[0] << std::endl;
-  //rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
+  ///////////////////////////////
+  rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
+  ///////////////////////////////
   if (eyes.size() != 2) return; // both eyes were not detected
   for (cv::Rect &eye : eyes)
-  {
-      //rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+  {	  ///////////////////////////////	
+      rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+      ///////////////////////////////
       std::cout << "Ojos" << eye << std::endl;
       struct {
         char type;
@@ -123,11 +126,38 @@ void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeC
       center = stabilize(centers, 5);
       int radius = (int)eyeball[2];
       std::cout << "Pupila " << center << ", " << radius << std::endl;
-      //cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
-      //cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
+      
+      
+       struct {
+        char type;
+        cv::Point center;
+        int radius;
+       
+      } p = {
+        'P', center, radius
+      };
+      ::write(fifo, &p, sizeof(p));
+      
+      
+      
+      
+      
+      
+      ///////////////////////////////
+      cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
+      cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
+      ///////////////////////////////
   }
-  
-  //cv::imshow("Eye", eye);
+  ///////////////////////////////
+  cv::imshow("Eye", eye);
+  ///////////////////////////////
+}
+
+
+
+
+void delay(int secs) {
+  for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
 }
 
 int main(int argc, char **argv)
@@ -153,7 +183,10 @@ int main(int argc, char **argv)
   cv::Mat frame;
   cv::Mat imageUndistorted;
 
-  fifo = open("eye_detect.log", O_WRONLY|O_CREAT, ~0);
+  fifo = open("eye_fifo", O_WRONLY|O_CREAT, ~0);
+  
+  cv::Point centro(320, 240);
+  cv::circle(imageUndistorted, centro, 5, cv::Scalar(255, 255, 255), 2);
   while (1)
   {
       cap >> frame; // outputs the webcam image to a Mat
@@ -187,8 +220,15 @@ int main(int argc, char **argv)
       if (!imageUndistorted.data) break;
       detectEyes(imageUndistorted, faceCascade, eyeCascade);
       //changeMouse(frame, mousePoint);
-      //cv::imshow("Webcam", frame); // displays the Mat
-      if (cv::waitKey(30) >= 0) break;  // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
+      ///////////////////////////////
+      cv::imshow("Webcam", imageUndistorted); // displays the Mat
+      ///////////////////////////////
+      if (cv::waitKey(30) >= 0) {
+		  break;  // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
+		  //close(fifo);
+		}
+      
+	delay(1);
   }
   
   
