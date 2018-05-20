@@ -112,7 +112,7 @@ eyetracking* e;
 		
 		
 		int fifo1= -1;	
-		fifo1 = open("eye_events", O_RDONLY);
+		fifo1 = open("/home/esther/Desktop/VKMS/Recopilacion/Eye_tracking/eye_fifo", O_RDONLY);
 		printf("fifo1: %d\n",fifo1);
 		void* state= console_set_raw_mode(0);
 		reactor *r= reactor_new();
