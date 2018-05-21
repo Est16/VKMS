@@ -228,7 +228,7 @@ int main(int argc, char **argv)
 		  //close(fifo);
 		}
       
-	delay(1);
+	//delay(1);
   }
   
   
