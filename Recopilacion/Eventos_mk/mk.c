@@ -19,13 +19,15 @@ event_handler* mouse_handler_new(int fd) {
 
 static void mouse (event_handler* ev) {
 	
-		int fifo= -1;
+
 	
 ////////////////////////////////////////////////////////////////
 // 		APERTURA DEL ARCHIVO ESPECIAL PARA SOLO ESCRITURA     //
 ////////////////////////////////////////////////////////////////
 
-	fifo= open("events.log", O_WRONLY);
+	int fifo= -1;	
+	fifo = open("archivo", O_RDWR|O_NONBLOCK);
+	printf("fiforaton: %d\n",fifo);
 	
 ////////////////////////////////////////////////////////////////
 // 			   	LECTURA DEL EVENTO DEL TECLADO           	  //
@@ -38,8 +40,9 @@ static void mouse (event_handler* ev) {
 	
 	if (p <0)
 		reactor_quit(ev->r);
-	printf("bytes leidos del descriptor mouse: %d\n", p);
+		printf("bytes leidos del descriptor mouse: %d\n", p);
 	
+	/*
 // Representación de los bytes del evento
 	int i;
 	
@@ -49,7 +52,7 @@ static void mouse (event_handler* ev) {
 	}
 	puts("");
 	
-	
+	*/
 
 // Un evento de raton corresponde con 7 bytes
 	
@@ -71,9 +74,8 @@ static void mouse (event_handler* ev) {
 	//strcpy(evento.buf, bufer); // No funciona
 	//strncpy(evento.buf, bufer, p);
 
-i=0;
 
-	for(i=0; i<p; ++i) {
+	for(int i=0; i<p; ++i) {
 	//printf("%x", bufer[i]);
 	
 	evento.buf[i] = bufer[i];
@@ -95,19 +97,19 @@ i=0;
 	printf("evento.tipo: %c\n", evento.tipo);
 	//printf("evento.buf[0]: %x\n", evento.buf[6]);
 
-	printf("EVENTO EN evento.buf: \n");
+	printf("evento.buf: \n");
 
-i= 0;
+int t= 0;
 	
-	for(i=0; i<p; ++i) {
-		printf("%x", evento.buf[i]);
+	for(t=0; t<p; ++t) {
+		printf("%x", evento.buf[t]);
 	}
 	
 puts("");
 
 	int a;
 	a= write(fifo, &evento, sizeof(evento));
-	printf("a: %d\n", a);
+	printf("numero de bytes escritos: %d\n", a);
 	
 ////////////////////////////////////////////////////////////////
 // 		 CIERRE DEL ARCHIVO ESPECIAL PARA SOLO ESCRITURA      //
@@ -115,68 +117,9 @@ puts("");
 	
 	close(fifo);
 	
-	
-////////////////////////////////////////////////////////////////
-// 	       		    LECTURA DEL EVENTO EN FIFO                //
-////////////////////////////////////////////////////////////////
-
-/*
- 	//int fifo2= -1;
-	
-	char bufer2[1025];
-	
-	fifo= open("events.log", O_RDONLY);
-	
-	int s;
-	
-	s= read (fifo, bufer2, sizeof(bufer2));
-	
-	printf("s: %d\n", s);
-	
-	
-	movimiento* m= (movimiento*) bufer2;
-	
-	printf("bufer2[0]: %c\n", bufer2[0]);
-	// printf("%c\n", bufer2[1]);
-	
-	printf ("lectura fifo \n");
-	printf("%c\n", m->tipo);
-	printf("%x\n", m->buf[0]);
-	printf("%x\n", m->buf[2]);
-	//puts("");
-	i= 0;
-	for(i=0; i<p; ++i) {
-	printf("%x", m->buf[i]);
-	}
-	puts("");
-	
-//i= 1;
-
-/*
-	for(i=1; i<p; ++i) {
-	printf("%x", m->buf[i]);
-	}
-	puts("");
-	* */
-	
-
-	
-	/*
-	printf("%x", m->buf[0]);
-	printf("%x", m->buf[1]);
-	printf("%x", m->buf[2]);
-	printf("%x", m->buf[3]);
-	printf("%x", m->buf[4]);
-	printf("%x", m->buf[5]);
-	printf("%x\n", m->buf[6]);
-	
-	
-		close(fifo);
-	
-	
-*/
-
 }
+
+
 
 event_handler* keyboard_handler_new() {
 	return event_handler_new(0, keyboard);
@@ -185,22 +128,25 @@ event_handler* keyboard_handler_new() {
 static void keyboard (event_handler* ev) {
 	
 
-	int fifo= -1;
-	
 ////////////////////////////////////////////////////////////////
 // 		APERTURA DEL ARCHIVO ESPECIAL PARA SOLO ESCRITURA     //
 ////////////////////////////////////////////////////////////////
 
-	fifo= open("events.log", O_WRONLY);
+	int fifo= -1;	
+	fifo = open("archivo", O_RDWR|O_NONBLOCK);
+	printf("fifoteclado: %d\n",fifo);
+
 	
 ////////////////////////////////////////////////////////////////
 // 			   	LECTURA DEL EVENTO DEL TECLADO           	  //
 ////////////////////////////////////////////////////////////////
 	
+
 	char bufer[1];
 	int s= read (ev->fd, bufer, sizeof(bufer));
 	if (s <0 || bufer[0]=='q')
 		reactor_quit(ev->r);
+		printf("bytes leidos del descriptor keyboard: %d\n", s);
 	
 	// Una tecla pulsada corresponde con un byte
 	printf("pulsando %c\n", bufer[0]);
@@ -235,81 +181,28 @@ static void keyboard (event_handler* ev) {
 ////////////////////////////////////////////////////////////////
 	int d;
 	d= write(fifo, &pulsacion, sizeof(pulsacion));
-	printf("d: %d\n", d);
+	printf("numero de bytes escritos: %d\n", d);
 	
 	
 	close(fifo);
-////////////////////////////////////////////////////////////////
-// 	       		    LECTURA DEL EVENTO EN FIFO                //
-////////////////////////////////////////////////////////////////
-
 	
- /*
-	
-	char bufer2[2];
-	
-	fifo= open("events.log", O_RDONLY);
-	
-	read (fifo, bufer2, sizeof(bufer2));
-	
-	
-	tecla* t= (tecla*) bufer2;
-	
-	printf("%c\n", bufer2[0]);
-	printf("%c\n", bufer2[1]);
-	
-	
-	
-	printf ("lectura fifo \n");
-	printf("%c\n", t->tipo);
-	printf("%c\n", t->buf[0]);
-	
-	
-	close(fifo);
-	* */
 }
 
 	
 
 int main () {
-	/*
-	struct {
-		
-		char tipo;
-		char buf;
-		buf= evento_teclado;
-		
-	} teclado;
-	
-	teclado= {'T', buf};
-	
-	int fifo= -1;
-	*/
+
 	
 	int fd1 = open("/dev/hidraw1", O_RDONLY);
 	printf("fd1 %d\n",fd1);
-	/*
-	fifo= open("events.log", O_WRONLY);
-	*/
-	
-	
 	
 	void* state= console_set_raw_mode(0);
 	reactor *r= reactor_new();
 	reactor_add(r, keyboard_handler_new());
 	reactor_add(r, mouse_handler_new(fd1));
 	
-//	write(fifo, &teclado, sizeof(teclado));
-	
 	reactor_run(r);
 	console_restore(0,  state);
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	return 0;

@@ -49,7 +49,7 @@ int main() {
 	
 	char bufer2[1025];
 
-	fifo= open("events.log", O_RDONLY);
+	fifo= open("/home/esther/Desktop/VKMS/Recopilacion/Eventos_mk/archivo", O_RDONLY);
 	
 	int s;
 	
@@ -89,7 +89,7 @@ int main() {
 	
 	int fifo1= -1;
 	char bufer3[1];
-	fifo1= open("select", O_RDONLY); // 1 caracter ocupa 1 byte
+	fifo1= open("/home/esther/Desktop/VKMS/Recopilacion/Selector/select", O_RDONLY); // 1 caracter ocupa 1 byte
 	
 	int r;
 	
@@ -97,11 +97,11 @@ int main() {
 	
 	if (bufer3[0]=='A') {
 		
-		IP= "192.168.1.38";
+		IP= "127.0.0.1";
 		
 	} else if (bufer3[0]=='B') {
 		
-		IP= "192.168.1.39";
+		IP= "127.0.0.1";
 		
 	} 
 	
