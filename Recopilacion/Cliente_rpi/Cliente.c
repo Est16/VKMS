@@ -30,96 +30,65 @@
 static int tcp_client_socket(const char* host, const char* service);
 int main() {
 	
-	const char* IP;
+	const char* IP1;
+	IP1= "127.0.0.1";
+	const char* IP2;
+	IP2= "127.0.0.1";
 	
-	//int fd = tcp_client_socket(IP, "1000");
+	// Comprobado con netcat en distintos puertos y una misma IP
+	int fd1 = tcp_client_socket(IP1, "1000"); 
+	int fd2 = tcp_client_socket(IP2, "999");
+	
 	for(;;) {
-		
+
 	///////////////////////////////////////////////////////////////
 	//			   ENVIO DE EVENTOS DE TECLADO Y RATON		     //
 	///////////////////////////////////////////////////////////////
 	
-	int fifo= -1;
-	
-	
-	typedef struct raton{
-	char tipo;
-	char buf[1024];
-	} movimiento;
-	
+	int fifo1= -1;
 	char bufer2[1025];
-
-	fifo= open("/home/esther/Desktop/VKMS/Recopilacion/Eventos_mk/archivo", O_RDONLY);
-	
+	fifo1= open("/home/esther/Desktop/VKMS/Recopilacion/Eventos_mk/archivo", O_RDONLY);
 	int s;
-	
-	s= read (fifo, bufer2, sizeof(bufer2));
-	
-	printf("s: %d\n", s);
-	
-	
-	movimiento* m= (movimiento*) bufer2;
+	s= read (fifo1, bufer2, sizeof(bufer2));
+	printf("numero de bytes leidos: %d\n", s);
 
-	printf("TIPO \n");
-	printf("%c\n", m->tipo);
-	
-	if (m->tipo=='T') {
-		
-		printf("BUFER \n");
-		printf("%c\n", m->buf[0]);
-		
-	}
-	
-	if (m->tipo=='R') {
-		
-		int i;
-		printf("BUFER \n");
-			for(i=0; i<7; ++i) {
-			printf("%x", m->buf[i]);
-			}
-		puts("");
-		
-	}
-	
 	
 	///////////////////////////////////////////////////////////////
 	//   OBTENCION DEL ARDUINO AL QUE HAY QUE ENVIAR EVENTOS     //
 	///////////////////////////////////////////////////////////////
 	
 	
-	int fifo1= -1;
+	int fifo2= -1;
+	int descriptor;
 	char bufer3[1];
-	fifo1= open("/home/esther/Desktop/VKMS/Recopilacion/Selector/select", O_RDONLY); // 1 caracter ocupa 1 byte
-	
+	fifo2= open("/home/esther/Desktop/VKMS/Recopilacion/Selector/select", O_RDONLY); // 1 caracter ocupa 1 byte
 	int r;
-	
-	r= read (fifo1, bufer3, sizeof(bufer3));
+	r= read (fifo2, bufer3, sizeof(bufer3));
 	
 	if (bufer3[0]=='A') {
 		
-		IP= "127.0.0.1";
+		descriptor= fd1;
 		
 	} else if (bufer3[0]=='B') {
 		
-		IP= "127.0.0.1";
-		
+		descriptor=fd2;
 	} 
-	
+
 	////////////////////////////////////////////////////////////////////////////
 	//   ENVIO DE LOS EVENTOS DE TECLADO Y RATON AL ARDUINO CORRESPONDIENTE   //
 	////////////////////////////////////////////////////////////////////////////
 	
-		int fd = tcp_client_socket(IP, "1000");
-		int n = write(fd, bufer2, strlen(bufer2));
+		int n = write(descriptor, bufer2, strlen(bufer2));
 		assert(n >= 0);
-		if (n == 0) break;
-
-		close(fifo);
-		
-		sleep(5);
+		if (n == 0) {
+			break;
+			close(fifo1);
+			close(fifo2);
+		}
 
 	}
-	close(fd);
+	close(fd1);
+	close(fd2);
 	return 0;
 }
 
