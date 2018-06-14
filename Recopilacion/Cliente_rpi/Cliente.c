@@ -31,13 +31,15 @@ static int tcp_client_socket(const char* host, const char* service);
 int main() {
 	
 	const char* IP1;
-	IP1= "127.0.0.1";
+	//IP1= "127.0.0.1";
+	IP1= "192.168.1.45";
 	const char* IP2;
-	IP2= "127.0.0.1";
+	//IP2= "127.0.0.1";
+	IP2= "192.168.1.45";
 	
 	// Comprobado con netcat en distintos puertos y una misma IP
 	int fd1 = tcp_client_socket(IP1, "1000"); 
-	int fd2 = tcp_client_socket(IP2, "999");
+	int fd2 = tcp_client_socket(IP2, "1000");
 	
 	for(;;) {
 
@@ -46,7 +48,7 @@ int main() {
 	///////////////////////////////////////////////////////////////
 	
 	int fifo1= -1;
-	char bufer2[1025];
+	unsigned char bufer2[1025];
 	fifo1= open("/home/esther/Desktop/VKMS/Recopilacion/Eventos_mk/archivo", O_RDONLY);
 	int s;
 	s= read (fifo1, bufer2, sizeof(bufer2));
@@ -78,7 +80,7 @@ int main() {
 	//   ENVIO DE LOS EVENTOS DE TECLADO Y RATON AL ARDUINO CORRESPONDIENTE   //
 	////////////////////////////////////////////////////////////////////////////
 	
-		int n = write(descriptor, bufer2, strlen(bufer2));
+		int n = write(descriptor, bufer2, s); //strlen(bufer2)
 		assert(n >= 0);
 		if (n == 0) {
 			break;

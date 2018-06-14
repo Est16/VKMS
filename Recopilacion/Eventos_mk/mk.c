@@ -34,7 +34,7 @@ static void mouse (event_handler* ev) {
 ////////////////////////////////////////////////////////////////
 	
 	//printf("ev->fd %d\n",ev->fd);
-	char bufer[1024];
+	unsigned char bufer[1024];
 	int p= read (ev->fd, bufer, 1024);
 	//printf("bytes: %d\n", p);
 	
@@ -63,7 +63,7 @@ static void mouse (event_handler* ev) {
 		
 	typedef struct raton{
 	char tipo;
-	char buf[1024];
+	unsigned char buf[1024];
 	//memset(buf, '\0', sizeof(buf));
 	//buf=bufer;
 	} movimiento;
@@ -103,12 +103,13 @@ int t= 0;
 	
 	for(t=0; t<p; ++t) {
 		printf("%x", evento.buf[t]);
+		printf(" - ");
 	}
 	
 puts("");
 
 	int a;
-	a= write(fifo, &evento, sizeof(evento));
+	a= write(fifo, &evento, p+1); //sizeof(evento)
 	printf("numero de bytes escritos: %d\n", a);
 	
 ////////////////////////////////////////////////////////////////

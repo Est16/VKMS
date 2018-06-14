@@ -20,17 +20,17 @@ ArduinoTCP.begin();
 }
 
 
-char buf[8]={0,0,0,0,0,0,0,0};
+unsigned char buf[8]={0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0};
 
 #define sensitivity 200
 
-typedef struct eventos {
-    byte x_plus[7]= {'3', '0', '1', '0', '0', '0', '0'};
-    byte x_less[7]= {'3', '0', '1', '5', '0', '0', '0'}; //    byte x_less[7]= {3, 0, -1, 15, 0, 0, 0};
-    byte y_plus[7]= {'3', '0', '0', '6', '1', '0', '0'}; //    byte y_plus[7]= {3, 0, 0, -16, -1, 0, 0};
-    byte y_less[7]= {'3', '0', '0', '6', '0', '0', '0'}; //    byte y_less[7]= {3, 0, 0, 16, 0, 0, 0};
-    byte ckd[7]= {'3', '2', '0', '0', '0', '0', '0'};
-    byte cki[7]= {'3', '1', '0', '0', '0', '0', '0'};
+typedef struct eventos {  
+    byte x_plus[7]= {0x3, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0};
+    byte x_less[7]= {0x3, 0x0, 0xFF, 0xF, 0x0, 0x0, 0x0}; //    byte x_less[7]= {3, 0, -1, 15, 0, 0, 0};
+    byte y_plus[13]= {0x3, 0x0, 0x0, 0xF0, 0xFF, 0x0, 0x0}; //    byte y_plus[7]= {3, 0, 0, -16, -1, 0, 0};
+    byte y_less[7]= {0x3, 0x0, 0x0, 0x10, 0x0, 0x0, 0x0}; //    byte y_less[7]= {3, 0, 0, 16, 0, 0, 0};
+    byte ckd[7]= {0x3, 0x2, 0x0, 0x0, 0x0, 0x0, 0x0};
+    byte cki[7]= {0x3, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0};
 };
 
 //raton* bytes;
@@ -51,9 +51,10 @@ void loop() {
     double B=0;
       
 
-    Serial.println("buf[0]");
-    Serial.println(buf[0]);  
-    buf[0]= cliente.read();
+    Serial.print("Contenido de buf[0]: ");
+    Serial.println(buf[0], HEX); 
+    
+    buf[0]= cliente.read(); 
     
     //////////////////////////////////////////////
     //        Leer el contenido del bufer       //
@@ -61,8 +62,8 @@ void loop() {
     
     if (buf[7]=='T') {
         //Keyboard.write(buf[6]);
-        Serial.println("Caracter");
-        Serial.println(buf[6]);
+        Serial.print("Caracter: ");
+        Serial.println(buf[6], HEX);
     }
 
     if  (buf[7]=='R') {
@@ -131,17 +132,19 @@ void loop() {
     //////////////////////////////////////////////
     
     for (int i=7; i>0; i--) {
-      Serial.println("///////////////"); 
-      Serial.println(i); 
-      Serial.println(buf[i]);    
+      //Serial.println("///////////////");
+      Serial.print("Contenido de la posición ");  
+      Serial.print(i); 
+      Serial.print(" de buf[]: "); 
+      Serial.println(buf[i], HEX);    
       buf[i]= buf[(i-1)];      
       delay(10);
     }
-    
+    Serial.println("///////////////");
       //Serial.println("buf[0]");
       //Serial.println(buf[0]);  
       //buf[0]= cliente.read();
       
-    delay (5000);
+    delay (2000);
 
 }

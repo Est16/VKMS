@@ -114,7 +114,7 @@ eyetracking* e;
 
 	double MM= (double) valor/5;
 	
-	printf("Media movil: %f\n", MM);
+	printf("Media: %f\n", MM);
 	
 	char salida = function(MM);
 	printf("salida: %c\n", salida);
