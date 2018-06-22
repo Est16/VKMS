@@ -1,0 +1,55 @@
+% IDIOMA ESPAÑOL Y TILDES Y EÑES
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{subfigure}
+\usepackage[numbers]{natbib}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{minted}
+\usepackage{pifont} %Añadido
+\usepackage{parskip} %Añadido
+\usepackage{amsmath} %Añadido
+\usepackage{amssymb} %Añadido
+\usepackage{cite} %añadido
+\usepackage{bibunits} %añadido
+\usepackage{url} %añadido
+\usepackage{color} %añadido
+
+\setcounter{secnumdepth}{5} %Añadido
+\setcounter{tocdepth}{5} %Añadido
+
+
+
+\renewcommand{\labelitemi}{\ding{68}}
+\renewcommand{\labelitemii}{\ding{93}}
+\renewcommand{\labelitemiii}{\ding{107}}
+%\renewcommand{\labelitemiiii}{\ding{108}}
+
+
+%\newcommand{\ee}{\textit{end-effector} }
+
+
+
+% Texto del terminal
+
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,skins}
+\usepackage{minted,xcolor}
+\usemintedstyle{perldoc}
+\definecolor{bg}{rgb}{1,0.9,0.95} 
+
+\newtcblisting{bashcode}{
+  listing engine=minted,
+  colback=bashcodebg,
+  colframe=black!70,
+  listing only,
+  minted style=colorful,
+  minted language=bash,
+  minted options={linenos=true,texcl=true},
+  left=1mm,
+}
+\definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
