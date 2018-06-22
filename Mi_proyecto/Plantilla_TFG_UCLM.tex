@@ -1,0 +1,62 @@
+\documentclass[11pt,twoside,titlepage,openright,onecolumn,a4paper]{book}
+  \setlength{\oddsidemargin}{0.75cm}    % Margen en paginas impares.
+  \setlength{\evensidemargin}{-0.4cm}   % Margen en paginas impares.
+  \setlength{\textwidth}{15.5cm}        % Anchura del texto.
+  \setlength{\textheight}{20.5cm}     	% Longitud del texto.
+  \setlength{\topmargin}{0cm}
+  \setlength{\headheight}{0cm}        	% Altura del encabezado.
+  \setlength{\headsep}{2.3cm}           % Espacio entre encabezado y texto.
+\input{paquetes/preambulo}				       
+\begin{document}
+
+\input{portada/portada_pfc}	
+\input{agradecimientos/agradecimientos}	   
+\input{dedicatoria/dedicatoria}
+\input{resumen/resumen}
+\cleardoublepage						          
+\pagestyle{headings}	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Índices   	                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman}
+\setcounter{page}{1}
+%\tableofcontents					       %Indice General
+\listoftables					           %Indice de tablas
+\listoffigures					           %Indice de figuras
+%\input{simbolos/simbolos}		           %Indice de símbolos. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Capitulos                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage	
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\iffalse
+\input{capitulo_01/texto_dir/capitulo_01}
+\input{capitulo_02/texto_dir/capitulo_02}
+
+\fi
+\input{capitulo_03/texto_dir/capitulo_03}
+\iffalse
+\input{capitulo_04/texto_dir/capitulo_04}
+\input{capitulo_05/texto_dir/capitulo_05}
+\input{capitulo_06/texto_dir/capitulo_06}		
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Bibliografía     	         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\input{bibliografia/bibliografia}		
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Inclusion de Anexos		     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\appendixname}{Anexo}
+\renewcommand{\appendixtocname}{Anexo}
+\renewcommand{\appendixpagename}{Anexo}
+\input{anexo_a/texto_dir/anexo_a}	
+\input{anexo_b/texto_dir/anexo_b}
+%\input{anexo_c/texto_dir/anexo_c}
+%\input{anexo_d/texto_dir/anexo_d}
+%\input{anexo_e/texto_dir/anexo_e}
+\end{document} 
