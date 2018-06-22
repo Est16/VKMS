@@ -91,7 +91,7 @@ La forma de tratar las excepciones es la siguiente:
     }
     \end{minted}
 
-Donde ``ex'' es la excepción de tipo ``exception'' definida en la estructura anterior. Cuando ``catch'' detecta una excepción es porque en ``try'' se ha producido una elevación de excepción en la ejecución normal del código. En ese momento, se interrumpe el proceso y ``catch'' trata el error que ha producido el lanzamiento de la excepción. En este caso, si ``catch'' sabe cómo tratar el error o ya se conoce el tipo de error que se ha producido, puede ejecutar el código correspondiente o incluso informar por pantalla sobre el mismo, en caso contrario, puede lanzar de nuevo otra excepción \citep{franciscoexcep}.
+Donde ``ex'' es la excepción de tipo ``exception'' definida en la estructura anterior. Cuando ``catch'' detecta una excepción es porque en ``try'' se ha producido una elevación de excepción en la ejecución normal del código. En ese momento, se interrumpe el proceso y ``catch'' trata el error que ha producido el lanzamiento de la excepción. En este caso, si ``catch'' sabe cómo tratar el error o ya se conoce el tipo de error que se ha producido, puede ejecutar el código correspondiente o incluso informar por pantalla sobre el mismo, en caso contrario, puede lanzar de nuevo otra excepción \citep[pág. 87--89]{tallerRPi}.
 
 Cuando se produce un error, la forma de lanzar una excepción es:
 
@@ -131,7 +131,7 @@ Se trata de un mecanismo de programación que usa objetos como pueden ser númer
     };
     \end{minted}
 
-El código anterior define un objeto denominado ``reactor'' a través de una estructura que contiene distintos datos o atributos. A esta definición se le llama ``clase''. Una vez especificado el objeto, éste debe construirse. Existen dos funciones llamadas ``constructores'' \citep{franciscoobjeto}: ``reactor\_new()'' y ``reactor\_init()''. El primero, se encarga de reservar memoria para un objeto de tipo ``reactor'', llamar a la función reactor\_init(), crear un puntero a una función que libera la memoria y devolver un puntero a una estructura de tipo ``reactor''. \\
+El código anterior define un objeto denominado ``reactor'' a través de una estructura que contiene distintos datos o atributos. A esta definición se le llama ``clase''. Una vez especificado el objeto, éste debe construirse. Existen dos funciones llamadas ``constructores'' \citep[pág. 93--95]{tallerRPi}: ``reactor\_new()'' y ``reactor\_init()''. El primero, se encarga de reservar memoria para un objeto de tipo ``reactor'', llamar a la función reactor\_init(), crear un puntero a una función que libera la memoria y devolver un puntero a una estructura de tipo ``reactor''. \\
 
     \begin{minted}[
     gobble=4,
@@ -148,7 +148,7 @@ El código anterior define un objeto denominado ``reactor'' a través de una est
     }
     \end{minted}
 
-La segunda función se encarga de asignar valores a los atributos del objeto. Además, también genera un puntero a una función el cual, debe apuntar a la función adecuada. Esta función se denomina ``función virtual'' y se encarga de liberar todos aquellos elementos de ``reactor'' reservados en la memoria. Debido a esto, esta función también es conocida como ``destructor virtual'' \citep{franciscoobjeto}.\\
+La segunda función se encarga de asignar valores a los atributos del objeto. Además, también genera un puntero a una función el cual, debe apuntar a la función adecuada. Esta función se denomina ``función virtual'' y se encarga de liberar todos aquellos elementos de ``reactor'' reservados en la memoria. Debido a esto, esta función también es conocida como ``destructor virtual'' \citep[pág. 93--95]{tallerRPi}.\\
     
 
     \begin{minted}[
@@ -176,7 +176,7 @@ Hasta ahora, solo se conoce la relevancia de la programación orientada a objeto
 
 La biblioteca reactor implementa un patrón de programación basado en programación orientada a objetos que permite elaborar programas con una arquitectura que otorga cierto orden a la aplicación que se desarrolla. Su función consiste en modelar los datos entrantes al sistema como eventos, de esta forma, ``Reactor'' dispone de varios tipos de manejadores, cada uno de ellos sirve para un tipo de evento concreto. En el caso de este proyecto, el manejador apropiado para eventos de dispositivos HID es el llamado ``event\_handler'' que se encarga de despachar eventos de tipo ``handle''\footnote{Véase el capítulo 3} y ``socket\_handler'' usado en la comunicación en red entre Raspberry Pi y Arduino. 
 
-Los objetos ``reactor'' y ``event\_handler'' que usa esta biblioteca cumplen distintas funciones. Los manejadores se implementan con objetos de tipo ``event\_handler'' y los objetos de tipo ``reactor'' contienen todos los datos necesarios para permitir la demultiplexación de los eventos, es decir, actúa como disparador eligiendo el tipo de manejador apropiado para los eventos de entrada \citep{franciscoreactor}.
+Los objetos ``reactor'' y ``event\_handler'' que usa esta biblioteca cumplen distintas funciones. Los manejadores se implementan con objetos de tipo ``event\_handler'' y los objetos de tipo ``reactor'' contienen todos los datos necesarios para permitir la demultiplexación de los eventos, es decir, actúa como disparador eligiendo el tipo de manejador apropiado para los eventos de entrada \citep[pág. 97--100]{tallerRPi}.
 
 La finalidad de esta biblioteca es tanto facilitar el manejo de eventos de varios tipos como fomentar la implementación de programas legibles y sin falsa apariencia de correcto funcionamiento como sucede aquellas veces en las que los programas se desarrollan sin seguir un patrón concreto complicándose estrepitósamente.
 

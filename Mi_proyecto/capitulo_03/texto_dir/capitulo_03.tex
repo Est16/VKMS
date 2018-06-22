@@ -101,7 +101,7 @@ Como resultado, la aplicación muestra los datos en hexadecimal de los movimient
 %/////////////////// Subsubsección ///////////////////%
 \subsubsection{Lectura de eventos de teclado}\label{s3_1_2_1}
 
-``Reactor'' aporta una forma sencilla de obtener los eventos de estos periféricos. Con este ejemplo, obtenido del libro del taller \citep{franciscotecla}, se recogen los eventos producidos por el teclado:\\
+``Reactor'' aporta una forma sencilla de obtener los eventos de estos periféricos. Con este ejemplo, obtenido del libro del taller \citep[pág. 98--99]{tallerRPi}, se recogen los eventos producidos por el teclado:
 
 \begin{minted}[
     gobble=4,
@@ -1178,8 +1178,8 @@ s= read (fifo1, bufer2, sizeof(bufer2));
 printf("numero de bytes leidos: %d\n", s);
 
 \end{minted}
-\caption{Obtención de los eventos del teclado y ratón a partir del descriptor ``archivo''.}
-\label{Listing}
+\caption{Obtención de los eventos del teclado y ratón a partir del descriptor de archivo.}
+\label{lst:hid-events-read-fd}
 \end{listing}
 
 Tras realizar estas dos llamadas al sistema, el vector ``bufer2'' contiene los bytes que constituyen el evento que ha entrado primero al archivo FIFO y que, por lo tanto, es el primero en leerse. El número de bytes almacenados en ``bufer2'' es igual al número de bytes leídos independientemente del tamaño  de 1025 bytes asignado al vector. El hecho de declarar el vector con el tipo ``unsigned char'' permite que cada byte pueda ser obtenido en decimal como un valor positivo desde 0 hasta 255, lo que se diferencia de un simple ``char'' ya que al representar en el terminal una variable de este tipo en hexadecimal, se puede obtener el número precedido de ``ffffff'' indicando que el número es negativo. Sin embargo, ambas opciones son válidas.
@@ -1218,7 +1218,7 @@ if (bufer3[0]=='A') {
 
 \end{minted}
 \caption{Decisión sobre el arduino que que recibe los eventos HID.}
-\label{Listing}
+\label{lst:hid-event-demux}
 \end{listing}
 
 %/////////////////// Subsubsección ///////////////////%
@@ -1247,7 +1247,7 @@ if (n == 0) {
 
 \end{minted}
 \caption{Envío de los eventos HID.}
-\label{Listing}
+\label{lst:hid-event-send}
 \end{listing}
 
 En cuanto a los descriptores de la conexión ``fd1'' y ``fd2'', se adquieren a partir de la llamada a la función ``tcp\_client\_socket()'' que contiene como argumentos la dirección IP del servidor Arduino y el puerto de conexión.
@@ -1270,7 +1270,7 @@ const char* IP2;
 
 \end{minted}
 \caption{Adquisición de los descriptores de la conexión.}
-\label{Listing}
+\label{lst:client-socket-create}
 \end{listing}
 
 
@@ -1312,13 +1312,13 @@ ArduinoTCP.begin();
 }
 
 \end{minted}
-\caption{Conexión de Arduino a internet mediante un módulo ethernet.}
-\label{Listing}
+\caption{Conexión de Arduino a Internet mediante un módulo Ethernet.}
+\label{lst:arduino-ethernet}
 \end{listing}
 
 
 %/////////////////// Subsubsección ///////////////////%
-\subsubsection{Lectura de los eventos}\label{s3_5_2_1}
+\subsubsection{Lectura de los eventos}\label{s3_5_2_2}
 
 Invocando a ``cliente.read()'' se obtiene uno de los bytes de los eventos enviados por el cliente de la conexión. Estos constituyen en total 7 bytes para el ratón y 1 byte para el teclado aunque depende del hardware y/o sistema operativo que se usa. Al igual que los eventos oculares, cada uno de ellos va precedido por un carácter para distinguir si se tratan de datos obtenidos por el ratón o por el teclado, de ahí que la estructura del evento sea ``TX'' y ``RXXXXXXX'' siendo ``X'' la representación de un byte. Para realizar un sistema de lectura de eventos, se ha pensado en un vector de 8 posiciones de tipo ``byte'', en el que, en cada iteración de un bucle infinito, los valores de cada posición se recorran hacia la posición sucesora y sea la posición ``0'' la que renueva su valor en cada mediante una llamada a ``cliente.read()'' para obtener un nuevo byte. A su vez, en cada iteración, se evalúa la última posición del vector. Esto quiere decir que comprueba si el byte corresponde al carácter ``T'' o ``R''. En el primer caso, lee la posición anterior a la última, ya que siempre se envía primero el carácter del tipo de evento seguido del carácter referente a la tecla pulsada. En el segundo caso, comienza un bucle de 7 iteraciones de tipo regresivo en el que se comparan todos los valores de cada una de las posiciones desde aquella anterior a la última hasta la primera con aquellas cadenas definidas como los atributos de un objeto llamado ``raton'' de tipo ``eventos''. Dado que estas cadenas están inicializadas en un orden opuesto al de verificación, las posiciones no pueden ser regresivas. Esto quiere decir que el valor relativo a la posición 6 del bufer de evento, ``buf'', no se puede comparar con el valor de la posición 6 de cualquiera de los vectores que componen el objeto ``ratón''. Así pues, ``buf[6]'' se le compara con la posición 0 de otro vector, ``buf[5] se compara con la posición 1 de otro vector y así sucesivamente. Para ello, se inicializa a 0 una variable llamada ``p'' que incrementa su valor la unidad en el momento en el que finaliza una iteración del bucle.
 
@@ -1499,7 +1499,7 @@ void loop() {
 
 \end{minted}
 \caption{Programa ``Servidor\_TCP.ino''}
-\label{Listing}
+\label{lst:servidor-tcp-ino}
 \end{listing}
 
 

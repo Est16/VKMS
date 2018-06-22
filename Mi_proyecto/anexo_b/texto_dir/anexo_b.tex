@@ -44,7 +44,7 @@ A continuación, en la imagen inferior, se observa el resultado:\\
     
 Como se observa en la imagen, todos los datos introducidos en el terminal del cliente, llegan al terminal del servidor y viceversa.
 
-La utilidad que tiene ``netcat'' en el proyecto es la de comprobar el funcionamiento del programa ``Cliente.c''. En la sección 3.3, se comenta que este programa constituye el cliente de la comunicación TCP entre Raspberry Pi Zero y Arduino Leonardo. Para saber si desempeña correctamente esta función, se puede crear un servidor con ``netcat'' que se comunique con el cliente de Raspberry. ``Cliente.c'' se ha elaborado modificando el programa cliente TCP del apartado de ``comunicaciones en red'' del libro del taller \citep{franciscoTCP}. Este programa recoge todo aquello introducido en el terminal del cliente mediante la función ``fgets()'' que lee el descriptor de la entrada estándar (teclado). Evidentemente, la comprobación se puede realizar con el programa cliente original pero la forma más directa de comprobarlo es mediante el programa cliente del taller.
+La utilidad que tiene ``netcat'' en el proyecto es la de comprobar el funcionamiento del programa ``Cliente.c''. En la sección 3.3, se comenta que este programa constituye el cliente de la comunicación TCP entre Raspberry Pi Zero y Arduino Leonardo. Para saber si desempeña correctamente esta función, se puede crear un servidor con ``netcat'' que se comunique con el cliente de Raspberry. ``Cliente.c'' se ha elaborado modificando el programa cliente TCP del apartado de ``comunicaciones en red'' del libro del taller \citep[pág. 83--85]{tallerRPi}. Este programa recoge todo aquello introducido en el terminal del cliente mediante la función ``fgets()'' que lee el descriptor de la entrada estándar (teclado). Evidentemente, la comprobación se puede realizar con el programa cliente original pero la forma más directa de comprobarlo es mediante el programa cliente del taller.
 
 \begin{listing}
 \begin{minted}[bgcolor=bg,
@@ -110,7 +110,7 @@ static struct sockaddr_in ip_address(const char* host,
 
 \end{minted}
 \caption{Programa cliente del libro del taller de Raspberry Pi}
-\label{Listing}
+\label{lst:cliente-taller-rpi}
 \end{listing}
 
 
