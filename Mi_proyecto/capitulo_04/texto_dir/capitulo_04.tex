@@ -12,16 +12,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Lectura y multiplexado de eventos teclado - ratón con ``Reactor''} \label{s4_1}
+\section{Lectura y demultiplexado de eventos teclado - ratón con ``Reactor''} \label{s4_1}
 
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Instalación de ``Reactor''} \label{s4_1_1}
 
-La biblioteca ``Reactor’’ es una biblioteca de software libre que ha sido pensada para el uso académico en Trabajos de Fin de Grado impartidos en la Universidad de Castilla-La Mancha. Se encuentra disposnible respositorio de su desarrollador, Francisco Moya: ``http:\textbackslash \textbackslash github.com/\\FranciscoMoya/rpi-src’’. Puede descargarse directamente o si se dispone de un sistema de control de versiones GIT\footnote{Véase la sección 1,5.}, se puede clonar el repositorio: \\
+La biblioteca ``Reactor’’ es una biblioteca de software libre que ha sido pensada para el uso académico en Trabajos de Fin de Grado impartidos en la Universidad de Castilla-La Mancha. Se encuentra disponible respositorio de su desarrollador, Francisco Moya: ``https://github.com/\\FranciscoMoya/rpi-src’’. Puede descargarse directamente o si se dispone de un sistema de control de versiones GIT\footnote{Véase la sección 1,5.}, se puede clonar el repositorio: \\
 
 \begin{bashcode}
 $ cd Desktop
-$ clone http:\\github.com/FranciscoMoya/rpi-src
+$ git clone https://github.com/FranciscoMoya/rpi-src
 \end{bashcode}
 
 Accediendo a la ruta ``Desktop/rpi-src/c/reactor/reactor’’ se observan aquellos archivos ``.c’’ y cabecera o ``.h’’ necesarios para compilar aquellos programas que hagan uso de esta biblioteca.
@@ -46,20 +46,20 @@ $ ./build
 \end{bashcode}
 
 El script ``build’’ realiza la compilación y la instalación de WiringPi. 
-Una vez hecho esto, se procede a contruir la biblioteca ``Reactor'' con todos los archivos de ``Desktop/rpi-src/c/reactor/reactor’’: \\
+Una vez hecho esto, se procede a construir la biblioteca ``Reactor'' con todos los archivos de ``Desktop/rpi-src/c/reactor/reactor’’: \\
 
 \begin{bashcode}
 $ cd Desktop/rpi-src/c/reactor
 $ make
 \end{bashcode}
 
-La última orden crea la biblioteca ``libreactor.a’’ sin problemas ya que se detecta perfectamente el archivo cabecera ``wiringPi.h’’ de la biblioteca anterior la cual, ha sido previamente instalada.
+La última orden crea la biblioteca ``libreactor.a’’ sin problemas ya que se detecta perfectamente el archivo cabecera ``wiringPi.h’’ de la biblioteca anterior, la cual ha sido previamente instalada.
 
 
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
-\subsection{Resultados de la lectura y multiplexado de eventos} \label{s4_1_2}
+\subsection{Resultados de la lectura y demultiplexado de eventos} \label{s4_1_2}
 
-Como ya se ha descrito en la sección 3.1.3.3, este programa realiza la apertura de las interfaces ``Hidraw’’ de entrada/salida de los dispositivos HID para acceder a los eventos enviados por el ratón y el teclado conocidos como los clientes de esta comunicación. El descriptor del archivo se registra en un objeto de tipo ``reactor’’ y se declaran los manejadores, los cuales son llamados durante la ejecución del bucle ``reactor\_run()’’. Estos manejadores son declarados como ``event\_handler\_keyboard()’’ y ``event\_handler\_mouse()’’. Cuando el bucle demultiplexa los eventos, cede el control a uno de estos manejadores. Cada uno devuelve una función que crea un objeto ``event\_handler()’’ y tiene como argumentos el descriptor correspondiente y una función de tipo ``void’’ (``keyboard()’’ o ``mouse()’’) que lee el descriptor y muestra los datos en el terminal. Esto es lo que permite visualizar los eventos tras realizar la compilación del programa.
+Como ya se ha descrito en la sección 3.1, este programa realiza la apertura de las interfaces ``Hidraw’’ de entrada/salida de los dispositivos HID para acceder a los eventos enviados por el ratón y el teclado. El descriptor del archivo se registra en un objeto de tipo ``reactor’’ y se declaran los manejadores, los cuales son llamados durante la ejecución del bucle ``reactor\_run()’’. Estos manejadores son declarados como ``event\_handler\_keyboard()’’ y ``event\_handler\_mouse()’’. Cuando el bucle demultiplexa los eventos, cede el control a uno de estos manejadores. Cada uno devuelve una función que crea un objeto ``event\_handler()’’ y tiene como argumentos el descriptor correspondiente y una función de tipo ``void’’ (``keyboard()’’ o ``mouse()’’) que lee el descriptor y muestra los datos en el terminal. Esto es lo que permite visualizar los eventos tras realizar la compilación del programa.
 
 Para compilarlo, es necesario establecer las instrucciones adecuadas para que el compilador construya el ejecutable sin dar lugar a problemas. Para eso, es requisito indispensable tener instalada la biblioteca ``Reactor’’ como se describe en la sección anterior. Las instrucción se especifican en un archivo de nombre ``makefile’’ o ``Makefile’’\footnote{Esto se aplica a todos los programas.}:
 
@@ -86,10 +86,10 @@ Por otro lado, este archivo debe estar en el mismo directorio en el que se encue
 \begin{enumerate}
     \item Cambio del directorio de trabajo. Esto se logra con la orden ``cd’’ seguido de la ruta en la que se encuentran los archivos del programa.
     \item Compilación con la orden ``make’’ seguido del nombre del archivo sin incluir la extensión del formato. Si el formato del archivo indica que se trata de un programa escrito en C, ``make’’ compila con el compilador ``gcc’’, en cambio, si el archivo tiene la extensión ``.cpp’’ se usa el compilador ``g++’’ de C++.
-    ```make’’ no conoce el directorio en el que se encuentran los elementos que intervienen en la compilación como los archivos cabecera de ``Reactor’’, por tanto, en el ``makefile´´ se deben especificar todos ellos, incluyendo los archivos ``.c’’ que precisan para elaborar el ejecutable.
+    ```make’’ no conoce el directorio en el que se encuentran los elementos que intervienen en la compilación como los archivos cabecera de ``Reactor’’, por tanto, en ``makefile´´ se deben especificar todos ellos, incluyendo los archivos ``.c’’ que precisan para elaborar el ejecutable.
 \end{enumerate}
 
-En este caso, el archivo a compilar se llama ``mk.c’’ y se encuentra en la ruta ``Desktop/VKMS/Recopilacion/Eventos\_mk’’. Atendiendo a los pasos anteriores, la compilación se hace del siguiente modo: \\
+En este caso, el archivo a compilar se llama ``mk.c’’ y se encuentra en la ruta ``{\itshape Desktop/VKMS/Recopilacion/Eventos\_mk}''. Atendiendo a los pasos anteriores, la compilación se hace del siguiente modo: \\
 
 \begin{bashcode}
 $ cd Desktop/VKMS/Recopilacion/Eventos_mk
@@ -102,108 +102,96 @@ Tras construir el ejecutable, éste se ejecuta introduciendo ``./’’ junto al
 $ sudo ./mk
 \end{bashcode}
 
-En este caso, es importante añadir los permisos de usuario con ``sudo'' ya que el sistema puede devolver ``-1'' en la apertura del descriptor.
+En este caso, es importante añadir los permisos de superusuario con ``sudo'' ya que el programa puede devolver ``-1'' en la apertura del descriptor.
 
-Como resultado, el terminal de Linux muestra los eventos capturados de los dispositivos cuando se producen pulsaciones de teclado o movimientos de ratón: \\
+Como resultado, el terminal de Linux muestra los eventos capturados de los dispositivos cuando se producen pulsaciones de teclado o movimientos de ratón: 
 
 \begin{itemize}
-    \item Pulsaciones de teclas:\\
-    
-    \begin{figure}
+    \item Pulsaciones de teclas (``Listing \ref{fig: Eventos de pulsaciones de teclas}'').
+    \item Movimiento del ratón. Se incluyen las pulsaciones de los dos botones principales y deslizamientos de la ruleta central:
+    \begin{itemize}
+        \item Movimiento del ratón horizontalmente hacia la derecha (``Listing \ref{fig: horizontalmente hacia la derecha}'').
+        \item Movimiento del ratón horizontalmente hacia la izquierda (``Listing \ref{fig: horizontalmente hacia la izquierda}'').
+        \item Movimiento del ratón verticalmente hacia arriba (``Listing \ref{fig: verticalmente hacia arriba}'').
+        \item Movimiento del ratón verticalmente hacia abajo (``Listing \ref{fig: verticalmente hacia abajo}'').
+        \item Pulsaciones del botón derecho (``Listing \ref{fig: pulsaciones del botón derecho}'').
+        \item Pulsaciones del botón izquierdo (``Listing \ref{fig: pulsaciones del botón izquierdo}'').
+        \item Movimiento de la ruleta central hacia arriba (``Listing \ref{fig: ruleta hacia arriba}'').
+        \item Movimiento de la ruleta central hacia abajo (``Listing \ref{fig: ruleta hacia abajo}'').
+    \end{itemize}
+    \item Combinación de los eventos anteriores (demultiplexación) (``Listing \ref{fig: Eventos demultiplexados}'').\\
+\end{itemize}
+
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/teclas.jpg}
     \caption{Eventos de pulsaciones de teclas}
-    %\label{fig:figura4}
+    \label{fig: Eventos de pulsaciones de teclas}
     \end{figure}
 
-    \item Movimiento del ratón. Se incluyen las pulsaciones de los dos botones principales y deslizamientos de la ruleta central:\\
-    
-    \begin{itemize}
-        \item Movimiento del ratón horizontalmente hacia la derecha:
-        
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/derecha.jpg}
-            \caption{Eventos resultantes del movimiento del ratón horizontalmente hacia la derecha}
-            %\label{fig:figura4}
-            \end{figure}
-        
-        \item Movimiento del ratón horizontalmente hacia la izquierda:
-        
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/izquierda.jpg}
-            \caption{Eventos resultantes del movimiento del ratón horizontalmente hacia la izquierda}
-            %\label{fig:figura4}
-            \end{figure}
-        
-        \item Movimiento del ratón verticalmente hacia arriba:
-        
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/arriba.jpg}
-            \caption{Eventos resultantes del movimiento del ratón verticalmente hacia arriba}
-            %\label{fig:figura4}
-            \end{figure}
-        
-        \item Movimiento del ratón verticalmente hacia abajo:
-        
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/Abajo.jpg}
-            \caption{Eventos resultantes del movimiento del ratón verticalmente hacia abajo}
-            %\label{fig:figura4}
-            \end{figure}
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/derecha.jpg}
+    \caption{Eventos resultantes del movimiento del ratón horizontalmente hacia la derecha}
+    \label{fig: horizontalmente hacia la derecha}
+    \end{figure}
+
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/izquierda.jpg}
+    \caption{Eventos resultantes del movimiento del ratón horizontalmente hacia la izquierda}
+    \label{fig: horizontalmente hacia la izquierda}
+    \end{figure}
+
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/arriba.jpg}
+    \caption{Eventos resultantes del movimiento del ratón verticalmente hacia arriba}
+    \label{fig: verticalmente hacia arriba}
+    \end{figure}
+
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/Abajo.jpg}
+    \caption{Eventos resultantes del movimiento del ratón verticalmente hacia abajo}
+    \label{fig: verticalmente hacia abajo}
+    \end{figure}
+
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/clickder.jpg}
+    \caption{Eventos resultantes de las pulsaciones del botón derecho}
+    \label{fig: pulsaciones del botón derecho}
+    \end{figure}
+
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/clickizq.jpg}
+    \caption{Eventos resultantes de las pulsaciones del botón izquierdo}
+    \label{fig: pulsaciones del botón izquierdo}
+    \end{figure}
             
-        \item Pulsaciones del botón derecho:
-        
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/clickder.jpg}
-            \caption{Eventos resultantes de las pulsaciones del botón derecho}
-            %\label{fig:figura4}
-            \end{figure}
-        
-        \item Pulsaciones del botón izquierdo:
-        
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/clickizq.jpg}
-            \caption{Eventos resultantes de las pulsaciones del botón izquierdo}
-            %\label{fig:figura4}
-            \end{figure}
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/Raba.jpg}
+    \caption{Eventos resultantes del movimiento de la ruleta hacia arriba}
+    \label{fig: ruleta hacia arriba}
+    \end{figure}
             
-        \item Movimiento de la ruleta central hacia arriba:
+    \begin{figure}[p]
+    \centering
+    \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/Rajo.jpg}
+    \caption{Eventos resultantes del movimiento de la ruleta hacia abajo}
+    \label{fig: ruleta hacia abajo}
+    \end{figure}
 
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/Raba.jpg}
-            \caption{Eventos resultantes del movimiento de la ruleta hacia arriba}
-            %\label{fig:figura4}
-            \end{figure}
-            
-        \item Movimiento de la ruleta central hacia abajo:
-
-            \begin{figure}
-            \centering
-            \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/Rajo.jpg}
-            \caption{Eventos resultantes del movimiento de la ruleta hacia abajo}
-            %\label{fig:figura4}
-            \end{figure}
-
-    \end{itemize}
-
-    
-    \item Combinación de los eventos anteriores (demultiplexación):\\
-\end{itemize}
-
-    \begin{figure}
+    \begin{figure}[p]
     \centering
     \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/demu.jpg}
     \caption{Eventos demultiplexados}
-    %\label{fig:figura4}
+    \label{fig: Eventos demultiplexados}
     \end{figure}
-
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
@@ -213,45 +201,79 @@ Como resultado, el terminal de Linux muestra los eventos capturados de los dispo
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Instalación de ``OpenCV''} \label{s4_2_1}
 
-Los pasos para realizar la instalación de OpenCV son:
+Los pasos para realizar la instalación de OpenCV \citep{codebind} son:
 
 \begin{enumerate}
-    \item Instalación de las dependencias y compiladores:
+    \item Actualizar Raspbian:\\
+\begin{bashcode}
+$ sudo apt-get update
+$ sudo apt-get upgrade
+\end{bashcode}
+    \item Instalación de las dependencias:\\
     
 \begin{bashcode}
-$ sudo apt-get install build-
-$ sudo apt-get install cmake git libgtk2.0-dev pkg-config \
-    libavcodec-dev libavformat-dev libswscale-dev
-$ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev \
-    libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+$ sudo apt-get install build-essential cmake git libgtk2.0-dev 
+pkg-config libavcodec-dev libavformat-dev libswscale-dev
+\end{bashcode}
+\begin{bashcode}
+$ sudo apt-get install python3.5-dev python3-numpy libtbb2 libtbb-dev
+\end{bashcode}
+\begin{bashcode}
+$ sudo apt-get install libjpeg-dev libpng-dev libtiff5-dev 
+libjasper-dev libdc1394-22-dev libeigen3-dev libtheora-dev 
+libvorbis-dev libxvidcore-dev libx264-dev sphinx-common 
+libtbb-dev yasm libfaac-dev libopencore-amrnb-dev 
+libopencore-amrwb-dev libopenexr-dev libgstreamer-plugins-base1.0-dev
+libavutil-dev libavfilter-dev libavresample-dev
 \end{bashcode}
     
-    \item Descargar OpenCV de la página oficial de OpenCV\citep{opencvorg}: ``https://opencv.org/releases.html''. Aparece una lista de versiones de esta biblioteca disponibles. En cualquiera de ellas se selecciona ``sources'' y automáticamente comienza la descarga en un archivo comprimido.
+    \item Descargar OpenCV de la página oficial de OpenCV\citep{opencvorg}: ``https://opencv.org/releases.html''. Aparece una lista de versiones de esta biblioteca disponibles. En cualquiera de ellas se selecciona ``sources'' y automáticamente comienza la descarga en un archivo comprimido. Otra opción consiste en clonarlo con permisos de superusuario en {\itshape /opt} si se dispone de GIT:\\
+\begin{bashcode}
+$ sudo -s
+$ cd /opt
+/opt$ git clone https://github.com/Itseez/opencv.git
+/opt$ git clone https://github.com/Itseez/opencv_contrib.git
+\end{bashcode}
     
-    \item Descomprimir el archivo y renombrarlo con un nombre mas sencillo para facilitar su manipulación como, por ejemplo ``OpenCV''.
-    
-    \item Crear una carpeta dentro de /OpenCV llamada ``build'':
+    \item Crear una carpeta dentro de {\itshape /opencv} llamada ``release'':\\
     
 \begin{bashcode}
-$ cd OpenCV
-$ mkdir build
-$ cd build
+/opt$ cd opencv
+/opt/opencv$ mkdir release
 \end{bashcode}
-    
-    \item Instalar el compilador ``cmake'':
+
+    \item Eliminar el archivo ``CMakeCache.txt'' para evitar errores con ``cmake'': \\
 
 \begin{bashcode}
-$ cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..
+/opt$ cd opencv
+/opt/opencv$ rm CMakeCache.txt
 \end{bashcode}
 
-    \item Ejecutar la orden ``make'' dentro de ``build'' para compilar toda la biblioteca:
+    \item Instalar el compilador ``cmake'' dentro de ``release'':\\
+
 \begin{bashcode}
-$ make
+/opt/opencv$ cd release
+/opt/opencv/release$ cmake -D BUILD_TIFF=ON -D WITH_CUDA=OFF -D 
+ENABLE_AVX=OFF -D WITH_OPENGL=OFF -D WITH_OPENCL=OFF -D WITH_IPP=OFF 
+-D WITH_TBB=ON -D BUILD_TBB=ON -D WITH_EIGEN=OFF -D WITH_V4L=OFF 
+-D WITH_VTK=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF 
+-D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local 
+-D OPENCV_EXTRA_MODULES_PATH=/opt/opencv_contrib/modules /opt/opencv/
+
 \end{bashcode}
 
-    \item Ejecutar la orden ``sudo make install'' para instalar la bilioteca:
+    \item Construir e instalar la biblioteca:\\
 \begin{bashcode}
-$ sudo make install
+/opt/opencv/release$ make -j4
+/opt/opencv/release$ make install
+/opt/opencv/release$ ldconfig
+\end{bashcode}
+
+    \item Salir del modo superusuario y comprobar si la instalación de OpenCV se ha realizado con éxito obteniendo la versión:\\
+\begin{bashcode}
+/opt/opencv/release$ exit
+/opt/opencv/release$ cd ~
+$ pkg-config --modversion opencv
 \end{bashcode}
 
 \end{enumerate}
@@ -259,44 +281,46 @@ $ sudo make install
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Activación de la cámara} \label{s4_2_2}
 
-Cuando se conecta el módulo de la cámara al puerto Cam por primera vez, lo más probable es que no esté activada. Para activarla, hay que acceder al menú de la configuración de Raspberry Pi a través del terminal:
+Cuando se conecta el módulo de la cámara al puerto Cam por primera vez, lo más probable es que no esté activada. Para activarla, hay que acceder al menú de la configuración de Raspberry Pi a través del terminal:\\
 
 \begin{bashcode}
 $ sudo raspi-config
 \end{bashcode}
 
-A continuación, aparece el menú que presenta una amplia lista de elementos a configurar. La opción ``Interfacing Options'' permite acceder a la configuración de los periféricos. 
+    
+A continuación, aparece el menú que presenta una amplia lista de elementos a configurar (figura \ref{fig: menu}). La opción ``Interfacing Options'' permite acceder a la configuración de los periféricos (figura \ref{fig: submenu}). 
+En este caso, interesa modificar el estado de ``camera’’ de ``disable’’ a ``enable’’. Posteriormente, se muestra el mensaje ``Would you like the camera interface to be enabled?’’ al cual hay que responder con ``$\lessdot$Enable$\gtrdot$’’ y reiniciar la microcontroladora para guardar y establecer los cambios correctamente (figura \ref{fig: mensaje}). Esto va a permitir que ``eye\_detect.cpp’’ y ``save\_capture.cpp'' puedan encenderla para iniciar el proceso de detección y captura de imágenes.
 
-    \begin{figure}
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/actp1.jpg}
     \caption{Menú de configuración}
-    %\label{fig:figura4}
+    \label{fig: menu}
     \end{figure}
-
-En este caso, interesa modificar el estado de ``camera’’ de ``disable’’ a ``enable’’. Posteriormente, se muestra el mensaje ``Would you like the camera interface to be enabled?’’ al cual hay que responder con ``$\lessdot$Enable$\gtrdot$’’ y reiniciar la microcontroladora para guardar y establecer los cambios correctamente. Esto va a permitir que ``eye\_detect.cpp’’ y ``save\_capture.cpp'' pueda encenderla para iniciar el proceso de detección y captura de imágenes.
-
-    \begin{figure}
+    
+        \begin{figure}
     \centering
     \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/actp2.jpg}
     \caption{Submenú de ``Interfacing Options}
-    %\label{fig:figura4}
+    \label{fig: submenu}
     \end{figure}
+    
 
-    \begin{figure}
+
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/actp3.jpg}
     \caption{Mensaje de activación de la cámara}
-    %\label{fig:figura4}
+    \label{fig: mensaje}
     \end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Resultados de la calibración} \label{s4_2_3}
 
-Del proceso de calibración se obtienen dos tipos de resultados: las capturas tomadas con ayuda de ``save\_capture.cpp’’ y el archivo de calibración y los valores de los parámetros de la cámara obtenidos con ``catibration.cpp’’.
+Del proceso de calibración se obtienen tres tipos de resultados: la identificación de los patrones sobre las capturas tomadas con ayuda de ``save\_capture.cpp’’, el archivo de calibración y los valores de los parámetros de la cámara obtenidos con ``catibration.cpp’’ mostrados en el terminal.
 
-Al igual que en el caso anterior, es indispensable indicar las instrucciones de compilación al archivo ``makefile´´ para que conozca las direcciones de los archivos cabecera y archivos ``.c’’ así como los objetos de la biblioteca OpenCV invlolucrados en el proceso de creación del ejecutable tanto de ``save\_capture.cpp’’ como de ``calibration.cpp’’. Como ahora se trabaja con programas escritos en C++, el sistema Linux debe disponer del compilador ``g++’’. En caso de no tenerlo, se instala en el sistema tecleando los siguientes comandos en el terminal en el caso de Raspbian y de los sistemas operativos basados en Debian:
+Al igual que en el caso anterior, es indispensable indicar las instrucciones de compilación al archivo ``makefile'' para que conozca las direcciones de los archivos cabecera y archivos ``.c’’ así como los objetos de la biblioteca OpenCV involucrados en el proceso de creación del ejecutable tanto de ``save\_capture.cpp’’ como de ``calibration.cpp’’. Como ahora se trabaja con programas escritos en C++, el sistema Linux debe disponer del compilador ``g++’’. En caso de no tenerlo, se instala en el sistema tecleando los siguientes comandos en el terminal en el caso de Raspbian y de los sistemas operativos basados en Debian:
 
 \begin{bashcode}
 $ sudo apt-get install g++
@@ -321,7 +345,7 @@ calibration: CC=g++
 calibration: calibration.o
 
 \end{minted}
-\caption{Makefile de ``save\_capture.cpp'' y ``calibration.cpp''}
+\caption{``Makefile'' de ``save\_capture.cpp'' y ``calibration.cpp''}
 \label{Listing}
 \end{listing}
 
@@ -330,7 +354,7 @@ Este archivo sirve para construir el ejecutable de ambos programas. Si ya se ha 
 \begin{itemize}
     \item Capturas de imágenes:
     
-    El archivo OpenCV se encuentra en la ruta ``Desktop/VKMS/Calibracion’’ junto al ``Makefile’’ anterior. \\
+    El archivo ``save\_capture.cpp'' se encuentra en la ruta ``{\itshape Desktop/VKMS/Calibracion}’’ junto al ``Makefile’’ anterior. \\
     
 \begin{bashcode}
 $ cd Desktop/VKMS/Calibracion
@@ -338,28 +362,28 @@ $ make save_capture
 $ ./save_capture
 \end{bashcode}
     
-Después de ejecutar el programa, se abre una ventana que muestra todas las imágenes que captura la cámara y espera a que el usuario pulse alguna tecla. Cuando esto sucede, la imagen se captura y se guarda. Este proceso se lleva a cabo catorce veces. Como se ha comentado en apartados anteriores, cada captura corresponde con una posición concreta del patrón de calibración. Esto se puede observar en las imágenes capturadas y guardadas por el programa: \\
+Después de ejecutar el programa, se abre una ventana que muestra todas las imágenes que captura la cámara y espera a que el usuario pulse alguna tecla. Cuando esto sucede, la imagen se captura y se guarda. Este proceso se lleva a cabo catorce veces. Como se ha comentado en apartados anteriores, cada captura corresponde con una posición concreta del patrón de calibración. Esto se puede observar en las imágenes capturadas y guardadas por el programa (figura \ref{fig: imagenessavecapture}): 
     
 \begin{figure}[htbp]
 \centering
-\subfigure[Calibracion0.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion0.jpg}}
-\subfigure[Calibracion1.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion1.jpg}}
-\subfigure[Calibracion2.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion2.jpg}}
-\subfigure[Calibracion3.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion3.jpg}}
-\subfigure[Calibracion4.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion4.jpg}}
-\subfigure[Calibracion5.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion5.jpg}}
-\subfigure[Calibracion6.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion6.jpg}}
-\subfigure[Calibracion7.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion7.jpg}}
-\subfigure[Calibracion8.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion8.jpg}}
-\subfigure[Calibracion9.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion9.jpg}}
-\subfigure[Calibracion10.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion10.jpg}}
-\subfigure[Calibracion11.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion11.jpg}}
-\subfigure[Calibracion12.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion12.jpg}}
-\subfigure[Calibracion13.jpg]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/Calibracion13.jpg}}
+\subfigure[Calibracion0.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion0.jpg}}
+\subfigure[Calibracion1.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion1.jpg}}
+\subfigure[Calibracion2.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion2.jpg}}
+\subfigure[Calibracion3.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion3.jpg}}
+\subfigure[Calibracion4.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion4.jpg}}
+\subfigure[Calibracion5.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion5.jpg}}
+\subfigure[Calibracion6.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion6.jpg}}
+\subfigure[Calibracion7.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion7.jpg}}
+\subfigure[Calibracion8.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion8.jpg}}
+\subfigure[Calibracion9.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion9.jpg}}
+\subfigure[Calibracion10.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion10.jpg}}
+\subfigure[Calibracion11.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion11.jpg}}
+\subfigure[Calibracion12.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion12.jpg}}
+\subfigure[Calibracion13.jpg]{\includegraphics[width=45mm]{capitulo_04/figuras_dir/Calibracion13.jpg}}
 \caption{Imágenes capturadas y guardadas por ``save\_capture.cpp''} 
-%\label{fig:lego}
+\label{fig: imagenessavecapture}
 \end{figure}
-
+\clearpage
     \item Calibración:
 
 El ejecutable se obtiene y ejecuta de la misma forma que con ``save\_capture.cpp’’: \\
@@ -370,108 +394,97 @@ $ make calibration
 $ ./calibration
 \end{bashcode}
 
-El programa lee las imágenes que fueron guardadas en el paso anterior, detecta el patrón en cada una, calcula los puntos de las esquinas interiores de los cuadrados, dibuja el patrón si lo ha detectado, obtiene los parámetros de la cámara, los representan en el terminal y finalmente, los introduce en ``MiCam.yml’’:
+El programa lee las imágenes que fueron guardadas en el paso anterior, detecta el patrón en cada una, calcula los puntos de las esquinas interiores de los cuadrados, dibuja el patrón si lo ha detectado, obtiene los parámetros de la cámara, los representan en el terminal y finalmente, los introduce en ``MiCam.yml’’. Otro resultado de la calibración se muestra cuando ``eye\_detect.cpp'' llama a ``undistort()''. En este caso, la ventana que muestra las capturas de vídeo presenta una ligera modificación en los bordes y en las esquinas como consecuencia de la eliminación de la distorsión radial (figura \ref{fig: sindistorsion}).
 
 \begin{itemize}
-    \item Representación visual de los patrones sobre las capturas:\\
-    
+    \item Representación visual de los patrones sobre las capturas (figura \ref{fig: patrondetectado}).
+    \item Visualización de los valores de los parámetros de la cámara en el terminal (figura \ref{fig: parametroscamaraterminal}).
+    \item Archivo de calibración ``MiCam.yml’’ (figuras \ref{fig: micam1}, \ref{fig: micam2} y \ref{fig: micam3}). 
+    \item Imagen real e imagen sin distorsión (figura \ref{fig: sindistorsion}).\\
+\end{itemize}
+\end{itemize}
+
 \begin{figure}[htbp]
 \centering
-\subfigure[Posición 1]{\includegraphics[width=50mm]{capitulo_04/figuras_dir/pat1.jpg}}
-\subfigure[Posición 2]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat2.jpg}}
-\subfigure[Posición 3]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat3.jpg}}
-\subfigure[Posición 4]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat4.jpg}}
-\subfigure[Posición 5]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat5.jpg}}
-\subfigure[Posición 6]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat6.jpg}}
-\subfigure[Posición 7]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat7.jpg}}
-\subfigure[Posición 8]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat8.jpg}}
-\subfigure[Posición 9]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat9.jpg}}
-\subfigure[Posición 10]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat10.jpg}}
-\subfigure[Posición 11]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat11.jpg}}
-\subfigure[Posición 12]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat12.jpg}}
-\subfigure[Posición 13]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat13.jpg}}
-\subfigure[Posición 14]{\includegraphics[width=50mm, scale = 0.3]{capitulo_04/figuras_dir/pat14.jpg}}
+\subfigure[Posición 1]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat1.jpg}}
+\subfigure[Posición 2]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat2.jpg}}
+\subfigure[Posición 3]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat3.jpg}}
+\subfigure[Posición 4]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat4.jpg}}
+\subfigure[Posición 5]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat5.jpg}}
+\subfigure[Posición 6]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat6.jpg}}
+\subfigure[Posición 7]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat7.jpg}}
+\subfigure[Posición 8]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat8.jpg}}
+\subfigure[Posición 9]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat9.jpg}}
+\subfigure[Posición 10]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat10.jpg}}
+\subfigure[Posición 11]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat11.jpg}}
+\subfigure[Posición 12]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat12.jpg}}
+\subfigure[Posición 13]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat13.jpg}}
+\subfigure[Posición 14]{\includegraphics[width=42mm]{capitulo_04/figuras_dir/pat14.jpg}}
 \caption{Detección del patrón por ``calibration.cpp'' en las imágenes guardadas.} 
-%\label{fig:lego}
+\label{fig: patrondetectado}
 \end{figure}
 
-
-    \item Visualización de los valores de los parámetros de la cámara en el terminal: \\
-
-    \begin{figure}
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/parametros.jpg}
     \caption{Parámetros de la cámara en el terminal}
-    %\label{fig:figura4}
+    \label{fig: parametroscamaraterminal}
     \end{figure}
 
-    \item Archivo de calibración ``MiCam.yml’’: \\
-    
-    \begin{figure}
+    \begin{figure}[p]
     \centering
     \includegraphics[scale = 0.35]{capitulo_04/figuras_dir/par1.jpg}
     \caption{Número de precisión, matriz de la cámara, coeficientes de distorsión y vector de rotación}
-    %\label{fig:figura4}
+    \label{fig: micam1}
     \end{figure}
     
-    \begin{figure}
+    \begin{figure}[p]
     \centering
     \includegraphics[scale = 0.35]{capitulo_04/figuras_dir/par2.jpg}
     \caption{Vector de traslación}
-    %\label{fig:figura4}
+    \label{fig: micam2}
     \end{figure}
     
-    \begin{figure}
+    \begin{figure}[p]
     \centering
     \includegraphics[scale = 0.35]{capitulo_04/figuras_dir/par3.jpg}
     \caption{Concatenación del vector de rotación con el vector de traslación}
-    %\label{fig:figura4}
+    \label{fig: micam3}
     \end{figure}
-    
-    \item Imagen real e imagen sin distorsión:
-    
+
 \begin{figure}[htbp]
 \centering
 \subfigure[Imagen distorsionada]{\includegraphics[width=70mm]{capitulo_04/figuras_dir/condist.jpg}}
 \subfigure[Imagen sin distorsionar]{\includegraphics[width=70mm]{capitulo_04/figuras_dir/sindist.jpg}}
-
 \caption{Imagen con y sin distorsión radial} 
-\label{fig:sindistorsion}
+\label{fig: sindistorsion}
 \end{figure}
-
-\end{itemize}
-\end{itemize}
-
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Seguimiento ocular con OpenCV} \label{s4_3}
 
+Como se describe en el apartado anterior, los parámetros de la cámara son imprescindibles para eliminar la distorsión radial, en concreto, la matriz de la cámara y los coeficientes de distorsión. ``eye\_detect.cpp’’ elimina la distorsión radial cuando llama a la función ``undistort()’’ que carga el archivo que contiene esos parámetros y abre una ventana que muestra las capturas sin distorsión. En esa ventana, se muestra en cada captura las regiones detectadas con el algoritmo de Viola-Jones (figura \ref{fig:abner}). Estas regiones aparecen delimitadas por recuadros (cara y ojos) y circunferencias (iris). Evidentemente, en este proyecto no interesa la representación de estas zonas, sino que los puntos de la esquina superior izquierda de los recuadros del ojo izquierdo de la imagen que corresponde al ojo derecho de la persona. Las coordenadas de estos puntos se reproducen en el terminal. Para diferenciar unos puntos de otros, cada uno viene precedido de una palabra: ``face’’, ``Ojos’’ y ``Pupila’’. Es importante destacar que no todos estos puntos no se toman respecto al sistema de referencia de la imagen cuyo origen es la esquina superior izquierda (O). Sólo el punto del recuadro de la cara (x’, y’) se obtiene respecto a O. El punto (x’’, y’’) del recuadro del ojo está medido respecto el recuadro de la cara (O’) y el centro del iris (x’’’, y’’’), respecto el recuadro del ojo (O’’). Para una mejor comprensión del resultado del programa, se representa lo anterior en una imagen aclaratoria como la de la figura \ref{fig: esquemacara}.
 
-Los parámetros de la cámara son imprecindibles para eliminar la distorsión radial, en concreto, la matriz de la cámara y los coeficientes de distorsión. ``eye\_detect.cpp’’ elimina la distorsión radial cuando llama a la función ``undistort()’’ que carga el archivo que contiene esos parámetros y abre una ventana que muestra las capturas sin distorsión (figura \ref{fig:sindistorsion}). Esto se aprecia en la forma que toman las esquinas de la imagen. En esa ventana, se muestra en cada captura las regiones detectadas con el algoritmo de Viola-Jones (figura \ref{fig:abner}). Estas regiones aparecen delimitadas por recuadros (cara y ojos) y circunferencias (iris). Evidentemente, en este proyecto no interesa la representación de estas zonas, sino que los puntos de la esquina superior izquierda de los recuadros y el centro de la circunferencia en base al ojo izquierdo de la imagen (ojo derecho de la persona). Las coordenadas de estos puntos se reproducen en el terminal. Para diferenciar unos puntos de otros, cada uno viene precedido de una palabra: ``face’’, ``Ojos’’ y ``Pupila’’. Es importante destacar que no todos estos puntos no se toman respecto al sistema de referencia de la imagen cuyo origen es la esquina superior izquierda (O). Sólo el punto del recuadro de la cara (x’, y’) se obtiene respecto O. El punto (x’’, y’’) del recuadro del ojo está medido respecto el recuadro de la cara (O’) y el centro del iris (x’’’, y’’’), respecto el recuadro del ojo (O’’). Para una mejor comprensión del resultado del programa, se representa lo anterior en una imagen aclaratoria:
-
-    \begin{figure}
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/cara.jpg}
     \caption{Representación de los sistemas de referencia}
-    %\label{fig:figura4}
+    \label{fig: esquemacara}
     \end{figure}
-
-
-
-
-
+    
 Como resultado, se obtienen los eventos impresos por pantalla en el terminal:
 
-    \begin{figure}
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/eventos.jpg}
     \caption{Eventos de la cara, ojos y pupila}
     %\label{fig:figura4}
     \end{figure}
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -480,7 +493,7 @@ Como resultado, se obtienen los eventos impresos por pantalla en el terminal:
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Instalación de Arduino IDE} \label{s4_4_1}
 
-Arduino IDE es el software oficial de Arduino que incorpora la interfaz de programación y todas las bibliotecas necesarias en la compilación de varios tipos de programas. En este proyecto, se usa para compilar y cargar el programa ``Servidor\_TCP.ino'' y así, iniciar el servidor de la comunicación Raspberry Pi Zero - Arduino.
+Arduino IDE es el software oficial de Arduino que incorpora la interfaz de programación y todas las bibliotecas necesarias en la compilación de varios tipos de programas. En este proyecto, se usa para compilar y cargar el programa ``Servidor\_TCP.ino'' y así, iniciar el servidor de la comunicación Raspberry Pi - Arduino Leonardo.
 
 Para instalarlo, en primer lugar hay que descargarlo en la página oficial a través de la siguiente dirección: ``http://www.arduino.cc/en/Main/Software''. Debajo del título ``Download the Arduino IDE'' se selecciona la versión del sistema operativo y comienza la descarga de un archivo de formato ``.zip'' automáticamente. El siguiente paso, consiste en descomprimir el archivo y establecer como directorio de trabajo la carpeta resultante de la descomposición mediante el comando ``cd'' en el terminal. Posteriormente, se teclea la orden: \\
 
@@ -488,7 +501,7 @@ Para instalarlo, en primer lugar hay que descargarlo en la página oficial a tra
 $ ./install.sh
 \end{bashcode}
 
-Tras esto, la instalación se ha completado pero puede que se produzcan errorres al subir el archivo por el puerto correspondiente. Esto sucede debido a que no se han establecido los permisos del puerto serie. Para visualizar los permisos se introduce en el terminal: \\
+Tras esto, la instalación se ha completado pero puede que se produzcan errores al subir el archivo por el puerto correspondiente. Esto sucede debido a que no se han establecido los permisos del puerto serie. Para visualizar los permisos se introduce en el terminal: \\
 
 \begin{bashcode}
 $ ls -l /dev/ttyACM*
@@ -501,41 +514,82 @@ Para resolver el problema anterior, se añade el usuario propio al grupo de la s
 $ sudo usermod -a -G dialout <nombreusuario>
 \end{bashcode}
 
+\subsection{Montaje Arduino Leonardo - Ethernet Shield} \label{s4_4_2}
 
-\subsection{Resultados de la comunicación} \label{s4_4_2}
+Como se comenta en la sección 2.4, Arduino Leonardo se conecta al módulo Ethernet mediante el protocolo SPI. Arduino cumple la función de maestro generando la señal de reloj para establecer la temporización que debe seguir el módulo Ethernet en la transmisión de los datos obtenidos de la transferencia efectuada por el cliente de la conexión TCP de Raspberry Pi.
+Tanto el maestro como el esclavo disponen de los cuatro hilos que caracterizan este protocolo: SCK, MISO, MOSI y SS o CS. Dado que se trata de un solo esclavo, cada uno de estos pines se conecta con su homólogo del mismo nombre (figura \ref{fig: SPImaestroesclavo}).
+    \begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.6]{capitulo_04/figuras_dir/SPIconexion.jpg}
+    \caption{Conexión SPI maestro - único esclavo. Imagen tomada de Wikipedia: https://es.wikipedia.org/wiki/Serial\_Peripheral\_Interface}
+    \label{fig: SPImaestroesclavo}
+    \end{figure}
+De esta forma se conectan los dos dispositivos. Los pines SPI en Arduino Leonardo se encuentran en el conector ICSP como se muestra en la figura \ref{fig: pinout}.
+Los pines que intervienen en la conexión entre ambos circuitos integrados se resume en la siguiente tabla:
+\begin{table}[H]
+\caption{Conexiones SPI Arduino Leonardo - Ethernet Shield}  
+\begin{center}
+\begin{tabular}{c|c}
+     {\bfseries Pin Arduino Leonardo} & {\bfseries Pin Ethernet Shield} \\ \hline
+     pin Reset (conector ICSP) & pin Reset \\
+     pin Vcc (conector ICSP) & pin Vcc \\
+     pin GND (conector ICSP) & pin GND \\
+     pin MOSI (conector ICSP) & pin MOSI (conector ICSP) \\
+     pin MISO (conector ICSP) & pin MISO (conector ICSP) \\
+     pin SCK (conector ICSP) & pin SCK (conector ICSP) \\
+     pin 10 (SS) & pin 10 (SS) \\
+\end{tabular}
+\end{center}
+\end{table}
+El montaje se representa en la figura \ref{fig: montajethet}.
 
-Para observar cómo se reciben los eventos, es necesario ejecutar todos los programas elaborados hasta ahora: ``mk.c'', ``eye\_detect.cpp'', ``Selector.c'', ``Cliente.c'' y ``Servidor\_TCP.ino'' como se muestra en la figura \ref{fig:programas}.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.13]{capitulo_04/figuras_dir/montajethernet.jpg}
+    \caption{Montaje Arduino Leonardo - Ethernet Shield}
+    \label{fig: montajethet}
+    \end{figure}
+    
+    \begin{figure}
+    \centering
+    \includegraphics[scale = 0.4]{capitulo_04/figuras_dir/leonardo.jpg}
+    \caption{Esquema de pines de Arduino Leonardo. Imagen tomada de DIWO: http://diwo.bq.com/pinout-leonardo/}
+    \label{fig: pinout}
+    \end{figure}
+\subsection{Resultados de la comunicación} \label{s4_4_3}
+
+Para observar cómo se reciben los eventos, es necesario ejecutar todos los programas desarrollados hasta ahora: ``mk.c'', ``eye\_detect.cpp'', ``Selector.c'', ``Cliente.c'' y ``Servidor\_TCP.ino'' como se muestra en la figura \ref{fig:programas}.
 
 
 \begin{figure}[htbp]
 \centering
-\subfigure[Ejecución de ``mk.c'']{\includegraphics[width=80mm]{capitulo_04/figuras_dir/abrirmk.jpg}}
-\subfigure[Ejecución de ``eye\_detect.cpp'']{\includegraphics[width=80mm]{capitulo_04/figuras_dir/abrireye_tracking.jpg}}
-\subfigure[Ejecución de ``Selector.c'']{\includegraphics[width=80mm]{capitulo_04/figuras_dir/abrirselector.jpg}}
-\subfigure[Ejecución de ``Cliente.c'']{\includegraphics[width=80mm]{capitulo_04/figuras_dir/abrircliente.jpg}}
-
+\subfigure[Ejecución de ``mk.c'']{\includegraphics[width=85mm]{capitulo_04/figuras_dir/abrirmk.jpg}}
+\subfigure[Ejecución de ``eye\_detect.cpp'']{\includegraphics[width=85mm]{capitulo_04/figuras_dir/abrireye_tracking.jpg}}
+\subfigure[Ejecución de ``Selector.c'']{\includegraphics[width=85mm]{capitulo_04/figuras_dir/abrirselector.jpg}}
+\subfigure[Ejecución de ``Cliente.c'']{\includegraphics[width=85mm]{capitulo_04/figuras_dir/abrircliente.jpg}}
+\caption{Ejecución de ``mk.c'', ``eye\_detect.cpp'', ``Selector.c'', ``Cliente.c'' y ``Servidor\_TCP.ino'' para transmitir los eventos a Arduino Leonardo}
 \label{fig:programas}
 \end{figure}
 
-A continuación, se muestran los eventos representados en hexadecimal por el programa ``mk.c'' y la recepción de los mismos por el servidor Arduino.
+A continuación, se muestran los eventos cuyos bytes están separados por guiones y representados en hexadecimal por el programa ``mk.c'' y la recepción de los mismos por el servidor Arduino. Cuando el programa servidor identifica un conjunto de bytes como un evento predefinido en el programa, imprime por pantalla un carácter a modo indicativo.
 
     \begin{figure}
     \centering
-    \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/clickder2.jpg}
+    \includegraphics[scale = 0.45]{capitulo_04/figuras_dir/clickder2.jpg}
     \caption{``Click'' derecho.}
     %\label{fig:figura4}
     \end{figure}
 
     \begin{figure}
     \centering
-    \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/clickizq2.jpg}
+    \includegraphics[scale = 0.45]{capitulo_04/figuras_dir/clickizq2.jpg}
     \caption{``Click'' izquierdo.}
     %\label{fig:figura4}
     \end{figure}
 
     \begin{figure}
     \centering
-    \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/movx+.jpg}
+    \includegraphics[scale = 0.45]{capitulo_04/figuras_dir/movx+.jpg}
     \caption{Movimiento en sentido positivo del eje X.}
     %\label{fig:figura4}
     \end{figure}
@@ -549,34 +603,34 @@ A continuación, se muestran los eventos representados en hexadecimal por el pro
 
     \begin{figure}
     \centering
-    \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/movy+.jpg}
+    \includegraphics[scale = 0.45]{capitulo_04/figuras_dir/movy+.jpg}
     \caption{Movimiento en sentido positivo del eje Y.}
     %\label{fig:figura4}
     \end{figure}
 
     \begin{figure}
     \centering
-    \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/movy-.jpg}
+    \includegraphics[scale = 0.45]{capitulo_04/figuras_dir/movy-.jpg}
     \caption{Movimiento en sentido positivo del eje Y.}
     %\label{fig:figura4}
     \end{figure}
 
     \begin{figure}
     \centering
-    \includegraphics[scale = 0.5]{capitulo_04/figuras_dir/teclau.jpg}
+    \includegraphics[scale = 0.45]{capitulo_04/figuras_dir/teclau.jpg}
     \caption{Pulsación de la tecla ``u''.}
     %\label{fig:figura4}
     \end{figure}
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Programa de selección} \label{s4_5}
 
-El programa ``selector.c'' descrito en la sección 3.4, permite determinar el lugar hacia donde mira el observador analizando y comparando el valor de la coordenada x'' (coordenada x del evento del ojo) en relación a dos valores: ``x1'' y ``x2''. Cada uno de ellos constituye un límite en el eje de abscisas. Cuando el observador mira hacia la derecha fuera de la pantalla principal, el valor de x'' es igual o superior a ``x2'', en ese momento, ``selector.c'' envía ``B''. Cuando mira hacia la izquierda fuera de la pantalla, x'' es igual o inferior a ``x1'', momento en el que también se envía ``B'' al cliente, ya que cualquier cambio hacia una pantalla secundaria, se indica con este caracter al programa cliente. 
+El programa ``selector.c'' descrito en la sección 3.3, permite determinar el lugar hacia donde mira el observador analizando y comparando el valor de  x'' (figura \ref{fig: esquemacara}) (coordenada {\itshape x} del evento del ojo) con dos valores distintos: ``x1'' y ``x2''. Cada uno de ellos constituye un límite en el eje de abscisas. Cuando el observador mira hacia la derecha fuera de la pantalla principal, el valor de x'' es igual o superior a ``x2'', en ese momento, ``selector.c'' envía ``B''. Cuando mira hacia la izquierda fuera de la pantalla, x'' es igual o inferior a ``x1'', momento en el que también se envía ``B'' al cliente, ya que cualquier cambio hacia una pantalla secundaria, se indica con este carácter al programa cliente. 
 
-Estos valores límite se obtienen tras sucesivas pruebas. En primer lugar, se ejecuta ``eye\_detect.cpp'' para guardar los eventos en FIFO y posteriormente, ``selector.c'' que recoge todos esos datos escritos mediante operaciones de lectura y realiza la media de las coordenadas x de cinco eventos de ojos sucesivos (precedidos por el tipo ``E'').
+Estos valores límite se obtienen tras sucesivas pruebas. En primer lugar, se ejecuta ``eye\_detect.\\cpp'' para guardar los eventos en FIFO y posteriormente, ``selector.c'' que recoge todos esos datos escritos mediante operaciones de lectura y realiza la media de las coordenadas x de cinco eventos de ojos sucesivos (precedidos por el tipo ``E'').
 
 A continuación, se exponen los valores de esta coordenada cuando el observador mira a la pantalla principal (vista frente), a una pantalla secundaria situada a la derecha de la principal (vista derecha) y a una pantalla secundaria situada a la izquierda de la principal (vista izquierda):
 
@@ -663,41 +717,41 @@ Abner Matheus \citep{eyetracking} implementó el programa de seguimiento ocular 
 \label{fig:abner}
 \end{figure}
 
-Las tres imágenes anteriores ayudan a comprender los datos obtenidos en la tabla anterior. Como se ha mencionado, cuando se mira hacia la derecha, con el movimiento de cabeza que conlleva, el lado izquierdo del cuadro azul (región facial) se aleja del lado izquierdo del cuadrado verde izquierdo y por tanto, mayor es x''. Cuando el observador gira la cabeza hacia la izquierda, el lado izquierdo del cuadrado azul se acerca al lado izquierdo del cuadrado verde izquierdo y por tanto, menor es x''. Sin embargo, con la cabeza en posición frontal, el cuadrado azul mantiene centrados ambos cuadrados verdes y x'' toma un valor intermedio entre los dos anteriores. \\ \\
+Las tres imágenes anteriores ayudan a comprender los datos obtenidos en la tabla anterior. Como se ha mencionado, cuando se mira hacia la derecha, con el movimiento de cabeza que conlleva, el lado izquierdo del cuadro azul (región facial) se aleja del lado izquierdo del cuadrado verde izquierdo y por tanto, mayor es x''. Cuando el observador gira la cabeza hacia la izquierda, el lado izquierdo del cuadrado azul se acerca al lado izquierdo del cuadrado verde izquierdo y por tanto, menor es x''. Sin embargo, con la cabeza en posición frontal, el cuadrado azul mantiene centrados ambos cuadrados verdes y x'' toma un valor intermedio entre los dos anteriores. 
 
-Los elementos anteriores sirven para determinar ``x1'' y ``x2''. Cuando a cada variable se le asigna su valor, lo único que falta es comprobar si el programa filtra los eventos correctamente y si envía al cliente la variable adecuada. A continuación, se representa la salida del programa de detección y del programa de selección cuando éste está configurado con la pantalla secundaria a la izquierda y el usuario mira a la pantalla y a ambos lados:
+Los elementos anteriores sirven para determinar ``x1'' y ``x2''. Cuando a cada variable se le asigna su valor, lo único que falta es comprobar si el programa filtra los eventos correctamente y si envía al cliente la variable adecuada. A continuación, se representa la salida del programa de detección y del programa de selección cuando éste está configurado con la pantalla secundaria a la izquierda y el usuario mira a la pantalla principal (sobre la que se sitúa la cámara) y a ambos lados:
 
-    \begin{figure}
+    \begin{figure}[H]
     \centering
-    \includegraphics[scale = 0.4]{capitulo_04/figuras_dir/ldcentro.jpg}
+    \includegraphics[scale = 0.3]{capitulo_04/figuras_dir/ldcentro.jpg}
     \caption{Vista al frente}
     %\label{fig:figura4}
     \end{figure}
 
-    \begin{figure}
+    \begin{figure}[H]
     \centering
-    \includegraphics[scale = 0.4]{capitulo_04/figuras_dir/ldder.jpg}
+    \includegraphics[scale = 0.3]{capitulo_04/figuras_dir/ldder.jpg}
     \caption{Vista a la derecha}
     %\label{fig:figura4}
     \end{figure}
 
-    \begin{figure}
+    \begin{figure}[H]
     \centering
-    \includegraphics[scale = 0.4]{capitulo_04/figuras_dir/ldizq.jpg}
+    \includegraphics[scale = 0.3]{capitulo_04/figuras_dir/ldizq.jpg}
     \caption{Vista a la izquierda}
     %\label{fig:figura4}
     \end{figure}
 
 
-El programa ``selector.c'' muestra entre corchetes las dimensiones del cuadrado que limita la región ocular y entre paréntesis, las coordenadas de los eventos de los ojos, ignorando los de la pupila que en este caso no son necesarios. 
+El programa ``selector.c'' muestra entre corchetes las dimensiones del cuadrado que limita la región ocular y entre paréntesis, las coordenadas de los eventos de los ojos, ignorando los de la pupila ya que no son necesarios. 
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Simulación de teclas en Arduino} \label{s4_6}
 
-Para la simulación de teclas, se procede a montar un pequeño circuito consistente en interruptores que comunican las entradas ``0'' y ``1'' de Arduino Leonardo a tierra. Para demostrar el funcionamiento de la simulación de teclas, se usa el código siguiente. En él, se asignan los pines anteriores como entradas ``pull up'', es decir, se las puede dar un valor de 0 lógico derivando su señal a tierra mediante un pulsador. En ese momento, se detecta que el botón correspondiente a uno de los pines es accionado, y se llama a ``keyboard.write()''. En el caso de pulsarse el interruptor correspondiente al pin 0, se escribe una ``A'' y en caso de que sea el correspondiente al pin 1, se escribe una frase completa. Si el cursor se sitúa en un documento Word o Libre Office, el resultado es como el que se muestra en la figura \ref{fig:simteclas}.
+Para la simulación de teclas, se procede a montar un pequeño circuito consistente en interruptores que comunican las entradas ``0'' y ``1'' de Arduino Leonardo a tierra. Para demostrar el funcionamiento de la simulación de teclas, se usa el código siguiente. En él, se asignan los pines anteriores como entradas ``pull up'', es decir, se las puede dar un valor de 0 lógico derivando su señal a tierra mediante un pulsador. En ese momento, se detecta que el botón correspondiente a uno de los pines es accionado, y se llama a ``keyboard.write()''. En el caso de pulsarse el interruptor correspondiente al pin 0, se escribe una ``A'' y en caso de que sea el correspondiente al pin 1, se escribe una frase completa. Si el cursor se sitúa en un documento Word o Libre Office, el resultado es como el que se muestra en la figura \ref{fig:simteclas}. En este ejemplo, Arduino Leonardo es reconocido como un dispositivo USB de interfaz humana y funciona de igual forma.
 
 
 
@@ -734,7 +788,7 @@ void loop() {
 }
 \end{minted}
 \caption{Código de muestra para la simulación de teclas.}
-\label{Listing}
+%\label{Listing}
 \end{listing}
 
     \begin{figure}

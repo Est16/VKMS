@@ -12,7 +12,7 @@ Existe una herramienta de Linux cuya función es crear un cliente y un servidor 
 $ sudo apt-get install netcat
 \end{bashcode}
 
-Para conocer su funcionamiento una vez instalada, se procede a crear un servidor y un cliente locales. Debido a que la comunicación Raspberry Pi Zero - Arduino es TCP, en este ejemplo se opta por dicho modo.
+Para conocer su funcionamiento una vez instalada, se procede a crear un servidor y un cliente locales. Debido a que la comunicación Raspberry Pi - Arduino Leonardo es TCP, en este ejemplo se opta por dicho modo.
 En primer lugar, se abren dos ventanas del terminal, cada una para un rol distinto. En una de ellas, se crea el servidor TCP. Es necesario habilitar el modo ``escucha'' del servidor con la opción ``-l'' y el puerto local con ``-p'' seguido del número del puerto: \\
 
 \begin{bashcode}
@@ -33,16 +33,14 @@ Una vez creado el servidor, se puede establecer el servidor:\\
 $ nc 127.0.01 25
 \end{bashcode}
 
-A continuación, en la imagen inferior, se observa el resultado:\\
+A continuación, en la figura \ref{fig: netcat}, se observa el resultado. Como se aprecia en la imagen, todos los datos introducidos en el terminal del cliente, llegan al terminal del servidor y viceversa.
 
     \begin{figure}
     \centering
     \includegraphics[scale = 0.3]{anexo_b/figuras_dir/csnetcat.jpg}
     \caption{Conexión entre el servidor y cliente netcat}
-    %\label{fig:figura4}
+    \label{fig: netcat}
     \end{figure}
-    
-Como se observa en la imagen, todos los datos introducidos en el terminal del cliente, llegan al terminal del servidor y viceversa.
 
 La utilidad que tiene ``netcat'' en el proyecto es la de comprobar el funcionamiento del programa ``Cliente.c''. En la sección 3.3, se comenta que este programa constituye el cliente de la comunicación TCP entre Raspberry Pi Zero y Arduino Leonardo. Para saber si desempeña correctamente esta función, se puede crear un servidor con ``netcat'' que se comunique con el cliente de Raspberry. ``Cliente.c'' se ha elaborado modificando el programa cliente TCP del apartado de ``comunicaciones en red'' del libro del taller \citep[pág. 83--85]{tallerRPi}. Este programa recoge todo aquello introducido en el terminal del cliente mediante la función ``fgets()'' que lee el descriptor de la entrada estándar (teclado). Evidentemente, la comprobación se puede realizar con el programa cliente original pero la forma más directa de comprobarlo es mediante el programa cliente del taller.
 
@@ -73,7 +71,6 @@ int main() {
 	close(fd);
 	return 0;
 }
-
 static struct sockaddr_in ip_address(const char* host,
 				const char* service,
 				const char* proto);
@@ -87,8 +84,18 @@ static int tcp_client_socket(const char* host, const char* service)
 	assert (connect(fd, (struct sockaddr*)&sin, sizeof(sin)) >= 0);
 	return fd;
 }
+\end{minted}
+\caption{Continuación de ``Listing \ref{lst:cliente-taller-rpi}''}
+%\label{lst:cliente-taller-rpi}
+\end{listing}
 
 
+\begin{listing}
+\begin{minted}[bgcolor=bg,
+               frame=lines,
+               framesep=2mm,
+               linenos]
+               {C}
 static struct sockaddr_in ip_address(const char* host,
 				const char* service,
 				const char* proto)
@@ -114,9 +121,9 @@ static struct sockaddr_in ip_address(const char* host,
 \end{listing}
 
 
-Como se observa, el programa se ha modificado para conectarse a la IP local y al puerto 25. Con ello, se procede a establecer la comunicación. El resultado se muestra en la figura \ref{fig:sernet}:
+Como se observa, el programa se ha modificado para conectarse a la IP local y al puerto 25. Con ello, se procede a establecer la comunicación. El resultado se muestra en la figura \ref{fig:sernet}
 
-    \begin{figure}
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.3]{anexo_b/figuras_dir/sernet.jpg}
     \caption{Conexión entre el servidor netcat y el cliente Raspberry Pi}

@@ -14,7 +14,7 @@ Para comprender mejor el funcionamiento de esta biblioteca, a continuación se e
     
     En este proyecto, se usa el manejador ``event\_hanlder'' para tratar eventos procedentes de un teclado y un ratón, sin embargo, los eventos pueden proceder de botones asignados a las patillas GPIO de Raspberry Pi. 
     
-    \begin{figure}
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.3]{anexo_a/figuras_dir/GPIO.jpg}
     \caption{Pines GPIO de Raspberry Pi 3 modelo B}
@@ -87,7 +87,7 @@ Tras ejecutarlo con el mismo archivo ``makefile'' usado en el programa de demult
     %\label{fig:figura4}
     \end{figure}
 
-
+\clearpage
 
     \item Eventos periódicos
     
@@ -128,13 +128,13 @@ int main ()
 
     \begin{figure}[htbp]
     \centering
-    \subfigure[Mensajes de eventos en t=t1]{\includegraphics[width=70mm, height=70mm]{anexo_a/figuras_dir/res2.jpg}}
-    \subfigure[Mensajes de eventos en t=t2]{\includegraphics[width=70mm, height=70mm]{anexo_a/figuras_dir/res3.jpg}}
+    \subfigure[Mensajes de eventos en t=t1]{\includegraphics[width=90mm, height=70mm]{anexo_a/figuras_dir/res2.jpg}}
+    \subfigure[Mensajes de eventos en t=t2]{\includegraphics[width=90mm, height=70mm]{anexo_a/figuras_dir/res3.jpg}}
     \caption{Salida del programa de eventos periódicos en t=t1 y t=t2 siendo t1<t2}
     %\label{fig:lego}
     \end{figure}
 
-
+\clearpage
     \item Parpadeo de un led
     
     Este programa envía cada cierto tiempo un pulso de corriente a un led conectado a una de los pines GPIO con un número determinado de milisegundos de duración que se repite tantas veces como ciclos de encendido/apagado se especifiquen.
@@ -174,11 +174,11 @@ int main ()
     \caption{Parpadeo del led del pin 18}
     %\label{fig:lego}
     \end{figure}
-    
+\clearpage
     \item Eventos de programas externos
     
-    El manejador ``music\_player'' ejecuta un programa ageno al principal. Se trata de ``mpg123'' que se usa para reproducir música en formato ``.mp3''.
-\begin{listing}
+    El manejador ``music\_player'' ejecuta un programa ajeno al principal. Se trata de ``mpg123'' que se usa para reproducir música en formato ``.mp3''.
+\begin{listing}[p]
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
@@ -238,7 +238,7 @@ static int read_key(int fd)
         \item Si se pulsan las teclas numéricas entre los valores 0 y 9 (inclusives), ``mpg123'' reproduce la canción correspondiente.
     \end{itemize}
     
-    \begin{figure}
+    \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.25]{anexo_a/figuras_dir/musica.jpg}
     \caption{Canciones que se reproducen con ``mpg123''}
