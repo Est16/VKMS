@@ -32,14 +32,15 @@ int main() {
 	
 	const char* IP1;
 	//IP1= "127.0.0.1";
-	IP1= "192.168.1.45";
+	IP1= "192.168.1.39";
 	const char* IP2;
 	//IP2= "127.0.0.1";
-	IP2= "192.168.1.45";
+	IP2= "192.168.1.55";
 	
 	// Comprobado con netcat en distintos puertos y una misma IP
 	int fd1 = tcp_client_socket(IP1, "1000"); 
 	int fd2 = tcp_client_socket(IP2, "1000");
+
 	
 	for(;;) {
 
@@ -53,7 +54,9 @@ int main() {
 	int s;
 	s= read (fifo1, bufer2, sizeof(bufer2));
 	printf("numero de bytes leidos: %d\n", s);
-
+	
+	
+	close(fifo1);
 	
 	///////////////////////////////////////////////////////////////
 	//   OBTENCION DEL ARDUINO AL QUE HAY QUE ENVIAR EVENTOS     //
@@ -61,11 +64,15 @@ int main() {
 	
 	
 	int fifo2= -1;
-	int descriptor;
+	int descriptor= -1;
 	char bufer3[1];
+	bufer3[0]= 'C';
 	fifo2= open("/home/esther/Desktop/VKMS/Recopilacion/Selector/select", O_RDONLY); // 1 caracter ocupa 1 byte
 	int r;
 	r= read (fifo2, bufer3, sizeof(bufer3));
+	printf("salida %c\n", bufer3[0]);
+	
+	close(fifo2);	
 	
 	if (bufer3[0]=='A') {
 		
@@ -75,6 +82,10 @@ int main() {
 		
 		descriptor=fd2;
 	} 
+	
+printf("fd1: %d\n", fd1);	
+printf("fd2: %d\n", fd2);	
+printf("Descriptor: %d\n", descriptor);
 
 	////////////////////////////////////////////////////////////////////////////
 	//   ENVIO DE LOS EVENTOS DE TECLADO Y RATON AL ARDUINO CORRESPONDIENTE   //

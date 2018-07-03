@@ -1,11 +1,13 @@
 #include <SPI.h>
 #include <Ethernet.h>
-//#include <Keyboard.h>
-//#include <Mouse.h>
+#include <Keyboard.h>
+#include <Mouse.h>
 
-byte MiMac[]= {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
+byte MiMac[]= {0xE8, 0x88, 0xC4, 0x8F, 0x8D, 0x7A};
+byte MiIp[]= {192,168,1,39};
 
-byte MiIp[]= {192,168,1,45};
+
+//byte MiIp[]= {161,67,57,97};
 
 EthernetServer ArduinoTCP = EthernetServer (1000);
 
@@ -16,7 +18,7 @@ Serial.begin(9600);
 Serial.println("Initializing ethernet connection");
 Ethernet.begin(MiMac, MiIp);
 ArduinoTCP.begin();
-// Keyboard.begin();  
+Keyboard.begin();  
 }
 
 
@@ -61,7 +63,7 @@ void loop() {
     //////////////////////////////////////////////
     
     if (buf[7]=='T') {
-        //Keyboard.write(buf[6]);
+        Keyboard.write(buf[6]);
         Serial.print("Caracter: ");
         Serial.println(buf[6], HEX);
     }
@@ -105,25 +107,25 @@ void loop() {
             if (buf[i]==raton.ckd[p]) {
                 cont5++;
                 if (cont5==7) {
-                    //Mouse.press(MOUSE_RIGHT);  
-                    //delay(200);
-                    //Mouse.release(MOUSE_RIGHT);
+                    Mouse.press(MOUSE_RIGHT);  
+                    delay(200);
+                    Mouse.release(MOUSE_RIGHT);
                     Serial.println("E");
                 }
             }
             if (buf[i]==raton.cki[p]) {
                 cont6++;
                 if (cont6==7) {
-                    //Mouse.press(MOUSE_LEFT);  
-                    //delay(200);
-                    //Mouse.release(MOUSE_LEFT);
+                    Mouse.press(MOUSE_LEFT);  
+                    delay(200);
+                    Mouse.release(MOUSE_LEFT);
                     Serial.println("F");
 
                 }
             }
             p++;
        }
-       //mouse.move(A,B,0);
+       Mouse.move(A,B,0);
     }
     
     
@@ -145,6 +147,6 @@ void loop() {
       //Serial.println(buf[0]);  
       //buf[0]= cliente.read();
       
-    delay (2000);
+    delay (100);
 
 }
