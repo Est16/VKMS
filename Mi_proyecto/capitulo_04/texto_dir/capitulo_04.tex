@@ -5,7 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Resultados} \label{cap4}
 
-
+En este capítulo se explican los pasos a seguir para ejecutar las aplicaciones e instalar sus bibliotecas correspondientes y así observar los resultados conseguidos con cada uno de los programas.
 
 \newpage
 
@@ -298,6 +298,7 @@ En este caso, interesa modificar el estado de ``camera’’ de ``disable’’ 
     \label{fig: menu}
     \end{figure}
     
+\clearpage
         \begin{figure}
     \centering
     \includegraphics[scale = 0.25]{capitulo_04/figuras_dir/actp2.jpg}
@@ -521,15 +522,17 @@ Tanto el maestro como el esclavo disponen de los cuatro hilos que caracterizan e
     \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.6]{capitulo_04/figuras_dir/SPIconexion.jpg}
-    \caption{Conexión SPI maestro - único esclavo. Imagen tomada de Wikipedia: https://es.wikipedia.org/wiki/Serial\_Peripheral\_Interface}
+    \caption{Conexión SPI maestro - único esclavo. Imagen tomada de Wikipedia - Serial Peripheral Interface: https://es.wikipedia.org/wiki/Serial\_Peripheral\_Interface}
     \label{fig: SPImaestroesclavo}
     \end{figure}
 De esta forma se conectan los dos dispositivos. Los pines SPI en Arduino Leonardo se encuentran en el conector ICSP como se muestra en la figura \ref{fig: pinout}.
 Los pines que intervienen en la conexión entre ambos circuitos integrados se resume en la siguiente tabla:
+
 \begin{table}[H]
-\caption{Conexiones SPI Arduino Leonardo - Ethernet Shield}  
+\caption{Conexiones SPI Arduino Leonardo - Ethernet Shield}
 \begin{center}
-\begin{tabular}{c|c}
+\begin{tabular}{cc}
+     & \\
      {\bfseries Pin Arduino Leonardo} & {\bfseries Pin Ethernet Shield} \\ \hline
      pin Reset (conector ICSP) & pin Reset \\
      pin Vcc (conector ICSP) & pin Vcc \\
@@ -541,6 +544,7 @@ Los pines que intervienen en la conexión entre ambos circuitos integrados se re
 \end{tabular}
 \end{center}
 \end{table}
+
 El montaje se representa en la figura \ref{fig: montajethet}.
 
     \begin{figure}[H]
@@ -553,7 +557,7 @@ El montaje se representa en la figura \ref{fig: montajethet}.
     \begin{figure}
     \centering
     \includegraphics[scale = 0.4]{capitulo_04/figuras_dir/leonardo.jpg}
-    \caption{Esquema de pines de Arduino Leonardo. Imagen tomada de DIWO: http://diwo.bq.com/pinout-leonardo/}
+    \caption{Esquema de pines de Arduino Leonardo. Imagen tomada de DIWO - Pinout Leonardo: http://diwo.bq.com/pinout-leonardo/}
     \label{fig: pinout}
     \end{figure}
 \subsection{Resultados de la comunicación} \label{s4_4_3}
@@ -611,7 +615,7 @@ A continuación, se muestran los eventos cuyos bytes están separados por guione
     \begin{figure}
     \centering
     \includegraphics[scale = 0.45]{capitulo_04/figuras_dir/movy-.jpg}
-    \caption{Movimiento en sentido positivo del eje Y.}
+    \caption{Movimiento en sentido negativo del eje Y.}
     %\label{fig:figura4}
     \end{figure}
 
@@ -767,24 +771,20 @@ Para la simulación de teclas, se procede a montar un pequeño circuito consiste
 void setup() {
     pinMode(0,INPUT_PULLUP);  
     pinMode(1,INPUT_PULLUP);  
-    
     Serial.begin(9600);   
-
 }
 
 void loop() {
   
-     Keyboard.begin();       
-     if (digitalRead(0) == 0)  
-      {
+    Keyboard.begin();       
+    if (digitalRead(0) == 0) {
         Keyboard.write('A');  
         delay(200);           
-      }
-      else if (digitalRead(1) == 0){  
+    }
+    else if (digitalRead(1) == 0) {  
         Keyboard.print("The rain in Spain falls mainly on the plain"); 
         delay(200);
     }
-      Keyboard.end();                
 }
 \end{minted}
 \caption{Código de muestra para la simulación de teclas.}

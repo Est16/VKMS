@@ -12,9 +12,11 @@ Los resultados obtenidos demuestran que es posible implementar un sistema de con
     \item Dificultad de reconocimiento facial y por tanto, ocular en situaciones de exceso de luz y de reflejo sobre las lentes de las gafas.
     \item Es necesario que los caracteres se introduzcan en el terminal de Linux para que sean procesados como eventos. Lo ideal es que el sistema permitiera enviar los datos de teclas independientemente de la ventana que esté activa en la pantalla conectada a Raspberry Pi.
     \item Falta de precisión y de sensibilidad del sistema de seguimiento ocular. Si la pantalla secundaria se encuentra a una distancia considerable de la principal, requiere un giro de la cabeza demasiado pronunciado que dificulta la labor de reconocimiento al algoritmo de Viola-Jones. Esto es necesariamente mejorable.
-    \item Gran consumo debido al procesamiento de gran cantidad de datos. Se desconoce los efectos sobre el hardware a largo plazo. Por tanto, es necesario aumentar la eficiencia del sistema.
-    \item Más latencia de la esperada.
+    \item Gran consumo de energía debido al procesamiento de gran cantidad de datos. Se desconoce los efectos sobre el hardware a largo plazo. Por tanto, es necesario aumentar la eficiencia del sistema, por ejemplo, filtrando eventos.
+    \item El servidor consume más tiempo del esperado en procesar eventos independientemente de la latencia de la conexión TCP.
     \item Problemas con en orden de recepción de los eventos debido a la implementación del servidor.
+    \item Ausencia de simulación de teclas de caracteres especiales y movimientos de la ruleta del ratón.
+    \item Incapacidad de envío de eventos en el momento en el que el sistema de reconocimiento no detecta los ojos.
 \end{itemize}
 
 

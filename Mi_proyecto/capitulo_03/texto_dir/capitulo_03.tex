@@ -5,7 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Procedimiento} \label{cap3}
 
-En este capítulo se explican los programas que conforman la parte de software del proyecto.
+En este capítulo se explican los programas que componen la parte de software del proyecto.
 
 \newpage
 
@@ -20,7 +20,7 @@ En este capítulo se explican los programas que conforman la parte de software d
 
 Como ya se ha comentado en la sección 2.1.3.1, la interfaz ``Hidraw'' permite comunicar la aplicación con el driver que se encarga permitir la comunicación entre el sistema operativo y el dispositivo HID. Para recoger los eventos es necesario acceder a a esta interfaz. Dado que el sistema operativo visualiza el sistema completo como un conjunto de archivos, la interfaz ``Hidraw'' también es vista como un archivo que se encuentra en la ruta {\itshape /dev/hidraw} del sistema. Para conseguir los datos de entrada de los dispositivos HID, en primer lugar, se debe abrir el archivo, y posteriormente, se deben realizar lecturas consecutivas usando el descriptor de archivo obtenido de la apertura anterior. 
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \includegraphics[scale = 0.4]{capitulo_03/figuras_dir/dev.jpg}
 \caption{``hidraw0'' y ``hidraw1'' en {\itshape /dev}}
@@ -43,52 +43,48 @@ Cuando se determina el dispositivo HID que se va a leer, se crea un vector de 10
                linenos
                ]
                {C}
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <fcntl.h>
-    #include <unistd.h>
-    #include <stdio.h>
-    #include <sys/select.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/select.h>
     
-    int main() {
-    	int teclado = open("/dev/hidraw0", O_RDONLY);
-    	int raton = open("/dev/hidraw1", O_RDONLY);
+int main() {
+    int teclado = open("/dev/hidraw0", O_RDONLY);
+    int raton = open("/dev/hidraw1", O_RDONLY);
     
-    	fd_set *fds1;
-    	fd_set fds2;
-    	fds1=&fds2;
-    	FD_ZERO(fds1);
-    	FD_ZERO(&fds2);
-    	FD_SET(teclado, fds1);
-    	FD_SET(raton, &fds2);
+    fd_set *fds1;
+    fd_set fds2;
+    fds1=&fds2;
+    FD_ZERO(fds1);
+    FD_ZERO(&fds2);
+    FD_SET(teclado, fds1);
+    FD_SET(raton, &fds2);
     	
-    	if (teclado<0 || raton<0)
+    if (teclado<0 || raton<0)
     	printf("Error al abrir los archivos\n");
-    	
-    	for(;;) {
-    		fd_set copia = fds2;
-    		int n = select(raton+1, &copia, NULL, NULL, NULL);
-    		int fd = -1;
+    for(;;) {
+    	fd_set copia = fds2;
+    	int n = select(raton+1, &copia, NULL, NULL, NULL);
+    	int fd = -1;
+    	if (FD_ISSET(teclado, &copia))
+    		fd = teclado;
+    	if (FD_ISSET(raton, &copia))
+    		fd = raton;
     
-    		if (FD_ISSET(teclado, &copia))
-    			fd = teclado;
-    
-    		if (FD_ISSET(raton, &copia))
-    			fd = raton;
-    
-    		char buf[1024];
-    		n = read(fd, buf, 1024);
-    
-    		printf("%d ", n);
-    		for(int i=0; i<n; ++i) {
-    			printf("%x", buf[i]);
-    		}
-    		puts("");
-    		if (n<0)
-    			perror("Al leer");
+    	char buf[1024];
+    	n = read(fd, buf, 1024);
+    	printf("%d ", n);
+    	for(int i=0; i<n; ++i) {
+    		printf("%x", buf[i]);
     	}
-    	return 0;
+    	puts("");
+    	if (n<0)
+    		perror("Al leer");
     }
+    return 0;
+}
 \end{minted}
 \caption{Programa de lectura y demultiplexación de eventos con ``Hidraw''}
 \label{Lis: HidraweventosHID}
@@ -112,35 +108,34 @@ Como resultado, la aplicación muestra los datos en hexadecimal de los movimient
                framesep=2mm,
                linenos]
                {C}
-    #include <reactor/reactor.h>
-    #include <reactor/console.h>
-    #include <stdio.h>
-    #include <unistd.h>
+#include <reactor/reactor.h>
+#include <reactor/console.h>
+#include <stdio.h>
+#include <unistd.h>
     
-    static void keyboard (event_handler* ev);
+static void keyboard (event_handler* ev);
    
-    event_handler* keyboard_handler_new() {
-    	return event_handler_new(0, keyboard);
-    }
+event_handler* keyboard_handler_new() {
+    return event_handler_new(0, keyboard);
+}
     
-    static void keyboard (event_handler* ev) {
-    	char buf[1];
-    	if (read (ev->fd, buf, 1) <0 || buf[0]=='q')
+static void keyboard (event_handler* ev) {
+    char buf[1];
+    if (read (ev->fd, buf, 1) <0 || buf[0]=='q')
     		reactor_quit(ev->r);
-    	printf("pulsando %c\n", buf[0]);
-    }
+    printf("pulsando %c\n", buf[0]);
+}
     
-    int main () {
+int main () {
     	
-    	void* state= console_set_raw_mode(0);
-    	reactor *r= reactor_new();
-    	reactor_add(r, keyboard_handler_new());
-    	reactor_run(r);
-    	console_restore(0,  state);
-    	return 0;
+    void* state= console_set_raw_mode(0);
+    reactor *r= reactor_new();
+    reactor_add(r, keyboard_handler_new());
+    reactor_run(r);
+    console_restore(0,  state);
+    return 0;
     	
-    }
-
+}
 \end{minted}
 \caption{Programa de lectura de eventos de teclado con ``Reactor''}
 \label{Lis: eventostecladoreactor}
@@ -163,50 +158,47 @@ Este programa es similar al anterior. Lo único que hay que tener en cuenta es q
                framesep=2mm,
                linenos]
                {C}
-    #include <reactor/reactor.h>
-    #include <reactor/console.h>
-    #include <stdio.h>
-    #include <unistd.h>
-    #include <assert.h>
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <fcntl.h>
-    #include <sys/select.h>
+#include <reactor/reactor.h>
+#include <reactor/console.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/select.h>
     
+static void mouse (event_handler* ev);
+event_handler* mouse_handler_new(int fd) {
+    return event_handler_new(fd, mouse);
+}
     
-    static void mouse (event_handler* ev);
-    
-    event_handler* mouse_handler_new(int fd) {
-    	return event_handler_new(fd, mouse);
-    }
-    
-    static void mouse (event_handler* ev) {
-    	printf("ev->fd %d\n",ev->fd);
-    	char buf[1024];
-    	int p= read (ev->fd, buf, 1024);
-    	printf("bytes: %d\n", p);
-    	if (p <0)
-    		reactor_quit(ev->r);
+static void mouse (event_handler* ev) {
+    printf("ev->fd %d\n",ev->fd);
+    char buf[1024];
+    int p= read (ev->fd, buf, 1024);
+    printf("bytes: %d\n", p);
+    if (p <0)
+    	reactor_quit(ev->r);
     		
-    	for(int i=0; i<p; ++i) {
-    		printf("%x", buf[i]);
-    	}
+    for(int i=0; i<p; ++i) {
+    	printf("%x", buf[i]);
+    }
     	puts("");
-    }
+}
     
-    int main () {
+int main () {
+    
+    int fd1 = open("/dev/hidraw1", O_RDONLY);
     	
-    	int fd1 = open("/dev/hidraw1", O_RDONLY);
+    void* state= console_set_raw_mode(0);
+    reactor *r= reactor_new();
+    reactor_add(r, mouse_handler_new(fd1));
+    reactor_run(r);
+    console_restore(0,  state);
+    return 0;
     	
-    	void* state= console_set_raw_mode(0);
-    	reactor *r= reactor_new();
-    	reactor_add(r, mouse_handler_new(fd1));
-    	reactor_run(r);
-    	console_restore(0,  state);
-    	return 0;
-    	
-    }
-
+}
 \end{minted}
 \caption{Programa de lectura de eventos de ratón con ``Reactor''}
 \label{Lis: eventosratonreactor}
@@ -228,47 +220,47 @@ Tras demultiplexar los eventos, el manejador correspondiente se encarga de mostr
                framesep=2mm,
                linenos]
                {C}
-    #include <reactor/reactor.h>
-    #include <reactor/console.h>
-    #include <stdio.h>
-    #include <unistd.h>
-    #include <assert.h>
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <fcntl.h>
-    #include <sys/select.h>
+#include <reactor/reactor.h>
+#include <reactor/console.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/select.h>
     
-    static void keyboard (event_handler* ev);
-    static void mouse (event_handler* ev);
-    event_handler* mouse_handler_new(int fd) {
-    	return event_handler_new(fd, mouse);
-    }
-    static void mouse (event_handler* ev) {
-    	int fifo= -1;	
-    	fifo = open("archivo", O_RDWR|O_NONBLOCK);
-    	unsigned char bufer[1024];
-    	int p= read (ev->fd, bufer, 1024);
-    	int a, t= 0;      
-    	if (p <0)
-    		reactor_quit(ev->r);
-    	typedef struct raton{
-    	char tipo;
-    	unsigned char buf[1024];
-    	} movimiento;
-    	movimiento evento;
-    	evento.tipo = 'R';
+static void keyboard (event_handler* ev);
+static void mouse (event_handler* ev);
+event_handler* mouse_handler_new(int fd) {
+    return event_handler_new(fd, mouse);
+}
+static void mouse (event_handler* ev) {
+    int fifo= -1;	
+    fifo = open("archivo", O_RDWR|O_NONBLOCK);
+    unsigned char bufer[1024];
+    int p= read (ev->fd, bufer, 1024);
+    int a, t= 0;      
+    if (p <0)
+    	reactor_quit(ev->r);
+    typedef struct raton{
+    char tipo;
+    unsigned char buf[1024];
+    } movimiento;
+    movimiento evento;
+    evento.tipo = 'R';
   
-    	for(int i=0; i<p; ++i) {
-    	evento.buf[i] = bufer[i];
-    	}
-    	for(t=0; t<p; ++t) {
-    		printf("%x", evento.buf[t]);
-    		printf(" - ");
-    	}
-    	puts("");
-    	a= write(fifo, &evento, p+1);
-    	close(fifo);
+    for(int i=0; i<p; ++i) {
+    evento.buf[i] = bufer[i];
     }
+    for(t=0; t<p; ++t) {
+    	printf("%x", evento.buf[t]);
+    	printf(" - ");
+    }
+    puts("");
+    a= write(fifo, &evento, p+1);
+    close(fifo);
+}
 \end{minted}
 \caption{Continuación de ``Listing \ref{Lis: eventosdemultiplexados}''}
 %\label{Lis: eventosdemultiplexados}
@@ -281,11 +273,11 @@ Tras demultiplexar los eventos, el manejador correspondiente se encarga de mostr
                framesep=2mm,
                linenos]
                {C} 
-    event_handler* keyboard_handler_new() {
-    	return event_handler_new(0, keyboard);
-    }
-    static void keyboard (event_handler* ev) {
-	int fifo= -1;	
+event_handler* keyboard_handler_new() {
+    return event_handler_new(0, keyboard);
+}
+static void keyboard (event_handler* ev) {
+    int fifo= -1;	
 	fifo = open("archivo", O_RDWR|O_NONBLOCK);
 	char bufer[1];
 	int s= read (ev->fd, bufer, sizeof(bufer));
@@ -303,19 +295,19 @@ Tras demultiplexar los eventos, el manejador correspondiente se encarga de mostr
 	int d;
 	d= write(fifo, &pulsacion, sizeof(pulsacion));
 	close(fifo);
-    }
+}
     
-    int main () {
+int main () {
     	
-    	int fd1 = open("/dev/hidraw1", O_RDONLY);
-    	void* state= console_set_raw_mode(0);
-    	reactor *r= reactor_new();
-    	reactor_add(r, keyboard_handler_new());
-    	reactor_add(r, mouse_handler_new(fd1));
-    	reactor_run(r);
-    	console_restore(0,  state);
-    	return 0;
-    }
+    int fd1 = open("/dev/hidraw1", O_RDONLY);
+    void* state= console_set_raw_mode(0);
+    reactor *r= reactor_new();
+    reactor_add(r, keyboard_handler_new());
+    reactor_add(r, mouse_handler_new(fd1));
+    reactor_run(r);
+    console_restore(0,  state);
+    return 0;
+}
 \end{minted}
 \caption{Programa de lectura y demultiplexado de eventos con ``Reactor''}
 \label{Lis: eventosdemultiplexados}
@@ -345,19 +337,17 @@ El programa se divide en las siguientes partes\footnote{El análisis se realiza 
                framesep=2mm,
                linenos]
                {C}
-    #include <iostream>
+#include <iostream>
 
-    #include <opencv2/core/core.hpp>
-    #include <opencv2/highgui/highgui.hpp>
-    #include <opencv2/imgproc/imgproc.hpp>
-    #include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/objdetect/objdetect.hpp>
     
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <fcntl.h>
-    #include <unistd.h>
-
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 \end{minted}
 \caption{Archivos cabecera de ``eye\_detect.cpp''}
 \label{Lis: libreriasopencv}
@@ -379,49 +369,43 @@ El programa se divide en las siguientes partes\footnote{El análisis se realiza 
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
 int fifo = -1;
-
-    cv::Vec3f getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
-    {
-      std::vector<int> sums(circles.size(), 0);
-      for (int y = 0; y < eye.rows; y++)
-      {
-          uchar *ptr = eye.ptr<uchar>(y);
-          for (int x = 0; x < eye.cols; x++)
-          {
-              int value = static_cast<int>(*ptr);
-              for (int i = 0; i < circles.size(); i++)
-              {
-                  cv::Point center((int)std::round(circles[i][0]), (int)std::round(circles[i][1]));
-                  int radius = (int)std::round(circles[i][2]);
-                  if (std::pow(x - center.x, 2) + std::pow(y - center.y, 2) < std::pow(radius, 2))
-                  {
-                      sums[i] += value;
-                  }
-              }
-              ++ptr;
-          }
-      }
-      int smallestSum = 9999999;
-      int smallestSumIndex = -1;
-      for (int i = 0; i < circles.size(); i++)
-      {
-          if (sums[i] < smallestSum)
-          {
+cv::Vec3f getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles) {
+    std::vector<int> sums(circles.size(), 0);
+    for (int y = 0; y < eye.rows; y++) {
+        uchar *ptr = eye.ptr<uchar>(y);
+        for (int x = 0; x < eye.cols; x++){
+            int value = static_cast<int>(*ptr);
+            for (int i = 0; i < circles.size(); i++) {
+                cv::Point center((int)std::round(circles[i][0]), (int)std::round(circles[i][1]));
+                int radius = (int)std::round(circles[i][2]);
+                if (std::pow(x - center.x, 2) + std::pow(y - center.y, 2) < std::pow(radius, 2)) {
+                    sums[i] += value;
+                }
+            }
+            ++ptr;
+        }
+    }
+    int smallestSum = 9999999;
+    int smallestSumIndex = -1;
+    for (int i = 0; i < circles.size(); i++) {
+        if (sums[i] < smallestSum) {
               smallestSum = sums[i];
               smallestSumIndex = i;
-          }
-      }
-      return circles[smallestSumIndex];
+        }
     }
+    return circles[smallestSumIndex];
+}
 \end{minted}
 \caption{Detección del iris}
 \label{Lis: deteccioniris}
 \end{listing}
     En primer lugar, se crea el descriptor de un archivo FIFO y lo inicializa a ``-1''. Seguidamente, la función ``getEyeball()'' selecciona la región circular que contiene más cantidad de píxeles negros (pupila).
-    
+\clearpage
     \item Selección del ojo izquierdo: 
     
 \begin{listing}[H]
@@ -430,20 +414,17 @@ int fifo = -1;
                framesep=2mm,
                linenos]
                {C}
-    cv::Rect getLeftmostEye(std::vector<cv::Rect> &eyes)
-    {
-      int leftmost = 99999999;
-      int leftmostIndex = -1;
-      for (int i = 0; i < eyes.size(); i++)
-      {
-          if (eyes[i].tl().x < leftmost)
-          {
-              leftmost = eyes[i].tl().x;
-              leftmostIndex = i;
-          }
-      }
-      return eyes[leftmostIndex];
+cv::Rect getLeftmostEye(std::vector<cv::Rect> &eyes) {
+    int leftmost = 99999999;
+    int leftmostIndex = -1;
+    for (int i = 0; i < eyes.size(); i++) {
+        if (eyes[i].tl().x < leftmost) {
+            leftmost = eyes[i].tl().x;
+            leftmostIndex = i;
+        }
     }
+    return eyes[leftmostIndex];
+}
 \end{minted}
 \caption{Selección del ojo izquierdo}
 \label{Lis: deteccionojoizq}
@@ -452,51 +433,50 @@ int fifo = -1;
 La función ``getLeftmostEye()'' devuelve un objeto de la clase ``cv::Rect'' que proporciona las coordenadas de la esquina superior izquierda del área rectangular que encierra el ojo junto a la altura y a la anchura del mismo (``Listing \ref{Lis: deteccionojoizq}'').
 
     \item Estabilización de las coordenadas del iris: 
-    
+
+Esta función realiza la media de las coordenadas del iris que se obtienen en las últimas cinco detecciones para obtener las coordenadas más precisas, ya que el algoritmo encargado de la detección de regiones circulares dentro del área cuadrada del ojo es bastante inestable (``Listing \ref{Lis: estabilizacion}'').
+
 \begin{listing}[H]
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
                linenos]
                {C}
-    std::vector<cv::Point> centers;
+std::vector<cv::Point> centers;
     
-    cv::Point stabilize(std::vector<cv::Point> &points, int windowSize)
-    {
-      float sumX = 0;
-      float sumY = 0;
-      int count = 0;
+cv::Point stabilize(std::vector<cv::Point> &points, int windowSize) {
+    float sumX = 0;
+    float sumY = 0;
+    int count = 0;
 \end{minted}
 \caption{Continuación de Listing \ref{Lis: estabilizacion}}
 %\label{Lis: estabilizacion}
 \end{listing}
+\clearpage
 
 \begin{listing}[H]
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
-      for (int i = std::max(0, (int)(points.size() - windowSize)); i < points.size(); i++)
-      {
-          sumX += points[i].x;
-          sumY += points[i].y;
-          ++count;
-      }
-      if (count > 0)
-      {
-          sumX /= count;
-          sumY /= count;
-      }
-      return cv::Point(sumX, sumY);
+    for (int i = std::max(0, (int)(points.size() - windowSize)); i < points.size(); i++) {
+        sumX += points[i].x;
+        sumY += points[i].y;
+        ++count;
     }
-    
+    if (count > 0) {
+        sumX /= count;
+        sumY /= count;
+    }
+    return cv::Point(sumX, sumY);
+}
 \end{minted}
 \caption{Estabilización de las coordenadas del iris}
 \label{Lis: estabilizacion}
 \end{listing}
-
-Esta función realiza la media de las coordenadas del iris que se obtienen en las últimas cinco detecciones para obtener las coordenadas más precisas, ya que el algoritmo encargado de la detección de regiones circulares dentro del área cuadrada del ojo es bastante inestable (``Listing \ref{Lis: estabilizacion}'').
 
     \item Detección del área rectangular que contiene los ojos: 
 
@@ -508,41 +488,41 @@ Cuando se ha detectado la cara, se define una matriz con la clase ``cv::Mat'' ll
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
-    void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade)
-    {
-      cv::Mat grayscale;
-      cv::cvtColor(frame, grayscale, CV_BGR2GRAY);
-      cv::equalizeHist(grayscale, grayscale);
-      std::vector<cv::Rect> faces;
-      faceCascade.detectMultiScale(grayscale, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(150, 150));
-      if (faces.size() == 0) return; 
-      cv::Mat face = grayscale(faces[0]); 
-      std::vector<cv::Rect> eyes;
-      eyeCascade.detectMultiScale(face, eyes, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));   
-      std::cout << "Face " << faces[0] << std::endl;
-      rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
-      if (eyes.size() != 2) return;
-      for (cv::Rect &eye : eyes)
-      {	
-          rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
-          std::cout << "Ojos" << eye << std::endl;
-          struct {
+void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade) {
+    cv::Mat grayscale;
+    cv::cvtColor(frame, grayscale, CV_BGR2GRAY);
+    cv::equalizeHist(grayscale, grayscale);
+    std::vector<cv::Rect> faces;
+    faceCascade.detectMultiScale(grayscale, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(150, 150));
+    if (faces.size() == 0) return; 
+    cv::Mat face = grayscale(faces[0]); 
+    std::vector<cv::Rect> eyes;
+    eyeCascade.detectMultiScale(face, eyes, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));   
+    std::cout << "Face " << faces[0] << std::endl;
+    rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
+    if (eyes.size() != 2) return;
+    for (cv::Rect &eye : eyes) {	
+        rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+        std::cout << "Ojos" << eye << std::endl;
+        struct {
             char type;
             cv::Rect eye;
-          } s = {
-            'E', eye
-          };
-          ::write(fifo, &s, sizeof(s));
-      }
-      cv::Rect eyeRect = getLeftmostEye(eyes);
-      cv::Mat eye = face(eyeRect);
-      cv::equalizeHist(eye, eye);
-      std::vector<cv::Vec3f> circles;
-      cv::HoughCircles(eye, circles, CV_HOUGH_GRADIENT, 1, eye.cols / 8, 250, 15, eye.rows / 8, eye.rows / 3);
+        } s = {
+        'E', eye
+        };
+        ::write(fifo, &s, sizeof(s));
+    }
+    cv::Rect eyeRect = getLeftmostEye(eyes);
+    cv::Mat eye = face(eyeRect);
+    cv::equalizeHist(eye, eye);
+    std::vector<cv::Vec3f> circles;
+    cv::HoughCircles(eye, circles, CV_HOUGH_GRADIENT, 1, eye.cols / 8, 250, 15, eye.rows / 8, eye.rows / 3);
 \end{minted}
-\caption{Continuación de ``Listing \ref{Lis: arearectangular}'')}
+\caption{Continuación de ``Listing \ref{Lis: arearectangular}''}
 %\label{Lis: arearectangular}
 \end{listing}
       
@@ -550,34 +530,31 @@ Cuando se ha detectado la cara, se define una matriz con la clase ``cv::Mat'' ll
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C} 
-      if (circles.size() > 0)
-      {
-          cv::Vec3f eyeball = getEyeball(eye, circles);
-          cv::Point center(eyeball[0], eyeball[1]);
-          centers.push_back(center);
-          center = stabilize(centers, 5);
-          int radius = (int)eyeball[2];
-          std::cout << "Pupila " << center << ", " << radius << std::endl;
-          
-          
-           struct {
+    if (circles.size() > 0) {
+        cv::Vec3f eyeball = getEyeball(eye, circles);
+        cv::Point center(eyeball[0], eyeball[1]);
+        centers.push_back(center);
+        center = stabilize(centers, 5);
+        int radius = (int)eyeball[2];
+        std::cout << "Pupila " << center << ", " << radius << std::endl;
+        struct {
             char type;
             cv::Point center;
             int radius;
-           
-          } p = {
+        } p = {
             'P', center, radius
-          };
-          ::write(fifo, &p, sizeof(p));
-          
-          cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
-          cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
-      }
-      cv::imshow("Eye", eye);
+        };
+        ::write(fifo, &p, sizeof(p));
+              
+        cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
+        cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
     }
-
+    cv::imshow("Eye", eye);
+}
 \end{minted}
 \caption{Detección del área rectangular que contiene los ojos}
 \label{Lis: arearectangular}
@@ -599,21 +576,17 @@ El proceso que se sigue en la detección del iris es parecido al de los ojos: Se
                framesep=2mm,
                linenos]
                {C} 
-    int main(int argc, char **argv)
-    {
-      cv::CascadeClassifier faceCascade;
-      cv::CascadeClassifier eyeCascade;
-      if (!faceCascade.load("./haarcascade_frontalface_alt.xml"))
-      {
-          std::cerr << "Could not load face detector." << std::endl;
-          return -1;
-      }    
-      if (!eyeCascade.load("./haarcascade_eye_tree_eyeglasses.xml"))
-      {
-          std::cerr << "Could not load eye detector." << std::endl;
-          return -1;
-      }
-    
+int main(int argc, char **argv) {
+    cv::CascadeClassifier faceCascade;
+    cv::CascadeClassifier eyeCascade;
+    if (!faceCascade.load("./haarcascade_frontalface_alt.xml")) {
+        std::cerr << "Could not load face detector." << std::endl;
+        return -1;
+    }    
+    if (!eyeCascade.load("./haarcascade_eye_tree_eyeglasses.xml")) {
+        std::cerr << "Could not load eye detector." << std::endl;
+        return -1;
+    }
 \end{minted}
 \caption{Carga de clasificadores}
 \label{Lis: cargaclasificadores}
@@ -627,14 +600,11 @@ El proceso que se sigue en la detección del iris es parecido al de los ojos: Se
                framesep=2mm,
                linenos]
                {C} 
-
     cv::VideoCapture cap(0); 
-    if (!cap.isOpened())
-      {
-          std::cerr << "Webcam not detected." << std::endl;
-          return -1;
-      }  
-    
+    if (!cap.isOpened()) {
+        std::cerr << "Webcam not detected." << std::endl;
+        return -1;
+    }  
 \end{minted}
 \caption{Encendido de la cámara en ``eye\_detect.cpp''}
 \label{Lis: camaraon}
@@ -642,7 +612,6 @@ El proceso que se sigue en la detección del iris es parecido al de los ojos: Se
     
     En primer lugar, se define ``cap'' con la clase ``cv::VideoCapture'' del módulo ``highgui'' de OpenCV. Posteriormente, se enciende con la extensión ``.is0pened()''. En el caso de que la cámara no se haya detectado, se informa de la situación por pantalla y devuelve ``-1'' (``Listing \ref{Lis: camaraon}'').
     
-\clearpage
     \item Función principal. Visualización de vídeo:
 
 La imagen capturada por la cámara se convierte en una matriz. Si el contenido de esa matriz es nulo, el programa sale del bucle, en caso contrario, se hace una llamada a ``detectEyes()'' para obtener los eventos del ojo y la pupila e introducirlo en el archivo especial. Además, por cada iteración se hacen 30 capturas que se clasifican con los correspondientes clasificadores mediante el algoritmo de Viola-Jones.     
@@ -655,17 +624,15 @@ La imagen capturada por la cámara se convierte en una matriz. Si el contenido d
                {C} 
     fifo = open("eye_fifo", O_WRONLY|O_CREAT, ~0);
     cv::Mat frame;
-    while (1)
-      {
-          cap >> frame;
-          if (!frame.data) break;
-          detectEyes(frame, faceCascade, eyeCascade);
-          cv::imshow("Webcam", frame);
-          if (cv::waitKey(30) >= 0) break;
-      }
-      return 0;
-    } 
-    
+    while (1) {
+        cap >> frame;
+        if (!frame.data) break;
+        detectEyes(frame, faceCascade, eyeCascade);
+        cv::imshow("Webcam", frame);
+        if (cv::waitKey(30) >= 0) break;
+    }
+    return 0;
+} 
 \end{minted}
 \caption{Visualización de vídeo en ``eye\_detect.cpp''}
 \label{Lis: visualizacionvideo}
@@ -673,7 +640,7 @@ La imagen capturada por la cámara se convierte en una matriz. Si el contenido d
 
     
 \end{itemize}
- \clearpage
+% \clearpage
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Calibración de la cámara} \label{s3_2_2}
 
@@ -683,7 +650,7 @@ La imagen capturada por la cámara se convierte en una matriz. Si el contenido d
 El primer paso en el proceso de calibración consiste en realizar varias capturas situando la plantilla en diferentes posiciones. De esta forma, al disponer de un gran número de muestras distintas, durante el proceso de calibración se analizan los puntos de los cuadrados en distintas orientaciones, lo cual otorga mayor precisión a la calibración.
 La toma de las muestras o capturas se lleva a cabo con ``save\_capture.cpp’’. Las distintas partes del programa se describen a continuación:
 
-
+\clearpage
 \begin{itemize}
     \item Carga de librerías:
     
@@ -693,19 +660,19 @@ La toma de las muestras o capturas se lleva a cabo con ``save\_capture.cpp’’
                framesep=2mm,
                linenos]
                {C} 
-    #include "opencv2/core.hpp"
-    #include <opencv2/core/utility.hpp>
-    #include "opencv2/imgproc.hpp"
-    #include "opencv2/calib3d.hpp"
-    #include "opencv2/imgcodecs.hpp"
-    #include "opencv2/videoio.hpp"
-    #include "opencv2/highgui.hpp"
+#include "opencv2/core.hpp"
+#include <opencv2/core/utility.hpp>
+#include "opencv2/imgproc.hpp"
+#include "opencv2/calib3d.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/videoio.hpp"
+#include "opencv2/highgui.hpp"
     
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <iostream>
-    #include <string> 
-    #include <sstream> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string> 
+#include <sstream> 
 \end{minted}
 \caption{Carga de librerías en ``save\_capture.cpp''}
 \label{Lis: visualizacionvideocal}
@@ -722,10 +689,8 @@ En primer lugar, se cargan los módulos de OpenCV y posteriormente, algunos arch
                framesep=2mm,
                linenos]
                {C} 
-    using namespace cv;
-    
-    int main (){
-
+using namespace cv;
+int main (){
     std::vector<int> compression_params;
     compression_params.push_back(CV_IMWRITE_JPEG_QUALITY);
     compression_params.push_back(100);
@@ -743,7 +708,7 @@ En primer lugar, se cargan los módulos de OpenCV y posteriormente, algunos arch
 \label{Lis: camaraonsave}
 \end{listing}
     
-Se inicia la cámara y se comprueba si se detecta o no, de la misma forma que en ``eye\_detect.cpp’’ (``Listing \ref{Lis: camaraonsave}). 
+Se inicia la cámara y se comprueba si se detecta o no, de la misma forma que en ``eye\_detect.cpp’’ (``Listing \ref{Lis: camaraonsave}''). 
 
     \item Función principal. Registro de la dirección: 
     
@@ -770,30 +735,31 @@ Se declara e inicializa una cadena de caracteres que contiene la ruta en la que 
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C} 
-    for(;;){
+    for(;;) {
     	
     cam >> img;
-    	
     namedWindow("image",WINDOW_AUTOSIZE);
     imshow("image", img);
     	
-    if(waitKey(30) == 13){//espera 30ms y pregunta por ENTER
-    
-    	Saveimgs << direccion << nimgs << ".jpg";
-    	SaveImage = imwrite(Saveimgs.str().c_str(), img, compression_params);
-    	Saveimgs = std::stringstream();
-    	nimgs++;
-    		if (!SaveImage){
-    			printf("!image %d saved failed!\n",nimgs);
-    
-    		}else{
-    			printf("!image %d saved successful!\n",nimgs);
-    		}
-    		if (nimgs == 14){break;}
-    		}
-    	}
+        if(waitKey(30) == 13){//espera 30ms y pregunta por ENTER
+        
+        	Saveimgs << direccion << nimgs << ".jpg";
+        	SaveImage = imwrite(Saveimgs.str().c_str(), img, compression_params);
+        	Saveimgs = std::stringstream();
+        	nimgs++;
+        	if (!SaveImage) {
+        		printf("!image %d saved failed!\n",nimgs);
+        
+        	} else {
+        		printf("!image %d saved successful!\n",nimgs);
+        	}
+        	if (nimgs == 14) {break;}
+        }
+    }
 \end{minted}
 \caption{Bucle de capturas}
 \label{Lis: buclecapturas}
@@ -818,19 +784,19 @@ Una vez se hayan capturado y guardado todas las imágenes, comienza el proceso d
                framesep=2mm,
                linenos]
                {C}  
-    #include "opencv2/core.hpp"
-    #include <opencv2/core/utility.hpp>
-    #include "opencv2/imgproc.hpp"
-    #include "opencv2/calib3d.hpp"
-    #include "opencv2/imgcodecs.hpp"
-    #include "opencv2/videoio.hpp"
-    #include "opencv2/highgui.hpp"
+#include "opencv2/core.hpp"
+#include <opencv2/core/utility.hpp>
+#include "opencv2/imgproc.hpp"
+#include "opencv2/calib3d.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/videoio.hpp"
+#include "opencv2/highgui.hpp"
     
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <iostream>
-    #include <string> 
-    #include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string> 
+#include <sstream>
 \end{minted}
 \caption{Carga de archivos cabecera en ``calibration.cpp’’}
 \label{Lis: cabeceracali}
@@ -843,17 +809,17 @@ Una vez se hayan capturado y guardado todas las imágenes, comienza el proceso d
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
-    using namespace cv;
+using namespace cv;
 
-    static void calcChessboardCorners(Size boardSize, float squareSize, std::vector<cv::Point3f>& corners)
-    {
-    	corners.clear();
-        for( int i = 0; i < boardSize.height; i++ )
-            for( int j = 0; j < boardSize.width; j++ )
-                corners.push_back(Point3f(float(j*squareSize),
-                                          float(i*squareSize), 0)); 
+static void calcChessboardCorners(Size boardSize, float squareSize, std::vector<cv::Point3f>& corners) {
+    corners.clear();
+    for( int i = 0; i < boardSize.height; i++ )
+        for( int j = 0; j < boardSize.width; j++ )
+            corners.push_back(Point3f(float(j*squareSize),float(i*squareSize), 0)); 
     }
 \end{minted}
 \caption{Cálculo de la posición de las esquinas de la plantilla}
@@ -868,12 +834,12 @@ Una vez se hayan capturado y guardado todas las imágenes, comienza el proceso d
                framesep=2mm,
                linenos]
                {C}
-    static void saveparams(const std::string& filename, 
+static void saveparams(const std::string& filename, 
         const Mat& cameraMatrix, const Mat& distCoeffs,
     	const std::vector<Mat>& rvecs,
     	const std::vector<Mat>& tvecs, 
-    	const double& RMS)
-    {
+    	const double& RMS) {
+    	
     FileStorage fs( filename, FileStorage::WRITE );
     fs << "Calibrate_Accuracy" << RMS;
     fs << "Camera_Matrix" << cameraMatrix;
@@ -881,11 +847,11 @@ Una vez se hayan capturado y guardado todas las imágenes, comienza el proceso d
     fs << "Rotation_Vector" << rvecs;
     fs << "Translation_vector" << tvecs;
     
-    if( !rvecs.empty() && !tvecs.empty() ){
+    if(!rvecs.empty() && !tvecs.empty()) {
     
     	CV_Assert(rvecs[0].type() == tvecs[0].type());
     	Mat bigmat((int)rvecs.size(), 6, rvecs[0].type());
-    	for( int i = 0; i < (int)rvecs.size(); i++ ){
+    	for( int i = 0; i < (int)rvecs.size(); i++ ) {
     		Mat r = bigmat(Range(i, i+1), Range(0,3));
     		Mat t = bigmat(Range(i, i+1), Range(3,6));
     
@@ -897,9 +863,9 @@ Una vez se hayan capturado y guardado todas las imágenes, comienza el proceso d
         }
         cvWriteComment( *fs, "Rotation vector + Translation vector", 0 );
         fs << "extrinsic_parameters" << bigmat;
-        }
-    		fs.release();
     }
+    fs.release();
+}
 \end{minted}
 \caption{Guardado de los parámetros de la cámara}
 \label{Lis: guardado}
@@ -907,7 +873,7 @@ Una vez se hayan capturado y guardado todas las imágenes, comienza el proceso d
     
 Determina el formato de guardado de la matriz de la cámara, los coeficientes de distorsión, el vector de rotación y el vector de traslación. Después concatena los vectores de traslación y rotación para formar la matriz de parámetros extrínsecos.
     
-    \item Función principal. Definición de parámetros (``Listing \ref{Lis: definicion}'')
+    \item Función principal. Declaración de parámetros (``Listing \ref{Lis: definicion}'')
     
 Se declaran los vectores que se van a usar como argumentos de las funciones a las que se llama y se define la variable ``patternsize’’ que toma el valor asignado por ``Size()’’ cuyos argumentos son el número de las esquinas interiores horizontales y verticales respectivamente. 
 La plantilla que se ha usado es la que se muestra en la figura \ref{fig: plantilla}.
@@ -918,7 +884,7 @@ La plantilla que se ha usado es la que se muestra en la figura \ref{fig: plantil
                framesep=2mm,
                linenos]
                {C}
-    int main(){
+int main() {
     
     cv::Size patternsize = cv::Size(9,6);
     std::vector<cv::Point3f> corners3D;
@@ -926,7 +892,7 @@ La plantilla que se ha usado es la que se muestra en la figura \ref{fig: plantil
     std::vector<std::vector<cv::Point2f>> coord2D;
     std::vector<std::vector<cv::Point3f>> coord3D;
 \end{minted}
-\caption{Definición de parámetros}
+\caption{Declaración de parámetros}
 \label{Lis: definicion}
 \end{listing}
 \clearpage
@@ -948,7 +914,9 @@ Como se puede observar, este patrón presenta ``9'' esquinas interiores horizont
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
     std::string direccion = "//home//esther//Desktop//VKMS//Calibracion//Calibracion";
     std::stringstream imgs;
@@ -959,7 +927,7 @@ Como se puede observar, este patrón presenta ``9'' esquinas interiores horizont
     
 Se establece la ruta en la que se encuentran almacenadas las imágenes que se van a cargar después. El último conjunto de caracteres de la dirección corresponde con el nombre de las capturas sin contar con el número ``N’’ mencionado en el apartado anterior.
 
-    \item Función principal. Llamada a la función ``calcChessbiardCorners()''
+    \item Función principal. Llamada a la función ``calcChessboardCorners()''
     
 \begin{listing}[H]
 \begin{minted}[bgcolor=bg,
@@ -969,7 +937,7 @@ Se establece la ruta en la que se encuentran almacenadas las imágenes que se va
                {C}
     calcChessboardCorners(patternsize,23,corners3D);
 \end{minted}
-\caption{Llamada a la función ``calcChessbiardCorners()''}
+\caption{Llamada a la función ``calcChessboardCorners()''}
 \label{Lis: calcChessbiardCorners}
 \end{listing}
 
@@ -989,12 +957,14 @@ El segundo argumento debe modificarse en función de las características de la 
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
     Mat img, imgGray;
     bool found;
 
-    for (int  i = 0; i < 14; i++){
+    for (int  i = 0; i < 14; i++) {
 
 	    imgs << direccion << i << ".jpg";
 	    img = imread(imgs.str().c_str());
@@ -1031,7 +1001,9 @@ En cada iteración del bucle, se declara el nombre completo de cada imagen que p
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C} 
     Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
     Mat distCoeffs = Mat::zeros(8, 1, CV_64F);
@@ -1058,7 +1030,9 @@ Se declaran el número de precisión, la matriz de la cámara de orden 3, el vec
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C} 
     saveparams("//home//esther//Desktop//VKMS//Calibracion//MiCam.yml",cameraMatrix,distCoeffs,rvecs,tvecs,rms);
 \end{minted}
@@ -1082,34 +1056,35 @@ Es por ello por lo que hay que realizar una ligera modificación en el código d
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
     cv::Mat frame;
     cv::Mat imageUndistorted;
     fifo = open("eye_fifo", O_WRONLY|O_CREAT, ~0);
-    while (1)
-    {
-        cap >> frame; // outputs the webcam image to a Mat
+    while (1) {
+        cap >> frame;
         cv::Mat cameraMatrix = cv::Mat::eye(3, 3, CV_64F);
         cv::Mat Distortion = cv::Mat::zeros(8, 1, CV_64F);		
 	    cv::FileStorage storageRead("MiCam.yml",    cv::FileStorage::READ);
 	    storageRead["Camera_Matrix"] >> cameraMatrix;
 	    storageRead["Distortion_Coefficients"] >> Distortion;
+	    
+        // corrijo distorsion radial:
+        undistort(frame, imageUndistorted, cameraMatrix, Distortion); 
       
-        undistort(frame, imageUndistorted, cameraMatrix, Distortion);//corrijo distorsion radial
-      
-  
         if (!imageUndistorted.data) break;
             detectEyes(imageUndistorted, faceCascade, eyeCascade);
-            cv::imshow("Webcam", imageUndistorted); // displays the Mat
+            cv::imshow("Webcam", imageUndistorted);
             if (cv::waitKey(30) >= 0) {
-		        break;  // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
+		        break;  
 		        close(fifo);
 		    }
         }
   
-        return 0;
-    }
+    return 0;
+}
 \end{minted}
 \caption{Lectura del archivo ``MiCam.yml''}
 \label{Lis: micamlectura}
@@ -1135,31 +1110,31 @@ El programa de selección se divide esencialmente en tres partes: Obtención de 
                linenos]
                {C}
 
-    #include <reactor/reactor.h>
-    #include <reactor/console.h>
-    #include <stdio.h>
-    #include <unistd.h>
-    #include <assert.h>
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <fcntl.h>
-    #include <sys/select.h>
+#include <reactor/reactor.h>
+#include <reactor/console.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/select.h>
     
-    ////////////// Media de la distancia X de O' a 0'' //////////////
+////////////// Media de la distancia X de O' a O'' //////////////
     
-    // 		Mirada central: 45,46,47,48,49,50,51
-    // 		Mirada derecha: 59,60,61,62,63
-    // 		Mirada izquierda: 40,41,42,43,44
+// 		Mirada central: 45,46,47,48,49,50,51
+// 		Mirada derecha: 59,60,61,62,63
+// 		Mirada izquierda: 40,41,42,43,44
     
-    #define x1 44
-    #define x2 59
+#define x1 44 // Limite x inferior
+#define x2 59 // Limite x superior
     
-    typedef struct {
-    	char tipo;
-    	int x, y, d;
-    } eyetracking;
+typedef struct {
+    char tipo;
+    int x, y, d;
+} eyetracking;
     
-    eyetracking* e;
+eyetracking* e;
 \end{minted}
 \caption{Continuación de ``Listing \ref{Lis: programaselector}''}
 %\label{Lis: programaselector}
@@ -1173,40 +1148,38 @@ El programa de selección se divide esencialmente en tres partes: Obtención de 
                linenos]
                {C}
     
-	static void eye (event_handler* ev);
+static void eye (event_handler* ev);
 
-	event_handler* eye_handler_new(int fifo) {
+event_handler* eye_handler_new(int fifo) {
 		return event_handler_new(fifo, eye);
-	}
-	
-	char function (double media) {
-	char salida;
-	char pantalla= 'I'; // Posicion de la pantalla secundaria
-	
-	switch (pantalla) {
-		case 'D':
-			if (media>=x2) {
-				salida= 'B';
-			} 
-			else {
-				salida = 'A';
-			}
-			break;
-			break;
-		case 'I': 
-			if (media<=x1) {
-				salida = 'B';
-			}
-			else {
-				salida= 'A';
-			}	
-			break;
-			break;
-	}
-
-	return salida;
 }
-
+	
+char function (double media) {
+    char salida;
+    char pantalla= 'I'; // Posicion de la pantalla secundaria
+	
+    switch (pantalla) {
+	    case 'D':
+		    if (media>=x2) {
+			    salida= 'B';
+		    } 
+		    else {
+			    salida = 'A';
+		    }
+		    break;
+		    break;
+	    case 'I': 
+		    if (media<=x1) {
+			    salida = 'B';
+		    }
+		    else {
+			    salida= 'A';
+		    }	
+		    break;
+		    break;
+    }
+    return salida;
+}
 \end{minted}
 \caption{Continuación de ``Listing \ref{Lis: programaselector}''}
 %\label{Lis: programaselector}
@@ -1218,35 +1191,31 @@ El programa de selección se divide esencialmente en tres partes: Obtención de 
                framesep=2mm,
                linenos]
                {C}
-	static void eye (event_handler* ev) {
+static void eye (event_handler* ev) {
 		
-		int contador=0;
-		int vector[5];
-		int valor =0;
+	int contador=0;
+	int vector[5];
+	int valor =0;
 		
-		while (contador<5) { 
+	while (contador<5) { 
 		int s;
 		char buf[512];
 		s= read (ev->fd, buf, sizeof(buf));
 		printf("s: %d\n", s);
 		
-			if (s <0)
+		if (s <0)
 			reactor_quit(ev->r);
 		
-			
-			if (buf[0] == 'E') {
-				e = (eyetracking*)buf;
-
-				if (e->x < 70) {
+		if (buf[0] == 'E') {
+			e = (eyetracking*)buf;
+			if (e->x < 70) {
 				vector[contador]= e->x;
 				contador++;
-				}
 			}
 		}
+	}
 	for (int i=0; i<contador+1; i++) {
-		
 		valor= valor + vector[i];
-		
 	}
 
 	double MM= (double) valor/5;
@@ -1261,44 +1230,42 @@ El programa de selección se divide esencialmente en tres partes: Obtención de 
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
 	int fifo2= -1;	
 	fifo2 = open("select", O_RDWR);
-
 	int p;
 	char buf1[1];
 	buf1[0]= salida;
 	p= write (fifo2, buf1, sizeof(buf1));
-	
-		if (p <0)
+	if (p <0)
 		reactor_quit(ev->r);
 		
 	printf("Salida introducida: %c\n", salida);
-    close(fifo2);
-	}
+	close(fifo2);
+}
 	
-	int main () {
+int main () {
+	int fifo1= -1;
+	fifo1 = open("/home/esther/Desktop/VKMS/Recopilacion/Eye_tracking/eye_fifo", O_RDONLY);
+	printf("fifo1: %d\n",fifo1);
 		
-
-		int fifo1= -1;
-		fifo1 = open("/home/esther/Desktop/VKMS/Recopilacion/Eye_tracking/eye_fifo", O_RDONLY);
-		printf("fifo1: %d\n",fifo1);
-		
-		void* state= console_set_raw_mode(0);
-		reactor *r= reactor_new();
-		reactor_add(r, eye_handler_new(fifo1));
-		reactor_run(r);
-		console_restore(0,  state);
-		close(fifo1);
-		return 0;
-	}
+	void* state= console_set_raw_mode(0);
+	reactor *r= reactor_new();
+	reactor_add(r, eye_handler_new(fifo1));
+	reactor_run(r);
+	console_restore(0,  state);
+	close(fifo1);
+	return 0;
+}
 \end{minted}
 \caption{Programa ``Selector.c''}
 \label{Lis: programaselector}
 \end{listing}
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Obtención de las coordenadas {\itshape x} límite} \label{s3_4_2}
 
@@ -1306,7 +1273,7 @@ Existen varias formas de determinar la dirección de la mirada del usuario. Una 
 
 Para estudiar esta situación, se ejecuta el programa ``eye\_detect.cpp''\footnote{Véase la sección 4.3.}. Como ya se ha comentado, muestra las capturas detectadas con la cámara de Raspberry Pi, y sobre ellas, dibuja las regiones detectadas por el algoritmo de Viola-Jones. Observar la posición de los recuadros es fundamental para determinar la variación que se produce en la coordenada {\itshape x}. Todo este proceso se relata en la sección 4.5 junto a los resultados.
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1323,23 +1290,20 @@ Tras introducir el carácter que indica el equipo que recibe los eventos y obten
 
 El programa cliente del taller toma aquello introducido en el teclado mediante ``fgets()'' leyendo el descriptor de la entrada estándar\footnote{Véase el anexo B.}. En este caso, no interesa en absoluto el descriptor del teclado, lo único que interesa es abrir el archivo especial ``archivo'' y tomar el descriptor resultante que se emplea para obtener aquellos eventos HID introducidos por ``mk.c'' mediante la operación de escritura. El procedimiento para adquirir el contenido del archivo FIFO es igual al que se emplea los archivos descriptores de la interfaz USB HID: en primer lugar, se abre el archivo para conseguir el descriptor con {\itshape open()} y en segundo lugar, se emplea el descriptor para leer el contenido con {\itshape read()}. 
 
-\begin{listing}[H]
+\begin{listing}
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
-
-///////////////////////////////////////////////////////////////
-//	OBTENCIÓN DE EVENTOS DE TECLADO Y RATON		        //
-///////////////////////////////////////////////////////////////
-	
-int fifo1= -1;
-unsigned char bufer2[1025];
-fifo1= open("/home/esther/Desktop/VKMS/Recopilacion/Eventos_mk/archivo", O_RDONLY);
-int s;
-s= read (fifo1, bufer2, sizeof(bufer2));
-printf("numero de bytes leidos: %d\n", s);
+    int fifo1= -1;
+    unsigned char bufer2[1025];
+    fifo1= open("/home/esther/Desktop/VKMS/Recopilacion/Eventos_mk/archivo", O_RDONLY);
+    int s;
+    s= read (fifo1, bufer2, sizeof(bufer2));
+    printf("numero de bytes leidos: %d\n", s);
 
 \end{minted}
 \caption{Obtención de los eventos del teclado y ratón a partir del descriptor de archivo.}
@@ -1357,29 +1321,25 @@ Otra de las funciones de este programa es tomar el carácter enviado por el prog
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
-               linenos]
+               linenos,
+               breaklines,
+               breakanywhere]
                {C}
-///////////////////////////////////////////////////////////////
-//   OBTENCION DEL ARDUINO AL QUE HAY QUE ENVIAR EVENTOS     //
-///////////////////////////////////////////////////////////////
-	
-	
-int fifo2= -1;
-int descriptor;
-char bufer3[1];
-fifo2= open("/home/esther/Desktop/VKMS/Recopilacion/Selector/select", O_RDONLY);
-int r;
-r= read (fifo2, bufer3, sizeof(bufer3));
-	
-if (bufer3[0]=='A') {
-		
-	descriptor= fd1;
-		
-} else if (bufer3[0]=='B') {
-		
-	descriptor=fd2;
-} 
-
+    int fifo2= -1;
+    int descriptor;
+    char bufer3[1];
+    fifo2= open("/home/esther/Desktop/VKMS/Recopilacion/Selector/select", O_RDONLY);
+    int r;
+    r= read (fifo2, bufer3, sizeof(bufer3));
+    	
+    if (bufer3[0]=='A') {
+    		
+    	descriptor= fd1;
+    		
+    } else if (bufer3[0]=='B') {
+    		
+    	descriptor=fd2;
+    } 
 \end{minted}
 \caption{Selección del Arduino que recibe los eventos HID.}
 \label{lst:hid-event-demux}
@@ -1396,28 +1356,22 @@ La función {\itshape write()} usa el descriptor de la conexión para enviar el 
                framesep=2mm,
                linenos]
                {C}
-
-////////////////////////////////////////////////////////////////////////////
-//   ENVIO DE LOS EVENTOS DE TECLADO Y RATON AL ARDUINO CORRESPONDIENTE   //
-////////////////////////////////////////////////////////////////////////////
-	
-int n = write(descriptor, bufer2, s); //strlen(bufer2)
-assert(n >= 0);
-if (n == 0) {
-	break;
-	close(fifo1);
-	close(fifo2);
-}
-
+    int n = write(descriptor, bufer2, s);
+    assert(n >= 0);
+    if (n == 0) {
+    	break;
+    	close(fifo1);
+    	close(fifo2);
+    }
 \end{minted}
 \caption{Envío de los eventos HID.}
 \label{lst:hid-event-send}
 \end{listing}
-
+\clearpage
 En cuanto a los descriptores de la conexión ``fd1'' y ``fd2'', se adquieren a partir de la llamada a la función ``tcp\_client\_socket()'' que contiene como argumentos la dirección IP del servidor Arduino y el puerto de conexión.
 
 
-\begin{listing}
+\begin{listing}[H]
 \begin{minted}[bgcolor=bg,
                frame=lines,
                framesep=2mm,
@@ -1425,13 +1379,12 @@ En cuanto a los descriptores de la conexión ``fd1'' y ``fd2'', se adquieren a p
                {C}
 
 const char* IP1;
-	IP1= "192.168.1.45";
+IP1= "192.168.1.45";
 const char* IP2;
-	IP2= "192.168.1.46";
-	
-	int fd1 = tcp_client_socket(IP1, "1000"); 
-	int fd2 = tcp_client_socket(IP2, "1000");
+IP2= "192.168.1.46";
 
+int fd1 = tcp_client_socket(IP1, "1000"); 
+int fd2 = tcp_client_socket(IP2, "1000");
 \end{minted}
 \caption{Adquisición de los descriptores de la conexión.}
 \label{lst:client-socket-create}
@@ -1454,7 +1407,6 @@ Tal y como se ha indicado, se usa un módulo Ethernet y es por eso por lo que es
                framesep=2mm,
                linenos]
                {C}
-
 #include <SPI.h>
 #include <Ethernet.h>
 //#include <Keyboard.h>
@@ -1467,14 +1419,12 @@ byte MiIp[]= {192,168,1,45};
 EthernetServer ArduinoTCP = EthernetServer (1000);
 
 void setup() {
-
-Serial.begin(9600);
-Serial.println("Initializing ethernet connection");
-Ethernet.begin(MiMac, MiIp);
-ArduinoTCP.begin();
-// Keyboard.begin();  
+    Serial.begin(9600);
+    Serial.println("Initializing ethernet connection");
+    Ethernet.begin(MiMac, MiIp);
+    ArduinoTCP.begin();
+    // Keyboard.begin();  
 }
-
 \end{minted}
 \caption{Conexión de Arduino a Internet mediante un módulo Ethernet.}
 \label{lst:arduino-ethernet}
@@ -1484,7 +1434,7 @@ ArduinoTCP.begin();
 %/////////////////// Subsubsección ///////////////////%
 \subsubsection{Lectura de los eventos}\label{s3_5_2_2}
 
-Invocando a ``cliente.read()'' se obtiene uno de los bytes de los eventos enviados por el cliente de la conexión. Estos constituyen en total 7 bytes para el ratón y 1 byte para el teclado aunque depende del hardware y/o sistema operativo que se usa. Al igual que los eventos oculares, cada uno de ellos va precedido por un carácter para distinguir si se tratan de datos obtenidos por el ratón o por el teclado, de ahí que la estructura del evento sea ``TX'' y ``RXXXXXXX'' siendo ``X'' la representación de un byte. Para realizar un sistema de lectura de eventos, se ha pensado en un vector de 8 posiciones de tipo ``byte'', en el que, en cada iteración de un bucle infinito, los valores de cada posición se recorran hacia la posición sucesora y sea la posición ``0'' la que renueva su valor en cada iteración mediante una llamada a ``cliente.read()'' para recibir un nuevo byte. A su vez, en cada iteración, se evalúa la última posición del vector. Esto quiere decir que comprueba si el byte corresponde al carácter ``T'' o ``R''. En el primer caso, lee la posición anterior a la última, ya que siempre se envía primero el carácter del tipo de evento seguido del carácter referente a la tecla pulsada. En el segundo caso, comienza un bucle de 7 iteraciones de tipo regresivo en el que se comparan todos los valores de cada una de las posiciones desde aquella anterior a la última hasta la primera con aquellas cadenas definidas como los atributos de un objeto llamado ``raton'' de tipo ``eventos''. Dado que estas cadenas están inicializadas en un orden opuesto al de verificación, las posiciones no pueden ser regresivas. Esto quiere decir que el valor relativo a la posición 6 del bufer de evento, ``buf'', no se puede comparar con el valor de la posición 6 de cualquiera de los vectores que componen el objeto ``ratón''. Así pues, ``buf[6]'' se le compara con la posición 0 de otro vector, ``buf[5] se compara con la posición 1 de otro vector y así sucesivamente. Para ello, se inicializa a 0 una variable llamada ``p'' que incrementa su valor la unidad en el momento en el que finaliza una iteración del bucle.
+Invocando a ``cliente.read()'' se obtiene uno de los bytes de los eventos enviados por el cliente de la conexión. Estos constituyen en total 7 bytes para el ratón y 1 byte para el teclado aunque depende del hardware y/o sistema operativo que se usa. Al igual que los eventos oculares, cada uno de ellos va precedido por un carácter para distinguir si se tratan de datos obtenidos por el ratón o por el teclado, de ahí que la estructura del evento sea ``TX'' y ``RXXXXXXX'' siendo ``X'' la representación de un byte. Para realizar un sistema de lectura de eventos, se ha pensado en un vector de 8 posiciones de tipo ``byte'', en el que, en cada iteración de un bucle infinito, los valores de cada posición se recorran hacia la posición sucesora y sea la posición ``0'' la que renueva su valor en cada iteración mediante una llamada a ``cliente.read()'' para recibir un nuevo byte. A su vez, en cada iteración, se evalúa la última posición del vector. Esto quiere decir que comprueba si el byte corresponde al carácter ``T'' o ``R''. En el primer caso, lee la posición anterior a la última, ya que siempre se envía primero el carácter del tipo de evento seguido del carácter referente a la tecla pulsada. En el segundo caso, comienza un bucle de 7 iteraciones de tipo regresivo en el que se comparan todos los valores de cada una de las posiciones desde aquella anterior a la última hasta la primera con aquellas cadenas definidas como los atributos de un objeto llamado ``raton'' de tipo ``eventos''. Dado que estas cadenas están inicializadas en un orden opuesto al de verificación, las posiciones no pueden ser regresivas. Esto quiere decir que el valor relativo a la posición 6 del bufer de evento, ``buf'', no se puede comparar con el valor de la posición 6 de cualquiera de los vectores que componen el objeto ``ratón''. Así pues, ``buf[6]'' se le compara con la posición 0 de otro vector, ``buf[5]'' se compara con la posición 1 de otro vector y así sucesivamente. Para ello, se inicializa a 0 una variable llamada ``p'' que incrementa su valor la unidad en el momento en el que finaliza una iteración del bucle.
 
 Cada atributo es un vector que contiene los bytes de los eventos más significativos con los que posteriormente se va a realiza la simulación:
 
@@ -1511,29 +1461,6 @@ A continuación se representa el programa ``Servidor\_TCP.ino'' en ``Listing \re
                framesep=2mm,
                linenos]
                {C}
-
-#include <SPI.h>
-#include <Ethernet.h>
-//#include <Keyboard.h>
-//#include <Mouse.h>
-
-byte MiMac[]= {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-
-byte MiIp[]= {192,168,1,45};
-
-EthernetServer ArduinoTCP = EthernetServer (1000);
-
-void setup() {
-
-Serial.begin(9600);
-//pinMode(10,OUTUPUT)
-Serial.println("Initializing ethernet connection");
-Ethernet.begin(MiMac, MiIp);
-ArduinoTCP.begin();
-// Keyboard.begin();  
-}
-
-
 unsigned char buf[8]={0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0};
 
 #define sensitivity 200
@@ -1541,12 +1468,30 @@ unsigned char buf[8]={0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0};
 typedef struct eventos {  
     byte x_plus[7]= {0x3, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0};
     byte x_less[7]= {0x3, 0x0, 0xFF, 0xF, 0x0, 0x0, 0x0};
-    byte y_plus[13]= {0x3, 0x0, 0x0, 0xF0, 0xFF, 0x0, 0x0};
+    byte y_plus[7]= {0x3, 0x0, 0x0, 0xF0, 0xFF, 0x0, 0x0};
     byte y_less[7]= {0x3, 0x0, 0x0, 0x10, 0x0, 0x0, 0x0};
     byte ckd[7]= {0x3, 0x2, 0x0, 0x0, 0x0, 0x0, 0x0};
     byte cki[7]= {0x3, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0};
 };
 
+void loop() {
+    eventos raton;
+    EthernetClient cliente = ArduinoTCP.available();
+    
+    int i,p;
+    int cont1=0;
+    int cont2=0;
+    int cont3=0;
+    int cont4=0;
+    int cont5=0;
+    int cont6=0;
+    double A=0;
+    double B=0;
+      
+    Serial.print("Contenido de buf[0]: ");
+    Serial.println(buf[0], HEX); 
+    
+    buf[0]= cliente.read(); 
 \end{minted}
 \caption{Continuación de ``Listing \ref{lst:servidor-tcp-ino}''}
 %\label{lst:servidor-tcp-ino}
@@ -1559,27 +1504,6 @@ typedef struct eventos {
                framesep=2mm,
                linenos]
                {C}
-void loop() {
-    eventos raton;
-    EthernetClient cliente = ArduinoTCP.available();
-    
-    //char c;
-    int i,p;
-    int cont1=0;
-    int cont2=0;
-    int cont3=0;
-    int cont4=0;
-    int cont5=0;
-    int cont6=0;
-    double A=0;
-    double B=0;
-      
-
-    Serial.print("Contenido de buf[0]: ");
-    Serial.println(buf[0], HEX); 
-    
-    buf[0]= cliente.read(); 
-    
     //////////////////////////////////////////////
     //        Leer el contenido del bufer       //
     //////////////////////////////////////////////
@@ -1600,17 +1524,6 @@ void loop() {
                     Serial.println("A");
                 }
             }
-\end{minted}
-\caption{Continuación de ``Listing \ref{lst:servidor-tcp-ino}''}
-%\label{lst:servidor-tcp-ino}
-\end{listing}
-            
-\begin{listing}[p]
-\begin{minted}[bgcolor=bg,
-               frame=lines,
-               framesep=2mm,
-               linenos]
-               {C}         
             if (buf[i]==raton.x_less[p]) {
                 cont2++;;
                 if (cont2==7) {
@@ -1627,6 +1540,17 @@ void loop() {
                     Serial.println("C");
                 }
             }
+\end{minted}
+\caption{Continuación de ``Listing \ref{lst:servidor-tcp-ino}''}
+%\label{lst:servidor-tcp-ino}
+\end{listing}
+            
+\begin{listing}[p]
+\begin{minted}[bgcolor=bg,
+               frame=lines,
+               framesep=2mm,
+               linenos]
+               {C}         
             if (buf[i]==raton.y_less[p]) {
                 cont4++;
                 if (cont4==7) {
@@ -1644,18 +1568,6 @@ void loop() {
                     Serial.println("E");
                 }
             }
-
-\end{minted}
-\caption{Continuación de ``Listing \ref{lst:servidor-tcp-ino}''}
-%\label{lst:servidor-tcp-ino}
-\end{listing}
-    
-\begin{listing}[p]
-\begin{minted}[bgcolor=bg,
-               frame=lines,
-               framesep=2mm,
-               linenos]
-               {C}   
                 if (buf[i]==raton.cki[p]) {
                 cont6++;
                 if (cont6==7) {
@@ -1669,6 +1581,17 @@ void loop() {
        }
        //mouse.move(A,B,0);
     }
+\end{minted}
+\caption{Continuación de ``Listing \ref{lst:servidor-tcp-ino}''}
+%\label{lst:servidor-tcp-ino}
+\end{listing}
+    
+\begin{listing}[p]
+\begin{minted}[bgcolor=bg,
+               frame=lines,
+               framesep=2mm,
+               linenos]
+               {C}   
     //////////////////////////////////////////////
     //              Rellenar el bufer           //
     //////////////////////////////////////////////

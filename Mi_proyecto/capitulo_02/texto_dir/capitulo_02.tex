@@ -23,7 +23,7 @@ Los dispositivos de interfaz humana o ``Human Interface Devices'' de donde proce
 
 Aquellos dispositivos HID que se comuniquen con el computador utilizando el protocolo ``Universal Serial Bus'' o comúnmente llamado ``USB'' son denominados USB-HID Devices, o dispositivos USB de interfaz humana. 
 
-En este proyecto, son necesarios dos dispositivos HID USB, el teclado y el ratón, que van a permitir al usuario tomar el control de dos equipos distintos. Además, también se hace uso de otro periférico como es una cámara para capturar el rostro y reconocer la posición de los ojos. Todos ellos se conectan a Raspberry Pi que funciona de idéntica forma a un computador, actuando como servidor o ``host'' de la comunicación mientras que todos estos periféricos cumplen la función de clientes o ```clients''. Cuando se pulsa una tecla o se realiza un movimiento con el ratón, Raspberry Pi recibe los datos introducidos por el humano y y devuelve una respuesta a los dispositivos HID. Todo esto, se hace posible mediante un conjunto de comandos o drivers que se ejecutan para permitir la comunicación entre los dispositivos y el servidor. Los drivers HID otorgan la capacidad al sistema operativo y a otro tipo de aplicaciones de acceder al cualquier hardware independientemente del fabricante sin conocer en profundidad sus características concretas, es decir, es el intermediario entre el hardware y el sistema operativo.
+En este proyecto, son necesarios dos dispositivos HID USB, el teclado y el ratón, que van a permitir al usuario tomar el control de dos equipos distintos. Además, también se hace uso de otro periférico como es una cámara para capturar el rostro y reconocer la posición de los ojos. Todos ellos se conectan a Raspberry Pi que funciona de idéntica forma a un computador, actuando como servidor o ``host'' de la comunicación mientras que todos estos periféricos cumplen la función de clientes o ``clients''. Cuando se pulsa una tecla o se realiza un movimiento con el ratón, Raspberry Pi recibe los datos introducidos por el humano y y devuelve una respuesta a los dispositivos HID. Todo esto, se hace posible mediante un conjunto de comandos o drivers que se ejecutan para permitir la comunicación entre los dispositivos y el servidor. Los drivers HID otorgan la capacidad al sistema operativo y a otro tipo de aplicaciones de acceder al cualquier hardware independientemente del fabricante sin conocer en profundidad sus características concretas, es decir, es el intermediario entre el hardware y el sistema operativo.
 
 
 
@@ -229,7 +229,7 @@ La finalidad de esta biblioteca es tanto facilitar el manejo de eventos de vario
 OpenCV es una biblioteca que, tal y como su nombre indica, proporciona código abierto de visión computacional (Open Source Computer Vision Library). Se utiliza para aplicaciones que se ejecutan en tiempo real, por tanto, ofrece una gran eficiencia a nivel computacional procesando y analizando imágenes, estructuras de datos y muchas tareas que requieren potencia de procesamiento. De hecho, OpenCV ha sido desarrollado debido al crecimiento de algoritmos de visión computacional que evidencian la necesidad de conseguir software más sofisticado y de mayor velocidad. 
 Esta herramienta se caracteriza por su versatilidad, permitiendo al usuario su uso en diferentes entornos de programación como C++, Python, Matlab, Ruby y Java. Asimismo, se puede usar en multitud de sistemas operativos, tales como Windows, Linux, MacOs, iOs e incluso Android y su implementación está basada en C y C++ optimizado.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \includegraphics[scale = 0.5]{capitulo_02/figuras_dir/OpenCV.jpg}
 \caption{Logotipo de OpenCV}
@@ -289,7 +289,7 @@ Los clasificadores intervienen en el reconocimiento de determinados objetos, en 
 En el caso de este proyecto, interesa conocer los eventos de la posición de los ojos, para ello, en primer lugar es necesario detectar la posición de la cara, y dentro de esta región, detectar la posición de los ojos. Una vez conocida la región que contiene los ojos, de la misma forma se puede conocer la posición del iris. Para esto, se emplean clasificadores que están implementados con el algoritmo de Viola-Jones. Este algoritmo es usado en la detección de rostros y se caracteriza por su eficiencia y su baja tasa de errores en la detección a diferencia de otro tipo del algoritmos que se pueden encontrar en la actualidad. El método se emplea para reconocer un rostro en una imagen. En primer lugar, el algoritmo requiere imágenes con cara (denominadas imágenes positivas) e imágenes sin cara (denominadas imágenes negativas) para poder entrenar al clasificador. De esas imágenes se obtienen las características comunes a todas las caras.
 Las características comunes que presenta un rostro son \citep{iglesias2016reconocimiento}:
 \begin{itemize}
-\item La zona de los ojos es mas oscura en relación a la zona de las mejillas
+\item La zona de los ojos es mas oscura en relación a la zona de las mejillas.
 \item La zona del puente nasal es mas claro que la región de los ojos. 
 \end{itemize}
 
@@ -298,7 +298,7 @@ Para reconocer en cada imagen el rostro, se desliza una máscara sobre la imagen
 \begin{figure}
 \centering
 \includegraphics[scale = 0.7]{capitulo_02/figuras_dir/mascaras.jpg}
-\caption{Algunos tipos de ``Haar-like features''}
+\caption{Algunos tipos de ``Haar-like features''. Imagen tomada de Robologs - Reconocimiento facial con OpenCV + webcam: https://robologs.net/2014/05/26/reconocimiento-facial-con-opencv-webcam/\#!parentId=236}
 %\label{fig:figura4}
 \end{figure}
 
@@ -310,21 +310,12 @@ Este método, como se ha comentado, clasifica las zonas de la imagen en positiva
 
 Los clasificadores en cascadas emplean en primer lugar clasificadores débiles para descartar zonas que no pertenezcan a cara. La salida del clasificador anterior se introduce en un nuevo clasificador y su salida a su vez, es la entrada de otro y así continuamente. Es de esperar que, cuanto mayor sea el número de clasificadores empleados, mayor es el tiempo de cálculo.
 
-
 \begin{figure}
 \centering
 \includegraphics[scale = 0.7]{capitulo_02/figuras_dir/haarcascade.jpg}
-\caption{Búsqueda de ``Haar-like features'' en una imagen}
+\caption{Búsqueda de ``Haar-like features'' en una imagen. Imagen tomada de Robologs - Reconocimiento facial con OpenCV + webcam: https://robologs.net/2014/05/26/reconocimiento-facial-con-opencv-webcam/\#!parentId=236}
 %\label{fig:figura4}
 \end{figure}
-
- 
-
-
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Calibración de la cámara} \label{s2_2_3}
@@ -419,7 +410,7 @@ En este método, la plantilla debe cumplir con una serie de características:
     \item El número de cuadrados totales de la plantilla puede variar. Si se pretende conseguir mayor sensibilidad con este algoritmo de calibración, la plantilla puede incorporar mayor número de cuadrados. 
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \includegraphics[scale = 0.4]{capitulo_02/figuras_dir/CHESSBOARD.jpg}
 \caption{Plantilla de calibración estilo tablero de ajedrez}
@@ -513,7 +504,7 @@ Distortion_Coefficients: !!opencv-matrix
 
 
 
-
+\clearpage
 
 %\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -544,7 +535,7 @@ Para establecer una comunicación Raspberry Pi-Arduino via internet, es necesari
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 \subsection{Comunicación TCP} \label{s2_3_2}
 
-TCP deriva de sus siglas ``Transmition Control Protocol''. Este protocolo establece las reglas para la transmisión de información entre dos sistemas a través de redes internet junto con el protocolo IP o ``Internet Protocol''. Ambos protocolos trabajan en distintos niveles expuestos por el modelo OSI\footnote{El modelo OSI o ``Open System Interconnection'' define las etapas que intervienen en un proceso de comunicación. Estas etapas son llamadas niveles o capas: nivel físico, nivel de enlace de datos, nivel de red, nivel de transporte, nivel de sesión, nivel de presentación y nivel de aplicación. Todos ellos ordenados de nivel inferior a superior respectivamente.}. El protocolo TCP trabaja en el nivel de transporte.
+TCP deriva de sus siglas ``Transmition Control Protocol''. Este protocolo establece las reglas para la transmisión de información entre dos sistemas a través de redes internet junto con el protocolo IP o ``Internet Protocol''. Ambos protocolos trabajan en distintos niveles expuestos por el modelo OSI\footnote{El modelo OSI o ``Open System Interconnection'' define las etapas que intervienen en un proceso de comunicación. Estas etapas son llamadas niveles o capas: nivel físico, nivel de enlace de datos, nivel de red, nivel de transporte, nivel de sesión, nivel de presentación y nivel de aplicación. Todos ellos ordenados de nivel inferior a superior respectivamente.} (figura \ref{fig: OSI}). El protocolo TCP trabaja en el nivel de transporte.
 
 La función de TCP consiste en establecer la conexión, enviar los datos y cerrar la conexión. El proceso de comunicación se lleva a cabo mediante la identificación previa de las direcciones IP del emisor y del receptor. Tal y como describe Adrián Estrada \citep{corona2004protocolos}, la dirección IP es ``un número único para cada equipo o ``host'' representado por cuatro cifras separadas por puntos, quedando determinado el 255 como límite [...], con la dirección IP queda identificada la máquina del usuario y la red a la que pertenece''.
 
@@ -556,9 +547,9 @@ Este es el principal motivo por el cual para el proyecto se ha escogido este pro
 
 \begin{figure}
 \centering
-\includegraphics[scale = 0.65]{capitulo_02/figuras_dir/OSI.jpg}
-\caption{Niveles del modelo OSI y protocolos de internet aplicados a cada nivel}
-%\label{fig:figura4}
+\includegraphics[scale = 0.9]{capitulo_02/figuras_dir/OSI.jpg}
+\caption{Niveles del modelo OSI y protocolos de internet aplicados a cada nivel. Imagen tomada de Olivero - Internet Network Model: http://olivero.info/bari/i/internet-network-model/}
+\label{fig: OSI}
 \end{figure}
 
 
@@ -567,7 +558,7 @@ Este es el principal motivo por el cual para el proyecto se ha escogido este pro
 
 
 
-
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
@@ -591,7 +582,7 @@ Algunas de las características de este protocolo son:
             \item {\itshape\bfseries SCLK} o {\itshape\bfseries SCK} (Serial Clock): Es la señal de reloj que genera y emite el maestro o servidor a todos los clientes y que otorga la sincronía característica de esta comunicación.
             \item {\itshape\bfseries MISO} (Master Input, Slave Output): Es la señal de entrada de datos al maestro y de salida de datos del esclavo.
             \item {\itshape\bfseries MOSI} (Master Output, Slave Input): Es la señal de salida del maestro y de entrada de datos al esclavo.
-            \item {\itshape\bfseries SS} o {\itshape\bfseries CS} (Chip Select o Slave Select): Es la señal que habilita el integrado que constituye el esclavo de la comunicación. Cuando el maestro quiere enviar y recibir datos con un esclavo, activa SS a nivel bajo. Cuando la comunicación finaliza, de deshabilita cambiando el estado de la señal a nivel alto. Hay tantas líneas SS o CS como esclavos haya (figura \ref{fig: SPI}).
+            \item {\itshape\bfseries SS} o {\itshape\bfseries CS} (Chip Select o Slave Select): Es la señal que habilita el integrado que constituye el esclavo de la comunicación. Cuando el maestro quiere enviar y recibir datos con un esclavo, activa SS a nivel bajo. Cuando la comunicación finaliza, lo deshabilita cambiando el estado de la señal a nivel alto. Hay tantas líneas SS o CS como esclavos haya (figura \ref{fig: SPI}).
         \end{itemize}
 \end{itemize}
 
@@ -606,11 +597,11 @@ Para transmitir un byte completo, es necesario transmitir 8 veces un bit. La tra
 \begin{figure}
 \centering
 \includegraphics[scale = 0.5]{capitulo_02/figuras_dir/SPI.jpg}
-\caption{Conexión SPI del maestro con varios esclavos. Imagen tomada de Prometec: https://www.prometec.net/bus-spi/.}
+\caption{Conexión SPI del maestro con varios esclavos. Imagen tomada de Prometec - El bus SPI: https://www.prometec.net/bus-spi/.}
 \label{fig: SPI}
 \end{figure}
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -636,10 +627,10 @@ Tras conectar Arduino Leonardo al computador, este último obtiene el descriptor
 
 Desde el punto de vista de la capa física del protocolo, existen cuatro líneas principalmente: línea de datos {\itshape D+}, línea de datos {\itshape D-}, línea de alimentación {\itshape Vcc} y línea de masa {\itshape GND}. Cada una de estas líneas se representa en la figura \ref{fig: USB}.
 
-\begin{figure}[H]
+\begin{figure}[p]
 \centering
-\includegraphics[scale = 0.65]{capitulo_02/figuras_dir/USB.jpg}
-\caption{Líneas del bus USB. Imagen tomada de Computación e Informática (blog): http://informmundo.blogspot.com/2010/04/que-llevan-por-dentro-los-cables-usb.html}
+\includegraphics[scale = 0.7]{capitulo_02/figuras_dir/USB.jpg}
+\caption{Líneas del bus USB. Imagen tomada de Computación e Informática - Qué llevan los cables por dento: http://informmundo.blogspot.com/2010/04/que-llevan-por-dentro-los-cables-usb.html}
 \label{fig: USB}
 \end{figure}
 
@@ -660,7 +651,7 @@ Desde el punto de vista de la capa física del protocolo, existen cuatro líneas
 
 
 
-
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
@@ -680,7 +671,7 @@ Tal y como se describe en el capítulo 3, el programa de detección ocular imple
 
 
 
-
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		            	Seccion          			  %
@@ -691,7 +682,7 @@ Cada microcontrolador Arduino debe funcionar como un dispositivo HID conectado a
 
 Mediante un ``sketch'' o programa ``.ino'' que haga uso de las librerías ``keyboard.h'' y ``mouse.h'', los eventos recibidos se simulan como pulsaciones de tecla y movimientos de ratón para que el microcontrolador funcione de la misma forma que un teclado y ratón cualquiera\footnote{Véase el capítulo 3, sección 3.5.}. Esta generación de teclas y movimientos de ratón se produce procesando los ``reports'' de los eventos enviados al equipo vía USB.
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%% Subsección %%%%%%%%%%%%%%%%%%%%%
 %\subsection{Teclado} \label{s2_5_1}
 
